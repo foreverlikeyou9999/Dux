@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'Dux' target in the 'Dux' project
+//
+
+#define SP_REFACTOR 1
+
+#ifdef __OBJC__
+  #import <Cocoa/Cocoa.h>
+#endif

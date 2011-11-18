@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		380AED3D14500377005770D7 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380AED3C14500377005770D7 /* DuxTextView.m */; };
+		3824F07514522FAB00F00B96 /* DuxSyntaxHighlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */; };
+		3824F07B1452304D00F00B96 /* DuxLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F07A1452304D00F00B96 /* DuxLanguage.m */; };
+		3824F07E1452305700F00B96 /* DuxLanguageElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F07D1452305700F00B96 /* DuxLanguageElement.m */; };
+		3824F0811452306F00F00B96 /* DuxHTMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F0801452306F00F00B96 /* DuxHTMLLanguage.m */; };
+		3824F0851452E75700F00B96 /* DuxHTMLBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F0841452E75700F00B96 /* DuxHTMLBaseElement.m */; };
+		3829D938145A9F7D00188ECF /* DuxHTMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */; };
+		3837FAB21475E058002CC459 /* NSStringDuxAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */; };
+		38383A06146FB25C008CD049 /* DuxHTMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */; };
+		384FDFE014710EFC00BD0D8D /* DuxHTMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */; };
+		38734F521406133200992D33 /* OpenQuickly.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38734F511406133200992D33 /* OpenQuickly.xib */; };
+		38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F551406135A00992D33 /* MyOpenQuicklyController.m */; };
+		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
+		3877D7EF1476F14400EE534E /* UNLICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3877D7EE1476F14400EE534E /* UNLICENSE */; };
+		387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */; };
+		387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */; };
+		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
+		38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */; };
+		38CFE15C1403C96900CA7044 /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15B1403C96900CA7044 /* appicon.icns */; };
+		38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15D1403CBCD00CA7044 /* docicon.icns */; };
+		38CFEEC31473AEE700F81E6F /* DuxPHPLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */; };
+		38CFEEC61473AEF500F81E6F /* DuxPHPBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC51473AEF500F81E6F /* DuxPHPBaseElement.m */; };
+		38CFEECC1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEECB1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.m */; };
+		38CFEECF1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEECE1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.m */; };
+		38CFEED21473AF4200F81E6F /* DuxPHPNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEED11473AF4200F81E6F /* DuxPHPNumberElement.m */; };
+		38CFEED51473AF5400F81E6F /* DuxPHPVariableElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEED41473AF5400F81E6F /* DuxPHPVariableElement.m */; };
+		38CFEED81473B1E000F81E6F /* DuxPHPKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEED71473B1E000F81E6F /* DuxPHPKeywordElement.m */; };
+		38D605881403859600D70F81 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605871403859600D70F81 /* Cocoa.framework */; };
+		38D605921403859600D70F81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38D605901403859600D70F81 /* InfoPlist.strings */; };
+		38D605941403859600D70F81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D605931403859600D70F81 /* main.m */; };
+		38D605981403859600D70F81 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 38D605961403859600D70F81 /* Credits.rtf */; };
+		38D6059B1403859600D70F81 /* MyTextDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D6059A1403859600D70F81 /* MyTextDocument.m */; };
+		38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059C1403859700D70F81 /* MyTextDocument.xib */; };
+		38D605A11403859700D70F81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059F1403859700D70F81 /* MainMenu.xib */; };
+		38D605D51403996C00D70F81 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D41403996C00D70F81 /* WebKit.framework */; };
+		38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D614039A0600D70F81 /* CoreFoundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		380AED3B14500377005770D7 /* DuxTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextView.h; sourceTree = "<group>"; };
+		380AED3C14500377005770D7 /* DuxTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextView.m; sourceTree = "<group>"; };
+		3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxSyntaxHighlighter.h; sourceTree = "<group>"; };
+		3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxSyntaxHighlighter.m; sourceTree = "<group>"; };
+		3824F0791452304D00F00B96 /* DuxLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguage.h; sourceTree = "<group>"; };
+		3824F07A1452304D00F00B96 /* DuxLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguage.m; sourceTree = "<group>"; };
+		3824F07C1452305700F00B96 /* DuxLanguageElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageElement.h; sourceTree = "<group>"; };
+		3824F07D1452305700F00B96 /* DuxLanguageElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageElement.m; sourceTree = "<group>"; };
+		3824F07F1452306F00F00B96 /* DuxHTMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLLanguage.h; sourceTree = "<group>"; };
+		3824F0801452306F00F00B96 /* DuxHTMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLLanguage.m; sourceTree = "<group>"; };
+		3824F0831452E75700F00B96 /* DuxHTMLBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLBaseElement.h; sourceTree = "<group>"; };
+		3824F0841452E75700F00B96 /* DuxHTMLBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLBaseElement.m; sourceTree = "<group>"; };
+		3829D936145A9F7D00188ECF /* DuxHTMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagElement.h; sourceTree = "<group>"; };
+		3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagElement.m; sourceTree = "<group>"; };
+		3837FAB01475E058002CC459 /* NSStringDuxAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringDuxAdditions.h; sourceTree = "<group>"; };
+		3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringDuxAdditions.m; sourceTree = "<group>"; };
+		38383A04146FB25C008CD049 /* DuxHTMLTagAttributeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagAttributeElement.h; sourceTree = "<group>"; };
+		38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagAttributeElement.m; sourceTree = "<group>"; };
+		384FDFDE14710EFC00BD0D8D /* DuxHTMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLEntityElement.h; sourceTree = "<group>"; };
+		384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLEntityElement.m; sourceTree = "<group>"; };
+		38734F511406133200992D33 /* OpenQuickly.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenQuickly.xib; sourceTree = "<group>"; };
+		38734F541406135A00992D33 /* MyOpenQuicklyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenQuicklyController.h; sourceTree = "<group>"; };
+		38734F551406135A00992D33 /* MyOpenQuicklyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenQuicklyController.m; sourceTree = "<group>"; };
+		38734F571406163A00992D33 /* MyAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAppDelegate.h; sourceTree = "<group>"; };
+		38734F581406163A00992D33 /* MyAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAppDelegate.m; sourceTree = "<group>"; };
+		3877D7EE1476F14400EE534E /* UNLICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UNLICENSE; sourceTree = "<group>"; };
+		387B21471473D94E00F191F1 /* DuxPHPSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleLineCommentElement.h; sourceTree = "<group>"; };
+		387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
+		387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
+		387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPBlockCommentElement.m; sourceTree = "<group>"; };
+		38983C721474FEC8004DD914 /* JumpToLinePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JumpToLinePanel.xib; sourceTree = "<group>"; };
+		38983C7414751B65004DD914 /* DuxLanguageMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageMenuItem.h; sourceTree = "<group>"; };
+		38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
+		38CFE15B1403C96900CA7044 /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = ../appicon.icns; sourceTree = "<group>"; };
+		38CFE15D1403CBCD00CA7044 /* docicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = docicon.icns; sourceTree = "<group>"; };
+		38CFEEC11473AEE700F81E6F /* DuxPHPLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPLanguage.h; sourceTree = "<group>"; };
+		38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPLanguage.m; sourceTree = "<group>"; };
+		38CFEEC41473AEF500F81E6F /* DuxPHPBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBaseElement.h; sourceTree = "<group>"; };
+		38CFEEC51473AEF500F81E6F /* DuxPHPBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPBaseElement.m; sourceTree = "<group>"; };
+		38CFEECA1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleQuoteStringElement.h; sourceTree = "<group>"; };
+		38CFEECB1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleQuoteStringElement.m; sourceTree = "<group>"; };
+		38CFEECD1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPDoubleQuoteStringElement.h; sourceTree = "<group>"; };
+		38CFEECE1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPDoubleQuoteStringElement.m; sourceTree = "<group>"; };
+		38CFEED01473AF4200F81E6F /* DuxPHPNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPNumberElement.h; sourceTree = "<group>"; };
+		38CFEED11473AF4200F81E6F /* DuxPHPNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPNumberElement.m; sourceTree = "<group>"; };
+		38CFEED31473AF5400F81E6F /* DuxPHPVariableElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPVariableElement.h; sourceTree = "<group>"; };
+		38CFEED41473AF5400F81E6F /* DuxPHPVariableElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPVariableElement.m; sourceTree = "<group>"; };
+		38CFEED61473B1DF00F81E6F /* DuxPHPKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPKeywordElement.h; sourceTree = "<group>"; };
+		38CFEED71473B1E000F81E6F /* DuxPHPKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPKeywordElement.m; sourceTree = "<group>"; };
+		38D605831403859600D70F81 /* Dux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dux.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38D605871403859600D70F81 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		38D6058A1403859600D70F81 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		38D6058B1403859600D70F81 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		38D6058C1403859600D70F81 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		38D6058F1403859600D70F81 /* Dux-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Dux-Info.plist"; sourceTree = "<group>"; };
+		38D605911403859600D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		38D605931403859600D70F81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		38D605951403859600D70F81 /* Dux-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dux-Prefix.pch"; sourceTree = "<group>"; };
+		38D605971403859600D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		38D605991403859600D70F81 /* MyTextDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTextDocument.h; sourceTree = "<group>"; };
+		38D6059A1403859600D70F81 /* MyTextDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTextDocument.m; sourceTree = "<group>"; };
+		38D6059D1403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyTextDocument.xib; sourceTree = "<group>"; };
+		38D605A01403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		38D605D41403996C00D70F81 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		38D605D614039A0600D70F81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		38D605801403859600D70F81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */,
+				38D605D51403996C00D70F81 /* WebKit.framework in Frameworks */,
+				38D605881403859600D70F81 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		380AED3914500340005770D7 /* Text View */ = {
+			isa = PBXGroup;
+			children = (
+				380AED3B14500377005770D7 /* DuxTextView.h */,
+				380AED3C14500377005770D7 /* DuxTextView.m */,
+				3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */,
+				3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */,
+				3824F0791452304D00F00B96 /* DuxLanguage.h */,
+				3824F07A1452304D00F00B96 /* DuxLanguage.m */,
+				3824F07C1452305700F00B96 /* DuxLanguageElement.h */,
+				3824F07D1452305700F00B96 /* DuxLanguageElement.m */,
+				38983C7414751B65004DD914 /* DuxLanguageMenuItem.h */,
+				38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */,
+				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
+				3824F0821452307300F00B96 /* HTML */,
+				38CFEEBC1473AEBB00F81E6F /* PHP */,
+			);
+			name = "Text View";
+			sourceTree = "<group>";
+		};
+		3824F0821452307300F00B96 /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				3824F07F1452306F00F00B96 /* DuxHTMLLanguage.h */,
+				3824F0801452306F00F00B96 /* DuxHTMLLanguage.m */,
+				3824F0831452E75700F00B96 /* DuxHTMLBaseElement.h */,
+				3824F0841452E75700F00B96 /* DuxHTMLBaseElement.m */,
+				3829D936145A9F7D00188ECF /* DuxHTMLTagElement.h */,
+				3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */,
+				38383A04146FB25C008CD049 /* DuxHTMLTagAttributeElement.h */,
+				38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */,
+				384FDFDE14710EFC00BD0D8D /* DuxHTMLEntityElement.h */,
+				384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */,
+			);
+			name = HTML;
+			sourceTree = "<group>";
+		};
+		3837FAA81475E009002CC459 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				3837FAB01475E058002CC459 /* NSStringDuxAdditions.h */,
+				3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		38A72CB11409057E008C26C9 /* Open Quickly */ = {
+			isa = PBXGroup;
+			children = (
+				38734F541406135A00992D33 /* MyOpenQuicklyController.h */,
+				38734F551406135A00992D33 /* MyOpenQuicklyController.m */,
+				38734F511406133200992D33 /* OpenQuickly.xib */,
+			);
+			name = "Open Quickly";
+			sourceTree = "<group>";
+		};
+		38CFEEBC1473AEBB00F81E6F /* PHP */ = {
+			isa = PBXGroup;
+			children = (
+				38CFEEC11473AEE700F81E6F /* DuxPHPLanguage.h */,
+				38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */,
+				38CFEEC41473AEF500F81E6F /* DuxPHPBaseElement.h */,
+				38CFEEC51473AEF500F81E6F /* DuxPHPBaseElement.m */,
+				38CFEECA1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.h */,
+				38CFEECB1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.m */,
+				38CFEECD1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.h */,
+				38CFEECE1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.m */,
+				38CFEED01473AF4200F81E6F /* DuxPHPNumberElement.h */,
+				38CFEED11473AF4200F81E6F /* DuxPHPNumberElement.m */,
+				38CFEED31473AF5400F81E6F /* DuxPHPVariableElement.h */,
+				38CFEED41473AF5400F81E6F /* DuxPHPVariableElement.m */,
+				38CFEED61473B1DF00F81E6F /* DuxPHPKeywordElement.h */,
+				38CFEED71473B1E000F81E6F /* DuxPHPKeywordElement.m */,
+				387B21471473D94E00F191F1 /* DuxPHPSingleLineCommentElement.h */,
+				387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */,
+				387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */,
+				387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */,
+			);
+			name = PHP;
+			sourceTree = "<group>";
+		};
+		38D605781403859600D70F81 = {
+			isa = PBXGroup;
+			children = (
+				38D6058D1403859600D70F81 /* Dux */,
+				38D605861403859600D70F81 /* Frameworks */,
+				38D605841403859600D70F81 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		38D605841403859600D70F81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38D605831403859600D70F81 /* Dux.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		38D605861403859600D70F81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				38D605871403859600D70F81 /* Cocoa.framework */,
+				38D605891403859600D70F81 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		38D605891403859600D70F81 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				38D605D614039A0600D70F81 /* CoreFoundation.framework */,
+				38D6058A1403859600D70F81 /* AppKit.framework */,
+				38D6058B1403859600D70F81 /* CoreData.framework */,
+				38D6058C1403859600D70F81 /* Foundation.framework */,
+				38D605D41403996C00D70F81 /* WebKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		38D6058D1403859600D70F81 /* Dux */ = {
+			isa = PBXGroup;
+			children = (
+				38734F571406163A00992D33 /* MyAppDelegate.h */,
+				38734F581406163A00992D33 /* MyAppDelegate.m */,
+				38D605991403859600D70F81 /* MyTextDocument.h */,
+				38D6059A1403859600D70F81 /* MyTextDocument.m */,
+				38D6059C1403859700D70F81 /* MyTextDocument.xib */,
+				38D6059F1403859700D70F81 /* MainMenu.xib */,
+				380AED3914500340005770D7 /* Text View */,
+				38A72CB11409057E008C26C9 /* Open Quickly */,
+				3837FAA81475E009002CC459 /* Misc */,
+				38D6058E1403859600D70F81 /* Supporting Files */,
+			);
+			path = Dux;
+			sourceTree = "<group>";
+		};
+		38D6058E1403859600D70F81 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				38D6058F1403859600D70F81 /* Dux-Info.plist */,
+				38D605901403859600D70F81 /* InfoPlist.strings */,
+				38D605931403859600D70F81 /* main.m */,
+				38D605951403859600D70F81 /* Dux-Prefix.pch */,
+				38D605961403859600D70F81 /* Credits.rtf */,
+				38CFE15B1403C96900CA7044 /* appicon.icns */,
+				38CFE15D1403CBCD00CA7044 /* docicon.icns */,
+				3877D7EE1476F14400EE534E /* UNLICENSE */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		38D605821403859600D70F81 /* Dux */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38D605A41403859700D70F81 /* Build configuration list for PBXNativeTarget "Dux" */;
+			buildPhases = (
+				38D6057F1403859600D70F81 /* Sources */,
+				38D605801403859600D70F81 /* Frameworks */,
+				38D605811403859600D70F81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dux;
+			productName = Dux;
+			productReference = 38D605831403859600D70F81 /* Dux.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		38D6057A1403859600D70F81 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 38D6057D1403859600D70F81 /* Build configuration list for PBXProject "Dux" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 38D605781403859600D70F81;
+			productRefGroup = 38D605841403859600D70F81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				38D605821403859600D70F81 /* Dux */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		38D605811403859600D70F81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38D605921403859600D70F81 /* InfoPlist.strings in Resources */,
+				38D605981403859600D70F81 /* Credits.rtf in Resources */,
+				38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */,
+				38D605A11403859700D70F81 /* MainMenu.xib in Resources */,
+				38CFE15C1403C96900CA7044 /* appicon.icns in Resources */,
+				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
+				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
+				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
+				3877D7EF1476F14400EE534E /* UNLICENSE in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		38D6057F1403859600D70F81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38D605941403859600D70F81 /* main.m in Sources */,
+				38D6059B1403859600D70F81 /* MyTextDocument.m in Sources */,
+				38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */,
+				38734F591406163A00992D33 /* MyAppDelegate.m in Sources */,
+				380AED3D14500377005770D7 /* DuxTextView.m in Sources */,
+				3824F07514522FAB00F00B96 /* DuxSyntaxHighlighter.m in Sources */,
+				3824F07B1452304D00F00B96 /* DuxLanguage.m in Sources */,
+				3824F07E1452305700F00B96 /* DuxLanguageElement.m in Sources */,
+				3824F0811452306F00F00B96 /* DuxHTMLLanguage.m in Sources */,
+				3824F0851452E75700F00B96 /* DuxHTMLBaseElement.m in Sources */,
+				3829D938145A9F7D00188ECF /* DuxHTMLTagElement.m in Sources */,
+				38383A06146FB25C008CD049 /* DuxHTMLTagAttributeElement.m in Sources */,
+				384FDFE014710EFC00BD0D8D /* DuxHTMLEntityElement.m in Sources */,
+				38CFEEC31473AEE700F81E6F /* DuxPHPLanguage.m in Sources */,
+				38CFEEC61473AEF500F81E6F /* DuxPHPBaseElement.m in Sources */,
+				38CFEECC1473AF2500F81E6F /* DuxPHPSingleQuoteStringElement.m in Sources */,
+				38CFEECF1473AF3400F81E6F /* DuxPHPDoubleQuoteStringElement.m in Sources */,
+				38CFEED21473AF4200F81E6F /* DuxPHPNumberElement.m in Sources */,
+				38CFEED51473AF5400F81E6F /* DuxPHPVariableElement.m in Sources */,
+				38CFEED81473B1E000F81E6F /* DuxPHPKeywordElement.m in Sources */,
+				387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */,
+				387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */,
+				38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */,
+				3837FAB21475E058002CC459 /* NSStringDuxAdditions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		38D605901403859600D70F81 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38D605911403859600D70F81 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		38D605961403859600D70F81 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38D605971403859600D70F81 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		38D6059C1403859700D70F81 /* MyTextDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38D6059D1403859700D70F81 /* en */,
+			);
+			name = MyTextDocument.xib;
+			sourceTree = "<group>";
+		};
+		38D6059F1403859700D70F81 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38D605A01403859700D70F81 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		38D605A21403859700D70F81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		38D605A31403859700D70F81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		38D605A51403859700D70F81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
+				INFOPLIST_FILE = "Dux/Dux-Info.plist";
+				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_NAME = Dux;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		38D605A61403859700D70F81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
+				INFOPLIST_FILE = "Dux/Dux-Info.plist";
+				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_NAME = Dux;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		38D6057D1403859600D70F81 /* Build configuration list for PBXProject "Dux" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38D605A21403859700D70F81 /* Debug */,
+				38D605A31403859700D70F81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		38D605A41403859700D70F81 /* Build configuration list for PBXNativeTarget "Dux" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38D605A51403859700D70F81 /* Debug */,
+				38D605A61403859700D70F81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 38D6057A1403859600D70F81 /* Project object */;
+}
