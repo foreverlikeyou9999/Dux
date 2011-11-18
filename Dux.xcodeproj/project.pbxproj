@@ -20,7 +20,6 @@
 		38734F521406133200992D33 /* OpenQuickly.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38734F511406133200992D33 /* OpenQuickly.xib */; };
 		38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F551406135A00992D33 /* MyOpenQuicklyController.m */; };
 		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
-		3877D7EF1476F14400EE534E /* UNLICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3877D7EE1476F14400EE534E /* UNLICENSE */; };
 		387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */; };
 		387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */; };
 		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
@@ -71,7 +70,6 @@
 		38734F551406135A00992D33 /* MyOpenQuicklyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenQuicklyController.m; sourceTree = "<group>"; };
 		38734F571406163A00992D33 /* MyAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAppDelegate.h; sourceTree = "<group>"; };
 		38734F581406163A00992D33 /* MyAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAppDelegate.m; sourceTree = "<group>"; };
-		3877D7EE1476F14400EE534E /* UNLICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UNLICENSE; sourceTree = "<group>"; };
 		387B21471473D94E00F191F1 /* DuxPHPSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleLineCommentElement.h; sourceTree = "<group>"; };
 		387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
 		387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
@@ -273,7 +271,6 @@
 				38D605961403859600D70F81 /* Credits.rtf */,
 				38CFE15B1403C96900CA7044 /* appicon.icns */,
 				38CFE15D1403CBCD00CA7044 /* docicon.icns */,
-				3877D7EE1476F14400EE534E /* UNLICENSE */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -333,7 +330,6 @@
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
-				3877D7EF1476F14400EE534E /* UNLICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
