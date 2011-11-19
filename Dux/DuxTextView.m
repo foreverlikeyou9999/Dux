@@ -255,4 +255,39 @@
   [self insertText:[copiedItems objectAtIndex:0]];
 }
 
+- (BOOL)smartInsertDeleteEnabled
+{
+  return NO;
+}
+
+- (BOOL)isAutomaticQuoteSubstitutionEnabled
+{
+  return NO;
+}
+
+- (BOOL)isAutomaticLinkDetectionEnabled
+{
+  return NO;
+}
+
+- (BOOL)isAutomaticDataDetectionEnabled
+{
+  return NO;
+}
+
+- (BOOL)isAutomaticDashSubstitutionEnabled
+{
+  return NO;
+}
+
+- (BOOL)isAutomaticTextReplacementEnabled
+{
+  return NO;
+}
+
+- (BOOL)isAutomaticSpellingCorrectionEnabled
+{
+  return NO;
+}
+
 @end
