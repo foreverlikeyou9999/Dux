@@ -158,9 +158,48 @@
 
 - (DuxLanguage *)languageForRange:(NSRange)range ofTextStorage:(NSTextStorage *)textStorage
 {
-  NSArray *elementStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:range.location effectiveRange:NULL];
+  NSArray *elementStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:MIN(range.location, textStorage.length - 1) effectiveRange:NULL];
   
   return [(DuxLanguageElement *)[elementStack lastObject] language];
+}
+
+- (BOOL)rangeIsComment:(NSRange)range inTextStorage:(NSTextStorage *)textStorage commentRange:(NSRangePointer)commentRange
+{
+  if (textStorage.length == 0)
+    return NO;
+  
+  BOOL isFirst = YES;
+  NSRange newCommentRange = NSMakeRange(0, 0);
+  NSUInteger offset = range.location;
+  while (offset <= NSMaxRange(range) && offset < textStorage.length) {
+    NSRange effectiveRange;
+    NSArray *languageStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:offset longestEffectiveRange:&effectiveRange inRange:NSMakeRange(0, textStorage.length)];
+    
+    // no language? not a comment then
+    if (!languageStack || languageStack.count == 0)
+      return NO;
+    
+    // is this item on the stack a comment?
+    if (![[languageStack lastObject] isComment]) {
+      // make sure the entire element isn't a newline
+      if (effectiveRange.length == 1 && [textStorage.string characterAtIndex:effectiveRange.location] == '\n') {
+        offset = NSMaxRange(effectiveRange);
+        continue;
+      }
+      return NO;
+    }
+    
+    if (isFirst) {
+      newCommentRange.location = effectiveRange.location;
+    }
+    newCommentRange.length = NSMaxRange(effectiveRange) - newCommentRange.location;
+    offset = NSMaxRange(effectiveRange);
+    isFirst = NO;
+  }
+  
+  commentRange->location = newCommentRange.location;
+  commentRange->length = newCommentRange.length;
+  return YES;
 }
 
 @end

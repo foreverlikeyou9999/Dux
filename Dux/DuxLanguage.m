@@ -53,7 +53,10 @@ static NSMutableArray *registeredLanguages = nil;
 
 - (void)wrapCommentsAroundRange:(NSRange)commentRange ofTextView:(NSTextView *)textView
 {
-  @throw [NSException exceptionWithName:@"not defined" reason:@"wrapCommentsAroundRange:ofTextStorage: must be implemented by a subclass" userInfo:nil];
+}
+
+- (void)removeCommentsAroundRange:(NSRange)commentRange ofTextView:(NSTextView *)textView
+{
 }
 
 - (void)prepareToParseTextStorage:(NSTextStorage *)textStorage

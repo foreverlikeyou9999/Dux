@@ -36,6 +36,17 @@ static NSIndexSet *keywordIndexSet = nil;
   [textView setSelectedRange:NSMakeRange(commentRange.location, commentedString.length)];
 }
 
+- (void)removeCommentsAroundRange:(NSRange)commentRange ofTextView:(NSTextView *)textView
+{
+  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"^\\s*// ?" options:NSRegularExpressionAnchorsMatchLines error:NULL];
+  
+  NSMutableString *newString = [[textView.textStorage.string substringWithRange:commentRange] mutableCopy];
+  [expression replaceMatchesInString:newString options:0 range:NSMakeRange(0, newString.length) withTemplate:@""];
+  
+  [textView insertText:[newString copy] replacementRange:commentRange];
+  [textView setSelectedRange:NSMakeRange(commentRange.location, newString.length)];
+}
+
 + (NSIndexSet *)keywordIndexSet
 {
   return keywordIndexSet;

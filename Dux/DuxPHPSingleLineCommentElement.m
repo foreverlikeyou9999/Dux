@@ -45,4 +45,9 @@ static NSColor *color;
   return color;
 }
 
+- (BOOL)isComment
+{
+  return YES;
+}
+
 @end

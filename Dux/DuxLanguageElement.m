@@ -64,4 +64,9 @@ static NSColor *color = nil;
   return color;
 }
 
+- (BOOL)isComment
+{
+  return NO;
+}
+
 @end

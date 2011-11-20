@@ -23,7 +23,9 @@
 
 - (IBAction)jumpToLine:(id)sender;
 - (IBAction)goToLinePanelButtonClicked:(id)sender;
-- (IBAction)commentSelection:(id)sender;
+
+- (IBAction)commentSelection:(id)sender; // will forward to uncommentSelection: if the selection is commented
+- (IBAction)uncomment:(NSRange)commentRange;
 
 - (void)moveSubwordBackward:(id)sender;
 - (void)moveSubwordBackwardAndModifySelection:(id)sender;

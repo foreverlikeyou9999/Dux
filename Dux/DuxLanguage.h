@@ -21,6 +21,7 @@
 - (DuxLanguageElement *)baseElement;
 
 - (void)wrapCommentsAroundRange:(NSRange)commentRange ofTextView:(NSTextView *)textView;
+- (void)removeCommentsAroundRange:(NSRange)commentRange ofTextView:(NSTextView *)textView;
 
 - (void)prepareToParseTextStorage:(NSTextStorage *)textStorage;
 

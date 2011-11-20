@@ -164,18 +164,34 @@
 
 - (IBAction)commentSelection:(id)sender
 {
+  // if there's no selection, grab the entire line
   NSRange commentRange = self.selectedRange;
   if (commentRange.length == 0) {
     commentRange = [self.textStorage.string rangeOfLineAtOffset:self.selectedRange.location];
-  } else {
-    if ([self.textStorage.string characterAtIndex:NSMaxRange(commentRange) - 1] == '\n') {
-      commentRange.length--;
-    }
   }
   
-  DuxLanguage *language = [self.highlighter languageForRange:self.selectedRange ofTextStorage:self.textStorage];
+  // if the last character is a newline, select one less character (this gives nicer results in most situations)
+  if ([self.textStorage.string characterAtIndex:NSMaxRange(commentRange) - 1] == '\n') {
+     commentRange.length--;
+  }
   
+  // is the *entire* selected range commented? If so, uncomment instead
+  NSRange uncommentRange;
+  if ([self.highlighter rangeIsComment:commentRange inTextStorage:self.textStorage commentRange:&uncommentRange]) {
+    
+    [self uncomment:uncommentRange];
+    return;
+  }
+  
+  // find the language, and ask it to remove commenting
+  DuxLanguage *language = [self.highlighter languageForRange:self.selectedRange ofTextStorage:self.textStorage];
   [language wrapCommentsAroundRange:commentRange ofTextView:self];
+}
+
+- (IBAction)uncomment:(NSRange)commentRange
+{
+  DuxLanguage *language = [self.highlighter languageForRange:self.selectedRange ofTextStorage:self.textStorage];
+  [language removeCommentsAroundRange:commentRange ofTextView:self];
 }
 
 - (IBAction)shiftSelectionRight:(id)sender

@@ -18,6 +18,9 @@
 
 + (id)sharedInstance;
 
+- (id)initWithLanguage:(DuxLanguage *)language; // designated
+- (id)init; // all subclasses must implement this, to call initWithLanguage: instead
+
 /**
  * Calculate the length of this language element in a string
  * 
@@ -29,8 +32,6 @@
 - (NSUInteger)lengthInString:(NSAttributedString *)string startingAt:(NSUInteger)startingAt nextElement:(DuxLanguageElement *__strong*)nextElement;
 
 - (NSColor *)color;
-
-- (id)initWithLanguage:(DuxLanguage *)language; // designated
-- (id)init; // all subclasses must implement this, to call initWithLanguage: instead
+- (BOOL)isComment;
 
 @end
