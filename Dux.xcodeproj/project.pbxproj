@@ -73,7 +73,7 @@
 		38110AE714791AF50028B786 /* DuxCSSPropertyValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSPropertyValueElement.m; sourceTree = "<group>"; };
 		38110AEA14791C3C0028B786 /* DuxCSSNumberValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSNumberValueElement.h; sourceTree = "<group>"; };
 		38110AEB14791C3C0028B786 /* DuxCSSNumberValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSNumberValueElement.m; sourceTree = "<group>"; };
-		38110AED14791E850028B786 /* DuxCSSColorValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; path = DuxCSSColorValueElement.h; sourceTree = "<group>"; };
+		38110AED14791E850028B786 /* DuxCSSColorValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSColorValueElement.h; sourceTree = "<group>"; };
 		38110AEE14791E850028B786 /* DuxCSSColorValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSColorValueElement.m; sourceTree = "<group>"; };
 		3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxSyntaxHighlighter.h; sourceTree = "<group>"; };
 		3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxSyntaxHighlighter.m; sourceTree = "<group>"; };
@@ -407,6 +407,7 @@
 				38D6057F1403859600D70F81 /* Sources */,
 				38D605801403859600D70F81 /* Frameworks */,
 				38D605811403859600D70F81 /* Resources */,
+				3826B8F5147993B7009FD11B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -456,6 +457,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3826B8F5147993B7009FD11B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "#!/usr/bin/ruby\n# xcode-git-cfbundleversion.rb\n# Update CFBundleVersion in Info.plist file with short Git revision string\n# http://github.com/guicocoa/xcode-git-cfbundleversion/\n#\n# This is based on\n# http://github.com/digdog/xcode-git-cfbundleversion/\n# http://github.com/jsallis/xcode-git-versioner\n# http://github.com/juretta/iphone-project-tools/tree/v1.0.3\n\nrequire 'rubygems'\nbegin\n  require 'Plist'\nrescue LoadError => e\n  puts \"You need to install the 'Plist' gem: [sudo] gem install plist\"\n  exit 1\nend\n\nraise \"Must be run from Xcode\" unless ENV['XCODE_VERSION_ACTUAL']\n\nGIT = \"/usr/bin/git\"\nPRODUCT_PLIST = File.join(ENV['BUILT_PRODUCTS_DIR'], ENV['INFOPLIST_PATH'])\nREVISION = `#{GIT} log --pretty=format:'' | wc -l`.scan(/\\d/).to_s\nBUNDLE_VERSION = \"CFBundleVersion\"\n\nif File.file?(PRODUCT_PLIST) and REVISION\n  \n  # update product plist\n  `/usr/bin/plutil -convert xml1 \\\"#{PRODUCT_PLIST}\\\"`\n  info = Plist::parse_xml(PRODUCT_PLIST)\n  if info\n    info[BUNDLE_VERSION] = REVISION\n    info.save_plist(PRODUCT_PLIST)\n  end\n  `/usr/bin/plutil -convert binary1 \\\"#{PRODUCT_PLIST}\\\"`\n  \n  # log\n  puts \"updated #{BUNDLE_VERSION} to #{REVISION}\"\n  \nend";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		38D6057F1403859600D70F81 /* Sources */ = {
