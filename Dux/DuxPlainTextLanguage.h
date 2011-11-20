@@ -2,8 +2,10 @@
 //  DuxPlainTextLanguage.h
 //  Dux
 //
-//  Created by Woody Beckert on 2011-11-20.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Created by Abhi Beckert on 2011-11-20.
+//  
+//  This is free and unencumbered software released into the public domain.
+//  For more information, please refer to <http://unlicense.org/>
 //
 
 #import "DuxLanguage.h"
