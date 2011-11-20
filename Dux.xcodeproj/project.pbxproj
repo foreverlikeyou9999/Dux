@@ -44,6 +44,11 @@
 		38D605A11403859700D70F81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059F1403859700D70F81 /* MainMenu.xib */; };
 		38D605D51403996C00D70F81 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D41403996C00D70F81 /* WebKit.framework */; };
 		38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D614039A0600D70F81 /* CoreFoundation.framework */; };
+		38EDD5211478E5AA0077BAB0 /* DuxXMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5201478E5AA0077BAB0 /* DuxXMLLanguage.m */; };
+		38EDD5241478E5B70077BAB0 /* DuxXMLBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5231478E5B70077BAB0 /* DuxXMLBaseElement.m */; };
+		38EDD5271478E5C30077BAB0 /* DuxXMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5261478E5C30077BAB0 /* DuxXMLTagElement.m */; };
+		38EDD52A1478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */; };
+		38EDD52D1478E5E90077BAB0 /* DuxXMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +120,16 @@
 		38D605A01403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		38D605D41403996C00D70F81 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		38D605D614039A0600D70F81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		38EDD51F1478E5AA0077BAB0 /* DuxXMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLLanguage.h; sourceTree = "<group>"; };
+		38EDD5201478E5AA0077BAB0 /* DuxXMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLLanguage.m; sourceTree = "<group>"; };
+		38EDD5221478E5B70077BAB0 /* DuxXMLBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLBaseElement.h; sourceTree = "<group>"; };
+		38EDD5231478E5B70077BAB0 /* DuxXMLBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLBaseElement.m; sourceTree = "<group>"; };
+		38EDD5251478E5C30077BAB0 /* DuxXMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLTagElement.h; sourceTree = "<group>"; };
+		38EDD5261478E5C30077BAB0 /* DuxXMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLTagElement.m; sourceTree = "<group>"; };
+		38EDD5281478E5DD0077BAB0 /* DuxXMLTagAttributeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLTagAttributeElement.h; sourceTree = "<group>"; };
+		38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLTagAttributeElement.m; sourceTree = "<group>"; };
+		38EDD52B1478E5E90077BAB0 /* DuxXMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLEntityElement.h; sourceTree = "<group>"; };
+		38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLEntityElement.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +149,7 @@
 		3804A8161478DA00005C587A /* Languages */ = {
 			isa = PBXGroup;
 			children = (
+				38EDD51D1478E58B0077BAB0 /* XML */,
 				3804A8181478DA1D005C587A /* Plain Text */,
 				3824F0821452307300F00B96 /* HTML */,
 				38CFEEBC1473AEBB00F81E6F /* PHP */,
@@ -301,6 +317,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		38EDD51D1478E58B0077BAB0 /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				38EDD51F1478E5AA0077BAB0 /* DuxXMLLanguage.h */,
+				38EDD5201478E5AA0077BAB0 /* DuxXMLLanguage.m */,
+				38EDD5221478E5B70077BAB0 /* DuxXMLBaseElement.h */,
+				38EDD5231478E5B70077BAB0 /* DuxXMLBaseElement.m */,
+				38EDD5251478E5C30077BAB0 /* DuxXMLTagElement.h */,
+				38EDD5261478E5C30077BAB0 /* DuxXMLTagElement.m */,
+				38EDD5281478E5DD0077BAB0 /* DuxXMLTagAttributeElement.h */,
+				38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */,
+				38EDD52B1478E5E90077BAB0 /* DuxXMLEntityElement.h */,
+				38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */,
+			);
+			name = XML;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -392,6 +425,11 @@
 				3837FAB21475E058002CC459 /* NSStringDuxAdditions.m in Sources */,
 				3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */,
 				3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */,
+				38EDD5211478E5AA0077BAB0 /* DuxXMLLanguage.m in Sources */,
+				38EDD5241478E5B70077BAB0 /* DuxXMLBaseElement.m in Sources */,
+				38EDD5271478E5C30077BAB0 /* DuxXMLTagElement.m in Sources */,
+				38EDD52A1478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m in Sources */,
+				38EDD52D1478E5E90077BAB0 /* DuxXMLEntityElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -852,6 +852,14 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
+								<object class="NSMenuItem" id="828457005">
+									<reference key="NSMenu" ref="309772716"/>
+									<string key="NSTitle">XML</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
 							</array>
 						</object>
 					</object>
@@ -1400,6 +1408,14 @@
 						<reference key="destination" ref="605452851"/>
 					</object>
 					<int key="connectionID">579</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setDuxLanguage:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="828457005"/>
+					</object>
+					<int key="connectionID">581</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -2044,6 +2060,7 @@
 							<reference ref="943798915"/>
 							<reference ref="241657993"/>
 							<reference ref="605452851"/>
+							<reference ref="828457005"/>
 						</array>
 						<reference key="parent" ref="793148078"/>
 					</object>
@@ -2121,6 +2138,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">578</int>
 						<reference key="object" ref="605452851"/>
+						<reference key="parent" ref="309772716"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">580</int>
+						<reference key="object" ref="828457005"/>
 						<reference key="parent" ref="309772716"/>
 					</object>
 				</array>
@@ -2268,6 +2290,22 @@
 				</object>
 				<string key="578.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="580.CustomClassName">DuxLanguageMenuItem</string>
+				<object class="NSMutableDictionary" key="580.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+					<object class="IBUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
+						<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+						<reference key="object" ref="828457005"/>
+						<array key="userDefinedRuntimeAttributes">
+							<object class="IBUserDefinedRuntimeAttribute">
+								<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.string</string>
+								<string key="keyPath">duxLanguageClassName</string>
+								<string key="value">DuxXMLLanguage</string>
+							</object>
+						</array>
+					</object>
+				</object>
+				<string key="580.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2284,7 +2322,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">579</int>
+			<int key="maxID">581</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
