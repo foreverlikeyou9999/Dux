@@ -16,6 +16,26 @@
 @synthesize goToLinePanel;
 @synthesize goToLineSearchField;
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+  if (!(self = [super initWithCoder:aDecoder]))
+    return nil;
+  
+  self.delegate = self;
+  
+  return self;
+}
+
+- (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)container
+{
+  if (!(self = [super initWithFrame:frameRect textContainer:container]))
+    return nil;
+  
+  self.delegate = self;
+  
+  return self;
+}
+
 - (void)dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -288,6 +308,248 @@
 - (BOOL)isAutomaticSpellingCorrectionEnabled
 {
   return NO;
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+  switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
+    case NSLeftArrowFunctionKey:
+      if (!([theEvent modifierFlags] & NSControlKeyMask))
+        break;
+      
+      if ([theEvent modifierFlags] & NSShiftKeyMask) {
+        [self moveSubwordBackwardAndModifySelection:self];
+      } else {
+        [self moveSubwordBackward:self];
+      }
+      return;
+    case NSRightArrowFunctionKey:;
+      if (!([theEvent modifierFlags] & NSControlKeyMask))
+        break;
+      
+      if ([theEvent modifierFlags] & NSShiftKeyMask) {
+        [self moveSubwordForwardAndModifySelection:self];
+      } else {
+        [self moveSubwordForward:self];
+      }
+      return;
+    case NSDeleteCharacter: // "delete" on mac keyboards, but "backspace" on others
+      if (!([theEvent modifierFlags] & NSControlKeyMask))
+        break;
+      
+      [self deleteSubwordBackward:self];
+      return;
+    case NSDeleteFunctionKey: // "delete forward" on mac keyboards, but "delete" on others
+      if (!([theEvent modifierFlags] & NSControlKeyMask))
+        break;
+      
+      [self deleteSubwordForward:self];
+      return;
+  }
+  
+  [super keyDown:theEvent];
+}
+
+- (NSUInteger)findBeginingOfSubwordStartingAt:(NSUInteger)offset
+{
+  // find one of three possibilities:
+  //  - the begining of a single word, all uppercase, that is at the end of the search range (parenthesis set 2)
+  //  - a point where a non-lowercase character is followed by a lowercase character (parenthesis set 4)
+  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"([^a-z0-9]([A-Z]+[^a-z0-9]*$))|(^|[^a-z0-9])([a-z0-9])" options:0 error:NULL];
+  
+  // we only work with one line at a time, to make the regex faster
+  NSRange lineRange = [self.textStorage.string rangeOfLineAtOffset:offset];
+  NSString *searchString = [self.textStorage.string substringWithRange:lineRange];
+  
+  // prepare search range
+  NSUInteger insertionPoint = offset - lineRange.location;
+  NSRange searchRange = NSMakeRange(0, insertionPoint);
+  
+  // we may need to try the search again on the previous line
+  NSUInteger newInsertionPoint = 0;
+  while (YES) {
+    // don't bother searching from the begining of the line... try again on the previous line (unless we are at the begining of the file!)
+    if (insertionPoint == 0 && lineRange.location != 0) {
+      lineRange = [self.textStorage.string rangeOfLineAtOffset:lineRange.location - 1];
+      searchString = [self.textStorage.string substringWithRange:lineRange];
+      insertionPoint = lineRange.length - 1;
+      searchRange = NSMakeRange(0, lineRange.length);
+      continue;
+    }
+    
+    // find the last match
+    NSTextCheckingResult *match = [[expression matchesInString:searchString options:0 range:searchRange] lastObject];
+    
+    // which match do we want?
+    newInsertionPoint = 0;
+    if (match && [match rangeAtIndex:2].location != NSNotFound) {
+      newInsertionPoint = [match rangeAtIndex:2].location;
+    } else if (match && [match rangeAtIndex:4].location != NSNotFound) {
+      newInsertionPoint = [match rangeAtIndex:4].location;
+    } else { // no match found at all, try again on the previous line
+      if (lineRange.location != 0) { // make sure we aren't at the begining of the file
+        lineRange = [self.textStorage.string rangeOfLineAtOffset:lineRange.location - 1];
+        searchString = [self.textStorage.string substringWithRange:lineRange];
+        insertionPoint = lineRange.length - 1;
+        searchRange = NSMakeRange(0, lineRange.length);
+        continue;
+      }
+    }
+    
+    // if we are in between an uppercase letter and a lowercase letter, than we need to drop 1 from the index
+    if ([[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[searchString characterAtIndex:newInsertionPoint - 1]]) {
+      newInsertionPoint--;
+    }
+    
+    break;
+  }
+    
+  return newInsertionPoint + lineRange.location;
+}
+
+- (NSUInteger)findEndOfSubwordStartingAt:(NSUInteger)offset
+{
+  // find one of two possibilities:
+  //  - the end of a single word, all uppercase, that is at the begining of the search range (parenthesis set 2)
+  //  - a point where a lowercase character is followed by a non-lowercase character (parenthesis set 4)
+  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"((^[^a-z0-9]*[A-Z]+)[^A-Z])|([a-z0-9])($|[^a-z0-9])" options:0 error:NULL];
+  
+  // we only work with one line at a time, to make the regex faster
+  NSRange lineRange = [self.textStorage.string rangeOfLineAtOffset:offset];
+  NSString *searchString = [self.textStorage.string substringWithRange:lineRange];
+  
+  // prepare search range
+  NSUInteger insertionPoint = offset - lineRange.location;
+  NSRange searchRange = NSMakeRange(MIN(insertionPoint + 1, searchString.length), searchString.length == 0 ? 0 : (searchString.length - (insertionPoint + 1)));
+  
+  // we may need to try the search again on the previous line
+  NSUInteger newInsertionPoint = searchString.length;
+  while (YES) {
+    // don't bother searching from the begining of the line... try again on the next line (unless we are at the end of the file!)
+    if (insertionPoint >= (searchString.length - 1) && (NSMaxRange(lineRange) < self.textStorage.string.length)) {
+      lineRange = [self.textStorage.string rangeOfLineAtOffset:NSMaxRange(lineRange) + 1];
+      searchString = [self.textStorage.string substringWithRange:lineRange];
+      insertionPoint = 0;
+      searchRange = NSMakeRange(0, searchString.length);
+      continue;
+    }
+    
+    // find the last match
+    NSTextCheckingResult *match = [expression firstMatchInString:searchString options:0 range:searchRange];
+    
+    // which match do we want?
+    newInsertionPoint = searchString.length;
+    if (match && [match rangeAtIndex:2].location != NSNotFound) {
+      newInsertionPoint = NSMaxRange([match rangeAtIndex:2]);
+    } else if (match && [match rangeAtIndex:4].location != NSNotFound) {
+      newInsertionPoint = [match rangeAtIndex:4].location;
+    } else { // no match found at all, try again on the previous line
+      if (NSMaxRange(lineRange) < self.textStorage.string.length) { // make sure we aren't at the begining of the file
+        lineRange = [self.textStorage.string rangeOfLineAtOffset:NSMaxRange(lineRange) + 1];
+        searchString = [self.textStorage.string substringWithRange:lineRange];
+        insertionPoint = 0;
+        searchRange = NSMakeRange(0, searchString.length);
+        continue;
+      }
+    }
+    
+    // if we are in between an uppercase letter and a lowercase letter, than we need to drop 1 from the index
+    if (searchString.length > 0) {
+      BOOL prevCharIsUppercase = [[NSCharacterSet uppercaseLetterCharacterSet] characterIsMember:[searchString characterAtIndex:newInsertionPoint - 1]];
+      BOOL nextCharIsLowercase = [[NSCharacterSet lowercaseLetterCharacterSet] characterIsMember:[searchString characterAtIndex:MIN(newInsertionPoint, searchString.length - 1)]];
+      if (prevCharIsUppercase && nextCharIsLowercase) {
+        newInsertionPoint--;
+      }
+    }
+    
+    break;
+  }
+  
+  return newInsertionPoint + lineRange.location;
+}
+
+- (void)moveSubwordBackward:(id)sender
+{
+  NSMutableArray *newSelectedRanges = [NSMutableArray array];
+  
+  for (NSValue *rangeValue in self.selectedRanges) {
+    NSUInteger newInsertionPoint = [self findBeginingOfSubwordStartingAt:rangeValue.rangeValue.location];
+    
+    NSRange newRange = NSMakeRange(newInsertionPoint, 0);
+    
+    [newSelectedRanges addObject:[NSValue valueWithRange:newRange]];
+  }
+  
+  [self setSelectedRanges:[newSelectedRanges copy]];
+}
+
+- (void)moveSubwordBackwardAndModifySelection:(id)sender
+{
+  NSMutableArray *newSelectedRanges = [NSMutableArray array];
+  
+  for (NSValue *rangeValue in self.selectedRanges) {
+    NSUInteger newInsertionPoint = [self findBeginingOfSubwordStartingAt:rangeValue.rangeValue.location];
+    
+    NSRange newRange = NSMakeRange(newInsertionPoint, NSMaxRange(rangeValue.rangeValue) - newInsertionPoint);
+    
+    [newSelectedRanges addObject:[NSValue valueWithRange:newRange]];
+  }
+  
+  [self setSelectedRanges:[newSelectedRanges copy]];
+}
+
+- (void)moveSubwordForward:(id)sender
+{
+  NSMutableArray *newSelectedRanges = [NSMutableArray array];
+  
+  for (NSValue *rangeValue in self.selectedRanges) {
+    NSUInteger newInsertionPoint = [self findEndOfSubwordStartingAt:NSMaxRange(rangeValue.rangeValue)];
+    
+    NSRange newRange = NSMakeRange(newInsertionPoint, 0);
+    
+    [newSelectedRanges addObject:[NSValue valueWithRange:newRange]];
+  }
+  
+  [self setSelectedRanges:[newSelectedRanges copy]];
+}
+
+- (void)moveSubwordForwardAndModifySelection:(id)sender
+{
+  NSMutableArray *newSelectedRanges = [NSMutableArray array];
+  
+  for (NSValue *rangeValue in self.selectedRanges) {
+    NSUInteger newInsertionPoint = [self findEndOfSubwordStartingAt:NSMaxRange(rangeValue.rangeValue)];
+    
+    NSRange newRange = NSMakeRange(rangeValue.rangeValue.location, newInsertionPoint - rangeValue.rangeValue.location);
+      
+    [newSelectedRanges addObject:[NSValue valueWithRange:newRange]];
+  }
+  
+  [self setSelectedRanges:[newSelectedRanges copy]];
+}
+
+- (void)deleteSubwordBackward:(id)sender
+{
+  if (self.selectedRanges.count > 1 || self.selectedRange.length > 0)
+    return [self deleteBackward:sender];
+  
+  NSUInteger deleteOffset = [self findBeginingOfSubwordStartingAt:self.selectedRange.location];
+  
+  NSRange newRange = NSMakeRange(deleteOffset, self.selectedRange.location - deleteOffset);
+  
+  [self insertText:@"" replacementRange:newRange];
+}
+
+- (void)deleteSubwordForward:(id)sender
+{
+  if (self.selectedRanges.count > 1 || self.selectedRange.length > 0)
+    return [self deleteForward:sender];
+  
+  NSUInteger deleteOffset = [self findEndOfSubwordStartingAt:self.selectedRange.location];
+  
+  NSRange newRange = NSMakeRange(self.selectedRange.location, deleteOffset - self.selectedRange.location);
+  
+  [self insertText:@"" replacementRange:newRange];
 }
 
 @end
