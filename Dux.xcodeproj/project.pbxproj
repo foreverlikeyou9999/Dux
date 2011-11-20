@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */; };
+		3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */; };
 		380AED3D14500377005770D7 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380AED3C14500377005770D7 /* DuxTextView.m */; };
 		3824F07514522FAB00F00B96 /* DuxSyntaxHighlighter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */; };
 		3824F07B1452304D00F00B96 /* DuxLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F07A1452304D00F00B96 /* DuxLanguage.m */; };
@@ -45,6 +47,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
+		3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextLanguage.m; sourceTree = "<group>"; };
+		3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
+		3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextBaseElement.m; sourceTree = "<group>"; };
 		380AED3B14500377005770D7 /* DuxTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextView.h; sourceTree = "<group>"; };
 		380AED3C14500377005770D7 /* DuxTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextView.m; sourceTree = "<group>"; };
 		3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxSyntaxHighlighter.h; sourceTree = "<group>"; };
@@ -125,6 +131,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3804A8161478DA00005C587A /* Languages */ = {
+			isa = PBXGroup;
+			children = (
+				3804A8181478DA1D005C587A /* Plain Text */,
+				3824F0821452307300F00B96 /* HTML */,
+				38CFEEBC1473AEBB00F81E6F /* PHP */,
+			);
+			name = Languages;
+			sourceTree = "<group>";
+		};
+		3804A8181478DA1D005C587A /* Plain Text */ = {
+			isa = PBXGroup;
+			children = (
+				3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */,
+				3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */,
+				3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */,
+				3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */,
+			);
+			name = "Plain Text";
+			sourceTree = "<group>";
+		};
 		380AED3914500340005770D7 /* Text View */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,8 +166,7 @@
 				38983C7414751B65004DD914 /* DuxLanguageMenuItem.h */,
 				38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */,
 				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
-				3824F0821452307300F00B96 /* HTML */,
-				38CFEEBC1473AEBB00F81E6F /* PHP */,
+				3804A8161478DA00005C587A /* Languages */,
 			);
 			name = "Text View";
 			sourceTree = "<group>";
@@ -364,6 +390,8 @@
 				387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */,
 				38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */,
 				3837FAB21475E058002CC459 /* NSStringDuxAdditions.m in Sources */,
+				3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */,
+				3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
