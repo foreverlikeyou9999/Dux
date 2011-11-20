@@ -13,6 +13,12 @@
 @implementation DuxLanguage
 
 static NSMutableDictionary *sharedInstances = nil;
+static NSMutableArray *registeredLanguages = nil;
+
++ (void)load
+{
+  registeredLanguages = [[NSMutableArray alloc] init];
+}
 
 + (id)sharedInstance
 {
@@ -30,6 +36,16 @@ static NSMutableDictionary *sharedInstances = nil;
   return sharedInstance;
 }
 
++ (NSArray *)registeredLanguages
+{
+  return registeredLanguages;
+}
+
++ (void)registerLanguage:(Class)language
+{
+  [registeredLanguages addObject:language];
+}
+
 - (DuxLanguageElement *)baseElement
 {
   @throw [NSException exceptionWithName:@"not defined" reason:@"baseElement must be implemented by a subclass" userInfo:nil];
@@ -42,6 +58,11 @@ static NSMutableDictionary *sharedInstances = nil;
 
 - (void)prepareToParseTextStorage:(NSTextStorage *)textStorage
 {
+}
+
++ (BOOL)isDefaultLanguageForURL:(NSURL *)URL textContents:(NSString *)textContents
+{
+  @throw [NSException exceptionWithName:@"not defined" reason:@"isDefaultLanguageForURL:textContents: must be implemented by a subclass" userInfo:nil];
 }
 
 @end

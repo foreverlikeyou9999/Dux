@@ -17,7 +17,7 @@
   if (!(self = [super init]))
     return nil;
   
-  baseLanguage = [DuxPHPLanguage sharedInstance];
+  baseLanguage = [DuxPlainTextLanguage sharedInstance];
   
   return self;
 }

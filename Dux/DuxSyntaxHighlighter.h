@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "DuxLanguage.h"
 #import "DuxHTMLLanguage.h"
-#import "DuxPHPLanguage.h"
+#import "DuxPlainTextLanguage.h"
 
 @interface DuxSyntaxHighlighter : NSObject <NSTextStorageDelegate> {
   NSDictionary *baseAttributes;

@@ -97,6 +97,15 @@
   if (!self.textStorage || !textContentToLoad)
     return;
   
+  // figure out what language to use
+  for (Class language in [DuxLanguage registeredLanguages]) {
+    if (![language isDefaultLanguageForURL:self.fileURL textContents:textContentToLoad])
+      continue;
+    
+    [self.syntaxtHighlighter setBaseLanguage:[language sharedInstance] forTextStorage:self.textStorage];
+    break;
+  }
+  
   // load contents into storage
   [self.textStorage beginEditing];
   [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withString:textContentToLoad];

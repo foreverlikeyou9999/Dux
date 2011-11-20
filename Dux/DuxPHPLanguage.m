@@ -15,6 +15,11 @@ static NSIndexSet *keywordIndexSet = nil;
 
 @implementation DuxPHPLanguage
 
++ (void)load
+{
+  [DuxLanguage registerLanguage:[self class]];
+}
+
 - (DuxLanguageElement *)baseElement
 {
   return [DuxPHPBaseElement sharedInstance];
@@ -52,6 +57,17 @@ static NSIndexSet *keywordIndexSet = nil;
   }];
   
   keywordIndexSet = [keywordIndexesMutable copy];
+}
+
++ (BOOL)isDefaultLanguageForURL:(NSURL *)URL textContents:(NSString *)textContents
+{
+  if (URL && [[URL pathExtension] isEqualToString:@"php"])
+    return YES;
+  
+  if (textContents.length >= 5 && [[textContents substringToIndex:5] isEqualToString:@"<?php"])
+    return YES;
+  
+  return NO;
 }
 
 @end

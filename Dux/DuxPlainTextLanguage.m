@@ -11,6 +11,11 @@
 
 @implementation DuxPlainTextLanguage
 
++ (void)load
+{
+  [DuxLanguage registerLanguage:[self class]];
+}
+
 - (DuxLanguageElement *)baseElement
 {
   return [DuxPlainTextBaseElement sharedInstance];
@@ -25,6 +30,12 @@
   
   [textView insertText:commentedString replacementRange:commentRange];
   [textView setSelectedRange:NSMakeRange(commentRange.location, commentedString.length)];
+}
+
++ (BOOL)isDefaultLanguageForURL:(NSURL *)URL textContents:(NSString *)textContents
+{
+  // we are the default when no other language returns YES here
+  return NO;
 }
 
 @end
