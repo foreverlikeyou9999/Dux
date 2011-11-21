@@ -134,7 +134,7 @@
 - (IBAction)goToLinePanelButtonClicked:(id)sender
 {
   // figure out what line we are navigating to
-  int targetLine = self.goToLineSearchField.intValue;
+  NSInteger targetLine = self.goToLineSearchField.integerValue;
   if (!targetLine) {
     NSBeep();
     return;
@@ -142,9 +142,11 @@
   
   // find the line
   int atLine = 1;
+  NSString *string = self.textStorage.string;
+  NSUInteger stringLength = string.length;
   NSUInteger characterLocation = 0;
   while (atLine < targetLine) {
-    characterLocation = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch range:NSMakeRange(characterLocation, (self.textStorage.length - characterLocation))].location;
+    characterLocation = [string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
     
     if (characterLocation == NSNotFound) {
       NSBeep();
@@ -155,8 +157,15 @@
     characterLocation++;
   }
   
+  // if we are at a \r character and the next character is a \n, skip the next character
+  if (string.length >= characterLocation &&
+      [string characterAtIndex:characterLocation] == '\r' &&
+      [string characterAtIndex:characterLocation + 1] == '\n') {
+    characterLocation++;
+  }
+  
   // jump to the line
-  NSRange lineRange = [self.textStorage.string rangeOfLineAtOffset:characterLocation];
+  NSRange lineRange = [string rangeOfLineAtOffset:characterLocation];
   [self scrollRangeToVisible:lineRange];
   [self setSelectedRange:lineRange];
   [self.goToLinePanel performClose:self];
