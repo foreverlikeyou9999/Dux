@@ -101,6 +101,7 @@
   
   // begin highlighting
   DuxLanguage *thisLanguage = nil;
+  NSUInteger endlessLoopDetectionRecentHighlightIndexes[10] = { [0 ... 9] = NSNotFound };
   while (highlightIndex < textStorage.length) {
     // prepare this element
     DuxLanguageElement *thisElement = [elementStack lastObject];
@@ -114,8 +115,27 @@
     NSUInteger elementLength = [thisElement lengthInString:textStorage startingAt:highlightIndex nextElement:&nextElement];
     
     // verify response
+    if (elementLength == 0) {
+      for (int i = 1; i < 10; i++)
+        endlessLoopDetectionRecentHighlightIndexes[i - 1] = endlessLoopDetectionRecentHighlightIndexes[i];
+      endlessLoopDetectionRecentHighlightIndexes[9] = highlightIndex;
+      
+      BOOL foundDifference = NO;
+      for (int i = 0; i < 10; i++) {
+        if (endlessLoopDetectionRecentHighlightIndexes[i] != highlightIndex) {
+          foundDifference = YES;
+          break;
+        }
+      }
+      
+      if (!foundDifference) {
+        NSLog(@"Detected endless loop in syntax highlighter at offset %lu. forcing highlighter to move 1 character forwards.", (unsigned long)elementLength);
+        elementLength = 1;
+        break;
+      }
+    }
     if (highlightIndex + elementLength > textStorage.length) {
-      NSLog(@"elementLength %lu is too long, changing it to %lu instead", elementLength, textStorage.length - highlightIndex);
+      NSLog(@"elementLength %lu is too long, changing it to %lu instead", (unsigned long)elementLength, (unsigned long)(textStorage.length - highlightIndex));
       elementLength = textStorage.length - highlightIndex;
     }
     
