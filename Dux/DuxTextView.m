@@ -153,14 +153,14 @@
       return;
     }
     
+    // if we are at a \r character and the next character is a \n, skip the next character
+    if (string.length >= characterLocation &&
+        [string characterAtIndex:characterLocation] == '\r' &&
+        [string characterAtIndex:characterLocation + 1] == '\n') {
+      characterLocation++;
+    }
+    
     atLine++;
-    characterLocation++;
-  }
-  
-  // if we are at a \r character and the next character is a \n, skip the next character
-  if (string.length >= characterLocation &&
-      [string characterAtIndex:characterLocation] == '\r' &&
-      [string characterAtIndex:characterLocation + 1] == '\n') {
     characterLocation++;
   }
   
