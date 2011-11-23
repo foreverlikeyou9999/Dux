@@ -10,10 +10,24 @@
 
 #import <Foundation/Foundation.h>
 
+enum {
+  DuxNewlineUnknown = 0,
+  DuxNewlineUnix = 1,
+  DuxNewlineWindows = 2,
+  DuxNewlineClassicMac = 4
+};
+typedef NSUInteger DuxNewlineOptions;
+
 @interface NSString (NSStringDuxAdditions)
 
 - (NSRange)rangeOfLineAtOffset:(NSUInteger)location;
 - (NSUInteger)beginingOfLineAtOffset:(NSUInteger)location;
 - (NSUInteger)endOfLineAtOffset:(NSUInteger)location;
+
+- (DuxNewlineOptions)newlineStyles;
+- (DuxNewlineOptions)newlineStyleForFirstNewline;
++ (NSString *)stringForNewlineStyle:(DuxNewlineOptions)newlineStyle;
+
+- (NSString *)stringByReplacingNewlinesWithNewline:(DuxNewlineOptions)newlineStyle;
 
 @end

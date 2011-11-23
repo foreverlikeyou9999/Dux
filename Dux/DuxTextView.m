@@ -9,12 +9,14 @@
 //
 
 #import "DuxTextView.h"
+#import "MyTextDocument.h"
 
 @implementation DuxTextView
 
 @synthesize highlighter;
 @synthesize goToLinePanel;
 @synthesize goToLineSearchField;
+@synthesize textDocument;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -84,8 +86,18 @@
     whitespace = [self.textStorage.string substringWithRange:whitespaceRange];
   }
   
-  // insert newline, then whitespace
-  [super insertNewline:sender];
+  // are we about to insert a unix newline immediately after a mac newline? This will create a windows newline, which
+  // do nothing as far as the user is concerned, and we need to insert *two* unix newlines
+  if (self.textDocument.activeNewlineStyle == DuxNewlineUnix) {
+    if (self.selectedRange.location > 0 && [self.string characterAtIndex:self.selectedRange.location - 1] == '\r') {
+      [self insertText:[NSString stringForNewlineStyle:self.textDocument.activeNewlineStyle]];
+    }
+  }
+  
+  // insert newline
+  [self insertText:[NSString stringForNewlineStyle:self.textDocument.activeNewlineStyle]];
+  
+  // insert whitespace
   if (whitespace) {
     [self insertText:whitespace];
   }
@@ -297,7 +309,10 @@
     return;
   }
   
-  [self insertText:[copiedItems objectAtIndex:0]];
+  NSString *pasteString = [copiedItems objectAtIndex:0];
+  pasteString = [pasteString stringByReplacingNewlinesWithNewline:self.textDocument.activeNewlineStyle];
+  
+  [self insertText:pasteString];
 }
 
 - (BOOL)smartInsertDeleteEnabled

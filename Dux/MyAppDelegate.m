@@ -9,18 +9,17 @@
 //
 
 #import "MyAppDelegate.h"
+#import "NSStringDuxAdditions.h"
 
 @implementation MyAppDelegate
 @synthesize openQuicklyController;
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+  if (!(self = [super init]))
+    return nil;
+  
+  return self;
 }
 
 - (IBAction)openQuickly:(id)sender

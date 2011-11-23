@@ -12,10 +12,13 @@
 #import "NSStringDuxAdditions.h"
 #import "DuxSyntaxHighlighter.h"
 
+@class MyTextDocument;
+
 @interface DuxTextView : NSTextView <NSTextViewDelegate>
 {
 }
 
+@property (weak) MyTextDocument *textDocument;
 @property (weak) DuxSyntaxHighlighter *highlighter;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;

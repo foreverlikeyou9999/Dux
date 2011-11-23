@@ -15,6 +15,7 @@
 @synthesize textStorage;
 @synthesize textView;
 @synthesize syntaxtHighlighter;
+@synthesize activeNewlineStyle;
 
 + (void)initialize
 {
@@ -46,13 +47,15 @@
 {
   [super windowControllerDidLoadNib:aController];
   
+  // load ourselves into text view
+  self.textView.textDocument = self;
+  
   // load text into view
   self.textStorage = self.textView.textStorage;
   self.syntaxtHighlighter = [[DuxSyntaxHighlighter alloc] init];
   self.textStorage.delegate = self.syntaxtHighlighter;
   self.textView.highlighter = self.syntaxtHighlighter;
   [self loadTextContentIntoStorage];
-  
   
   
   // make sure scroll bars are good
@@ -106,6 +109,9 @@
     break;
   }
   
+  // set activeNewlineStyle to the first newline in the document
+  self.activeNewlineStyle = [textContentToLoad newlineStyleForFirstNewline];
+  
   // load contents into storage
   [self.textStorage beginEditing];
   [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withString:textContentToLoad];
@@ -124,11 +130,20 @@
 
 - (void)documentWindowDidBecomeKey:(NSNotification *)notification
 {
-  [self updateSyntaxMenuStates];
+  // sometimes when this is called, the window hasn't *really* become key yet, and since we are only updating menu states it doesn't matter if it happens after a short delay
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC);
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [self updateSyntaxMenuStates];
+    [self updateNewlineStyleMenuStates];
+    [self updateLineEndingsInUseMenuItem];
+  });
 }
 
 - (void)updateSyntaxMenuStates
 {
+  if ([[NSApp keyWindow].windowController document] != self)
+    return;
+  
   NSString *languageClassName = NSStringFromClass([self.syntaxtHighlighter.baseLanguage class]);
   
   NSArray *editorMenuIems = [[[[[NSApplication sharedApplication] mainMenu] itemWithTitle:@"Editor"] submenu] itemArray];
@@ -147,6 +162,78 @@
   [self.syntaxtHighlighter setBaseLanguage:[languageClass sharedInstance] forTextStorage:self.textStorage];
   
   [self updateSyntaxMenuStates];
+}
+
+- (IBAction)setActiveNewlineStyleFromMenuItem:(NSMenuItem *)sender
+{
+  if ([[NSApp keyWindow].windowController document] != self)
+    return;
+  
+  self.activeNewlineStyle = [sender tag];
+  [self updateNewlineStyleMenuStates];
+}
+
+- (IBAction)convertToNewlineStyleFromMenuItem:(NSMenuItem *)sender
+{
+  DuxNewlineOptions newlineStyle = [sender tag];
+  
+  NSString *oldString = self.textView.string;
+  NSString *newString = [oldString stringByReplacingNewlinesWithNewline:newlineStyle];
+  
+  self.textView.string = newString;
+  
+  self.activeNewlineStyle = newlineStyle;
+  [self updateNewlineStyleMenuStates];
+  [self updateLineEndingsInUseMenuItem];
+}
+
+- (void)updateNewlineStyleMenuStates
+{
+  if ([[NSApp keyWindow].windowController document] != self)
+    return;
+  
+  NSArray *menuItems = [[[NSApplication sharedApplication].mainMenu itemWithTitle:@"Editor"].submenu itemWithTitle:@"Line Endings"].submenu.itemArray;
+  
+  for (NSMenuItem *menuItem in menuItems) {
+    if (menuItem.action != @selector(setActiveNewlineStyleFromMenuItem:))
+      continue;
+    
+    menuItem.state = (menuItem.tag == self.activeNewlineStyle) ? NSOnState : NSOffState;
+  }
+}
+
+- (void)updateLineEndingsInUseMenuItem
+{
+  if ([[NSApp keyWindow].windowController document] != self)
+    return;
+  
+  NSMenuItem *menuItem = [[[[NSApplication sharedApplication].mainMenu itemWithTitle:@"Editor"].submenu itemWithTitle:@"Line Endings"].submenu itemAtIndex:0];
+  
+  menuItem.title = @"In use: Calculating...";
+  NSString *stringForNewlineCalculation = [self.textStorage.string copy];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+    DuxNewlineOptions newlineStyles = [stringForNewlineCalculation newlineStyles];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if ([[NSApp keyWindow].windowController document] != self)
+        return;
+    
+      if (newlineStyles == 0) {
+        menuItem.title = @"In use: N/A";
+        return;
+      }
+      
+      NSMutableArray *styleNames = [NSMutableArray array];
+      if (newlineStyles & DuxNewlineUnix)
+        [styleNames addObject:@"Mac OS X / UNIX"];
+      if (newlineStyles & DuxNewlineWindows)
+        [styleNames addObject:@"Windows"];
+      if (newlineStyles & DuxNewlineClassicMac)
+        [styleNames addObject:@"Mac OS Classic"];
+      
+      menuItem.title = [NSString stringWithFormat:@"In use: %@", [styleNames componentsJoinedByString:@", "]];
+    });
+  });
 }
 
 @end
