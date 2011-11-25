@@ -47,6 +47,14 @@
 		38CD8FBB147F9D2D00062D34 /* DuxCKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FBA147F9D2D00062D34 /* DuxCKeywordElement.m */; };
 		38CD8FBE147F9D3800062D34 /* DuxCSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FBD147F9D3800062D34 /* DuxCSingleLineCommentElement.m */; };
 		38CD8FC1147F9D4400062D34 /* DuxCBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FC0147F9D4400062D34 /* DuxCBlockCommentElement.m */; };
+		38CD8FC5147FA23000062D34 /* DuxJavaScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FC4147FA23000062D34 /* DuxJavaScriptLanguage.m */; };
+		38CD8FC8147FA24200062D34 /* DuxJavaScriptBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FC7147FA24200062D34 /* DuxJavaScriptBaseElement.m */; };
+		38CD8FCB147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FCA147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.m */; };
+		38CD8FCE147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FCD147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.m */; };
+		38CD8FD1147FA26100062D34 /* DuxJavaScriptNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD0147FA26100062D34 /* DuxJavaScriptNumberElement.m */; };
+		38CD8FD4147FA26D00062D34 /* DuxJavaScriptKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD3147FA26D00062D34 /* DuxJavaScriptKeywordElement.m */; };
+		38CD8FD7147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */; };
+		38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */; };
 		38CFE15C1403C96900CA7044 /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15B1403C96900CA7044 /* appicon.icns */; };
 		38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15D1403CBCD00CA7044 /* docicon.icns */; };
 		38CFEEC31473AEE700F81E6F /* DuxPHPLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */; };
@@ -151,6 +159,22 @@
 		38CD8FBD147F9D3800062D34 /* DuxCSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSingleLineCommentElement.m; sourceTree = "<group>"; };
 		38CD8FBF147F9D4400062D34 /* DuxCBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCBlockCommentElement.h; sourceTree = "<group>"; };
 		38CD8FC0147F9D4400062D34 /* DuxCBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCBlockCommentElement.m; sourceTree = "<group>"; };
+		38CD8FC3147FA23000062D34 /* DuxJavaScriptLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptLanguage.h; sourceTree = "<group>"; };
+		38CD8FC4147FA23000062D34 /* DuxJavaScriptLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptLanguage.m; sourceTree = "<group>"; };
+		38CD8FC6147FA24200062D34 /* DuxJavaScriptBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptBaseElement.h; sourceTree = "<group>"; };
+		38CD8FC7147FA24200062D34 /* DuxJavaScriptBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptBaseElement.m; sourceTree = "<group>"; };
+		38CD8FC9147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptSingleQuotedStringElement.h; sourceTree = "<group>"; };
+		38CD8FCA147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptSingleQuotedStringElement.m; sourceTree = "<group>"; };
+		38CD8FCC147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptDoubleQuotedStringElement.h; sourceTree = "<group>"; };
+		38CD8FCD147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptDoubleQuotedStringElement.m; sourceTree = "<group>"; };
+		38CD8FCF147FA26100062D34 /* DuxJavaScriptNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptNumberElement.h; sourceTree = "<group>"; };
+		38CD8FD0147FA26100062D34 /* DuxJavaScriptNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptNumberElement.m; sourceTree = "<group>"; };
+		38CD8FD2147FA26D00062D34 /* DuxJavaScriptKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptKeywordElement.h; sourceTree = "<group>"; };
+		38CD8FD3147FA26D00062D34 /* DuxJavaScriptKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptKeywordElement.m; sourceTree = "<group>"; };
+		38CD8FD5147FA27900062D34 /* DuxJavaScriptSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptSingleLineCommentElement.h; sourceTree = "<group>"; };
+		38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptSingleLineCommentElement.m; sourceTree = "<group>"; };
+		38CD8FD8147FA28600062D34 /* DuxJavaScriptBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptBlockCommentElement.h; sourceTree = "<group>"; };
+		38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptBlockCommentElement.m; sourceTree = "<group>"; };
 		38CFE15B1403C96900CA7044 /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = ../Artwork/appicon.icns; sourceTree = "<group>"; };
 		38CFE15D1403CBCD00CA7044 /* docicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = docicon.icns; path = ../Artwork/docicon.icns; sourceTree = "<group>"; };
 		38CFEEC11473AEE700F81E6F /* DuxPHPLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPLanguage.h; sourceTree = "<group>"; };
@@ -213,6 +237,7 @@
 		3804A8161478DA00005C587A /* Languages */ = {
 			isa = PBXGroup;
 			children = (
+				38CD8FC2147FA21600062D34 /* JavaScript */,
 				38CD8FA9147F9CD000062D34 /* C/C++ */,
 				3886D4AE14790FBE00970CAE /* CSS */,
 				38EDD51D1478E58B0077BAB0 /* XML */,
@@ -343,6 +368,29 @@
 				38CD8FC0147F9D4400062D34 /* DuxCBlockCommentElement.m */,
 			);
 			name = "C/C++";
+			sourceTree = "<group>";
+		};
+		38CD8FC2147FA21600062D34 /* JavaScript */ = {
+			isa = PBXGroup;
+			children = (
+				38CD8FC3147FA23000062D34 /* DuxJavaScriptLanguage.h */,
+				38CD8FC4147FA23000062D34 /* DuxJavaScriptLanguage.m */,
+				38CD8FC6147FA24200062D34 /* DuxJavaScriptBaseElement.h */,
+				38CD8FC7147FA24200062D34 /* DuxJavaScriptBaseElement.m */,
+				38CD8FC9147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.h */,
+				38CD8FCA147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.m */,
+				38CD8FCC147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.h */,
+				38CD8FCD147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.m */,
+				38CD8FCF147FA26100062D34 /* DuxJavaScriptNumberElement.h */,
+				38CD8FD0147FA26100062D34 /* DuxJavaScriptNumberElement.m */,
+				38CD8FD2147FA26D00062D34 /* DuxJavaScriptKeywordElement.h */,
+				38CD8FD3147FA26D00062D34 /* DuxJavaScriptKeywordElement.m */,
+				38CD8FD5147FA27900062D34 /* DuxJavaScriptSingleLineCommentElement.h */,
+				38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */,
+				38CD8FD8147FA28600062D34 /* DuxJavaScriptBlockCommentElement.h */,
+				38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */,
+			);
+			name = JavaScript;
 			sourceTree = "<group>";
 		};
 		38CFEEBC1473AEBB00F81E6F /* PHP */ = {
@@ -591,6 +639,14 @@
 				38CD8FBB147F9D2D00062D34 /* DuxCKeywordElement.m in Sources */,
 				38CD8FBE147F9D3800062D34 /* DuxCSingleLineCommentElement.m in Sources */,
 				38CD8FC1147F9D4400062D34 /* DuxCBlockCommentElement.m in Sources */,
+				38CD8FC5147FA23000062D34 /* DuxJavaScriptLanguage.m in Sources */,
+				38CD8FC8147FA24200062D34 /* DuxJavaScriptBaseElement.m in Sources */,
+				38CD8FCB147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.m in Sources */,
+				38CD8FCE147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.m in Sources */,
+				38CD8FD1147FA26100062D34 /* DuxJavaScriptNumberElement.m in Sources */,
+				38CD8FD4147FA26D00062D34 /* DuxJavaScriptKeywordElement.m in Sources */,
+				38CD8FD7147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
+				38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
