@@ -24,6 +24,8 @@
 @property (strong) IBOutlet NSPanel *goToLinePanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;
 
+- (void)initDuxTextView;
+
 - (IBAction)jumpToLine:(id)sender;
 - (IBAction)goToLinePanelButtonClicked:(id)sender;
 
@@ -39,5 +41,7 @@
 
 - (NSUInteger)findBeginingOfSubwordStartingAt:(NSUInteger)offset;
 - (NSUInteger)findEndOfSubwordStartingAt:(NSUInteger)offset;
+
+- (void)drawLineNumber:(NSInteger)aNumber inRect:(NSRect)rect;
 
 @end

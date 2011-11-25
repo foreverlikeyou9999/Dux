@@ -38,6 +38,7 @@
 		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
 		38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
+		38CD8FA7147F8F0500062D34 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */; };
 		38CFE15C1403C96900CA7044 /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15B1403C96900CA7044 /* appicon.icns */; };
 		38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15D1403CBCD00CA7044 /* docicon.icns */; };
 		38CFEEC31473AEE700F81E6F /* DuxPHPLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */; };
@@ -124,6 +125,8 @@
 		38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
 		38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxOpenQuicklyTableViewCell.h; sourceTree = "<group>"; };
 		38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxOpenQuicklyTableViewCell.m; sourceTree = "<group>"; };
+		38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextContainer.h; sourceTree = "<group>"; };
+		38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextContainer.m; sourceTree = "<group>"; };
 		38CFE15B1403C96900CA7044 /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = ../Artwork/appicon.icns; sourceTree = "<group>"; };
 		38CFE15D1403CBCD00CA7044 /* docicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = docicon.icns; path = ../Artwork/docicon.icns; sourceTree = "<group>"; };
 		38CFEEC11473AEE700F81E6F /* DuxPHPLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPLanguage.h; sourceTree = "<group>"; };
@@ -211,6 +214,8 @@
 			children = (
 				380AED3B14500377005770D7 /* DuxTextView.h */,
 				380AED3C14500377005770D7 /* DuxTextView.m */,
+				38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */,
+				38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */,
 				3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */,
 				3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */,
 				3824F0791452304D00F00B96 /* DuxLanguage.h */,
@@ -529,6 +534,7 @@
 				38110AEC14791C3D0028B786 /* DuxCSSNumberValueElement.m in Sources */,
 				38110AEF14791E860028B786 /* DuxCSSColorValueElement.m in Sources */,
 				38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */,
+				38CD8FA7147F8F0500062D34 /* DuxTextContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

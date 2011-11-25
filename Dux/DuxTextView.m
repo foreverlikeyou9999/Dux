@@ -10,6 +10,10 @@
 
 #import "DuxTextView.h"
 #import "MyTextDocument.h"
+#import "DuxTextContainer.h"
+
+static NSDictionary *marginAttributes = nil;
+static NSDictionary *compressedMarginAttributes = nil;
 
 @implementation DuxTextView
 
@@ -23,7 +27,7 @@
   if (!(self = [super initWithCoder:aDecoder]))
     return nil;
   
-  self.delegate = self;
+  [self initDuxTextView];
   
   return self;
 }
@@ -33,9 +37,29 @@
   if (!(self = [super initWithFrame:frameRect textContainer:container]))
     return nil;
   
-  self.delegate = self;
+  [self initDuxTextView];
   
   return self;
+}
+
+- (void)initDuxTextView
+{
+  if (!marginAttributes) {
+    marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
+                         [NSColor darkGrayColor], NSForegroundColorAttributeName,
+                         nil];
+    compressedMarginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
+                                  [NSColor darkGrayColor], NSForegroundColorAttributeName,
+                                  [NSNumber numberWithFloat:-0.7], NSKernAttributeName,
+                                  nil];
+  }
+  
+  self.delegate = self;
+  
+  self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
+  
+  [self replaceTextContainer:[[DuxTextContainer alloc] init]];
+  [self.textContainer setWidthTracksTextView:YES];
 }
 
 - (void)dealloc
@@ -193,7 +217,7 @@
   
   // if the last character is a newline, select one less character (this gives nicer results in most situations)
   if ([self.textStorage.string characterAtIndex:NSMaxRange(commentRange) - 1] == '\n') {
-     commentRange.length--;
+    commentRange.length--;
   }
   
   // is the *entire* selected range commented? If so, uncomment instead
@@ -443,7 +467,7 @@
     
     break;
   }
-    
+  
   return newInsertionPoint + lineRange.location;
 }
 
@@ -561,7 +585,7 @@
     NSUInteger newInsertionPoint = [self findEndOfSubwordStartingAt:NSMaxRange(rangeValue.rangeValue)];
     
     NSRange newRange = NSMakeRange(rangeValue.rangeValue.location, newInsertionPoint - rangeValue.rangeValue.location);
-      
+    
     [newSelectedRanges addObject:[NSValue valueWithRange:newRange]];
   }
   
@@ -590,6 +614,76 @@
   NSRange newRange = NSMakeRange(self.selectedRange.location, deleteOffset - self.selectedRange.location);
   
   [self insertText:@"" replacementRange:newRange];
+}
+
+- (void)setNeedsDisplayInRect:(NSRect)rect avoidAdditionalLayout:(BOOL)flag
+{
+  // force all screen draws to be the full width
+  rect.origin.x = 0;
+  rect.size.width = self.bounds.size.width;
+  
+  [super setNeedsDisplayInRect:rect avoidAdditionalLayout:flag];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+	NSRect documentVisibleRect = [[self enclosingScrollView] documentVisibleRect];
+	NSLayoutManager *layoutManager = self.layoutManager;
+	NSTextContainer *textContainer = self.textContainer;
+  
+  // background
+  [[NSColor whiteColor] set];
+  NSRectFill(dirtyRect);
+  
+  // page margin
+  [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
+  [NSBezierPath strokeLineFromPoint:NSMakePoint(800.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(800.5, NSMaxY(documentVisibleRect))];
+  
+  // line numbers background
+  [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
+  [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
+  [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
+      
+  // draw line numbers
+  NSRange glyphRange = [layoutManager glyphRangeForBoundingRect:documentVisibleRect inTextContainer:textContainer];
+	NSUInteger startIndex = glyphRange.location;
+	NSUInteger endIndex = glyphRange.location + glyphRange.length;
+  
+	// find the first visible line number
+  NSUInteger index = 0;
+	NSUInteger lineNumber = 1;
+  NSRect lineRect;
+  NSRange lineRange;
+	while (index < startIndex) {
+		lineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+		index = NSMaxRange(lineRange);
+		lineNumber++;
+	}
+  
+  // draw line numbers
+	for (index = startIndex; index < endIndex; lineNumber++) {
+		lineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+		index = NSMaxRange(lineRange);
+    
+    [self drawLineNumber:lineNumber inRect:lineRect];
+  }
+  
+  NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
+  if (NSMinY(extraLineFragmentRect) >= NSMaxY(lineRect))
+    [self drawLineNumber:lineNumber inRect:extraLineFragmentRect];
+  
+  [super drawRect:dirtyRect];
+}
+
+- (void)drawLineNumber:(NSInteger)aNumber inRect:(NSRect)rect
+{
+  NSString *string = [NSString stringWithFormat:@"%d", aNumber, nil];
+  NSSize stringSize = [string sizeWithAttributes:marginAttributes];
+  
+  NSDictionary *atts = (stringSize.width < 26) ? marginAttributes : compressedMarginAttributes;
+    
+  NSPoint point = NSMakePoint(4, rect.origin.y + ((rect.size.height / 2) - (stringSize.height / 2)));
+  [string drawAtPoint: point withAttributes:atts];
 }
 
 @end
