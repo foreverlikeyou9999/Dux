@@ -84,14 +84,14 @@
   NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
   
   NSMutableArray *mutableSearchResults = [NSMutableArray array];
-  for (NSString *path in self.searchPaths) {
-    if ([expression rangeOfFirstMatchInString:path options:0 range:NSMakeRange(0, path.length)].location == NSNotFound)
+  for (NSURL *url in self.searchPaths) {
+    if ([expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
       continue;
     
-    [mutableSearchResults addObject:path];
+    [mutableSearchResults addObject:url];
   }
   [mutableSearchResults sortUsingComparator:(NSComparator)^(id leftObj, id rightObj) {
-    return [[(NSString *)leftObj lastPathComponent] compare:[(NSString *)rightObj lastPathComponent]];
+    return [[(NSURL *)leftObj lastPathComponent] compare:[(NSURL *)rightObj lastPathComponent]];
   }];
   
   self.searchResultPaths = [mutableSearchResults copy];
@@ -107,9 +107,9 @@
   if (self.searchResultPaths.count == 0)
     return;
   
-  NSString *resultPath = [self.searchResultPaths objectAtIndex:self.resultsTableView.selectedRow];
+  NSURL *resultURL = [self.searchResultPaths objectAtIndex:self.resultsTableView.selectedRow];
   
-  [self openResult:resultPath];
+  [self openResult:resultURL];
 }
 
 - (IBAction)browseForSearchIn:(id)sender
@@ -161,7 +161,7 @@
       }
       
       // add this to a scratch list of search paths
-      [scratchSearchPaths addObject:fileURL.path];
+      [scratchSearchPaths addObject:fileURL];
       
       // when the scratch has 200 items, add them to the real seacrh paths and refresh the search results
       if (scratchSearchPaths.count == 200) {
@@ -185,9 +185,9 @@
   });
 }
 
-- (void)openResult:(id)path
+- (void)openResult:(id)url
 {
-  [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:path] display:YES completionHandler:NULL];
+  [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES completionHandler:NULL];
   
   [self.window performClose:self];
 }

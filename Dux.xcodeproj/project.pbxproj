@@ -37,6 +37,7 @@
 		3886D4C3147912BC00970CAE /* DuxCSSClassSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4C2147912BC00970CAE /* DuxCSSClassSelectorElement.m */; };
 		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
 		38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */; };
+		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
 		38CFE15C1403C96900CA7044 /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15B1403C96900CA7044 /* appicon.icns */; };
 		38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15D1403CBCD00CA7044 /* docicon.icns */; };
 		38CFEEC31473AEE700F81E6F /* DuxPHPLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */; };
@@ -121,6 +122,8 @@
 		38983C721474FEC8004DD914 /* JumpToLinePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JumpToLinePanel.xib; sourceTree = "<group>"; };
 		38983C7414751B65004DD914 /* DuxLanguageMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageMenuItem.h; sourceTree = "<group>"; };
 		38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
+		38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxOpenQuicklyTableViewCell.h; sourceTree = "<group>"; };
+		38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxOpenQuicklyTableViewCell.m; sourceTree = "<group>"; };
 		38CFE15B1403C96900CA7044 /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = ../Artwork/appicon.icns; sourceTree = "<group>"; };
 		38CFE15D1403CBCD00CA7044 /* docicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = docicon.icns; path = ../Artwork/docicon.icns; sourceTree = "<group>"; };
 		38CFEEC11473AEE700F81E6F /* DuxPHPLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPLanguage.h; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				38734F541406135A00992D33 /* MyOpenQuicklyController.h */,
 				38734F551406135A00992D33 /* MyOpenQuicklyController.m */,
 				38734F511406133200992D33 /* OpenQuickly.xib */,
+				38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */,
+				38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */,
 			);
 			name = "Open Quickly";
 			sourceTree = "<group>";
@@ -523,6 +528,7 @@
 				38110AE814791AF50028B786 /* DuxCSSPropertyValueElement.m in Sources */,
 				38110AEC14791C3D0028B786 /* DuxCSSNumberValueElement.m in Sources */,
 				38110AEF14791E860028B786 /* DuxCSSColorValueElement.m in Sources */,
+				38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
