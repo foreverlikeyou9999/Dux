@@ -15,7 +15,6 @@
   NSString *searchPath;
   NSSearchField *__weak searchField;
   NSTextField *__weak searchPathField;
-  NSMetadataQuery *query;
   NSTableView *__weak resultsTableView;
   NSProgressIndicator *__weak progressIndicator;
 }
@@ -24,9 +23,13 @@
 @property (weak) IBOutlet NSTextField *searchPathField;
 @property (strong) IBOutlet NSString *searchPath;
 @property (strong) IBOutlet NSWindow *openQuicklyWindow;
-@property (strong) NSMetadataQuery *query;
 @property (weak) IBOutlet NSTableView *resultsTableView;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
+
+@property (strong) NSArray *searchPaths; // list of every subpath in available in the open quickly panel
+@property (strong) NSArray *searchResultPaths;
+
+@property (strong) NSArray *directoryNamesToSkip; // array of directories to skip when doing a search (eg: @".svn")
 
 - (void)showOpenQuicklyPanel;
 - (IBAction)performSearch:(id)sender;
@@ -35,5 +38,13 @@
 - (IBAction)browseForSearchIn:(id)sender;
 
 - (void)openResult:(id)result;
+
+// Update the searchPaths array.
+// 
+// This will perform the actual search on a background queue
+// and update the searchPaths property every 200 items. It
+// will call performSearch: every time the searchPaths value
+// is changed
+- (void)updateSearchPaths;
 
 @end

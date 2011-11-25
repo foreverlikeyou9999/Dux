@@ -16,44 +16,34 @@
 @synthesize searchPathField;
 @synthesize searchPath;
 @synthesize openQuicklyWindow;
-@synthesize query;
 @synthesize resultsTableView;
 @synthesize progressIndicator;
+@synthesize searchPaths;
+@synthesize searchResultPaths;
+@synthesize directoryNamesToSkip;
 
 - (id)initWithWindow:(NSWindow *)window
 {
   self = [super initWithWindow:window];
   if (self) {
-    self.searchPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"];
+    self.searchResultPaths = [NSArray array];
+    self.directoryNamesToSkip = [NSArray arrayWithObjects:@".svn", @"tmp", nil];
     
-    self.query = nil;
+    // load search path from user defaults
+    self.searchPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"];
+    self.searchPaths = [NSArray array];
+    
+    // Due to app sandboxing, we don't have access to a path until the user selects that
+    // path in an NSOpenPanel. The permission to access a path does not survive across
+    // app launches as of Mac OS X 10.7.2, however I've seen references that this feature
+    // will be implemented at some future point, so we only throw the path away if it
+    // actually isn't writable.
+    if (self.searchPath && ![[NSFileManager defaultManager] isWritableFileAtPath:self.searchPath]) {
+      self.searchPath = nil;
+    }
   }
   
   return self;
-}
-
-- (void)dealloc
-{
-  self.query = nil;
-  
-}
-
-- (NSMetadataQuery *)query
-{
-  return query;
-}
-
-- (void)setQuery:(NSMetadataQuery *)newQuery
-{
-  if (query) {
-    [query stopQuery];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:query];
-  }
-  
-  query = newQuery;
-  
-  if (query)
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(queryProgressChange:) name:nil object:query];
 }
 
 - (void)showOpenQuicklyPanel
@@ -61,57 +51,65 @@
   [self.openQuicklyWindow makeKeyAndOrderFront:self];
   [self.searchField becomeFirstResponder];
   
-  [self performSearch:self];
+  [self updateSearchPaths];
 }
 
 - (IBAction)performSearch:(id)sender
 {
-  if (self.query) {
-    [self.query stopQuery];
-  } else {
-    self.query = [[NSMetadataQuery alloc] init];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:(id)kMDItemLastUsedDate ascending:NO];
-    NSArray *descriptors = [NSArray arrayWithObject:sortDescriptor];
-    [self.query setSortDescriptors:descriptors];
+  // has the search path field's value changed?
+  if (![self.searchPathField.stringValue isEqualToString:self.searchPath]) {
+    self.searchPath = self.searchPathField.stringValue;
+    [self updateSearchPaths]; // this will call performSearch as it finds search path
+    return;
   }
   
+  // empty search string?
   if (self.searchField.stringValue.length == 0) {
     return;
   }
   
-  // limit scope to search in path
-  [[NSUserDefaults standardUserDefaults] setValue:self.searchPath forKey:@"OpenQuicklySearchPath"];
-  NSString *resolvedSerachPath = [self.searchPath stringByStandardizingPath];
-  if (resolvedSerachPath && resolvedSerachPath.length != 0) {
-    [self.query setSearchScopes:[NSArray arrayWithObject:resolvedSerachPath]];
-  }
-  
-  // build filename search pattern "*f*o*o*" for search string of "foo"
-  NSMutableString *searchString = [NSMutableString stringWithString:@"*"];
+  // build regex pattern from search string
+  NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
+  NSString *operatorChars = @"*?+[(){}^$|\\./";
   for (int charPos = 0; charPos < self.searchField.stringValue.length; charPos++) {
-    [searchString appendFormat:@"%@*", [self.searchField.stringValue substringWithRange:NSMakeRange(charPos, 1)]];
+    NSString *character = [self.searchField.stringValue substringWithRange:NSMakeRange(charPos, 1)];
+    
+    if ([operatorChars rangeOfString:character].location != NSNotFound)
+      character = [NSString stringWithFormat:@"\\%@", character];
+    
+    [searchPattern appendFormat:@"%@[^/]*", character];
   }
-        
-  // build predicate
-  NSPredicate *predicate = [NSPredicate predicateWithFormat: @"((kMDItemContentTypeTree == 'public.data') AND (kMDItemFSName LIKE[cd] %@))", searchString];
-  [self.query setPredicate:predicate];
+  [searchPattern appendString:@"$"];
   
-  [self.query startQuery];
+  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
+  
+  NSMutableArray *mutableSearchResults = [NSMutableArray array];
+  for (NSString *path in self.searchPaths) {
+    if ([expression rangeOfFirstMatchInString:path options:0 range:NSMakeRange(0, path.length)].location == NSNotFound)
+      continue;
+    
+    [mutableSearchResults addObject:path];
+  }
+  [mutableSearchResults sortUsingComparator:(NSComparator)^(id leftObj, id rightObj) {
+    return [[(NSString *)leftObj lastPathComponent] compare:[(NSString *)rightObj lastPathComponent]];
+  }];
+  
+  self.searchResultPaths = [mutableSearchResults copy];
 }
 
 - (IBAction)cancel:(id)sender
 {
-  self.query = nil;
   [self.window performClose:sender];
 }
 
 - (IBAction)open:(id)sender
 {
-  if ([self.query resultCount] > 0) {
-    NSString *resultPath = [[self.query resultAtIndex:self.resultsTableView.selectedRow] valueForKey:@"kMDItemPath"];
-    
-    [self openResult:resultPath];
-  }
+  if (self.searchResultPaths.count == 0)
+    return;
+  
+  NSString *resultPath = [self.searchResultPaths objectAtIndex:self.resultsTableView.selectedRow];
+  
+  [self openResult:resultPath];
 }
 
 - (IBAction)browseForSearchIn:(id)sender
@@ -126,14 +124,71 @@
       return;
     
     self.searchPath = [[panel.URL path] stringByAbbreviatingWithTildeInPath];
+    [[NSUserDefaults standardUserDefaults] setValue:self.searchPath forKey:@"OpenQuicklySearchPath"];
+    [self updateSearchPaths];
   }];
+}
+
+- (void)updateSearchPaths
+{
+  // init
+  self.searchPaths = [NSArray array];
+  
+  if (!self.searchPath || self.searchPath.length == 0 || [self.searchPath isEqualToString:@"(select search path)"]) {
+    self.searchPathField.stringValue = @"(select search path)";
+    return;
+  }
+  
+  [self.progressIndicator startAnimation:self];
+  
+  // enumerate all the files in the path
+  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSMutableArray *scratchSearchPaths = [NSMutableArray arrayWithCapacity:200];
+    
+    for (NSURL *fileURL in enumerator) {
+      // is this a directory?
+      NSNumber *isDirectory = nil;
+      if ([fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL] && [isDirectory boolValue]) {
+        
+        // do not enumerate specific subpaths
+        if ([self.directoryNamesToSkip containsObject:[fileURL lastPathComponent]]) {
+          [enumerator skipDescendants];
+        }
+        
+        // do not add directories to the list of search pathns
+        continue;
+      }
+      
+      // add this to a scratch list of search paths
+      [scratchSearchPaths addObject:fileURL.path];
+      
+      // when the scratch has 200 items, add them to the real seacrh paths and refresh the search results
+      if (scratchSearchPaths.count == 200) {
+        self.searchPaths = [self.searchPaths arrayByAddingObjectsFromArray:scratchSearchPaths];
+        scratchSearchPaths = [NSMutableArray arrayWithCapacity:200];
+        
+        [self performSearch:self];
+      }
+    }
+    
+    // add the final items in the scratch to the search paths, refresh the search, and stop the animation
+    dispatch_sync(dispatch_get_main_queue(), ^{
+      if (scratchSearchPaths.count > 0) {
+        self.searchPaths = [self.searchPaths arrayByAddingObjectsFromArray:scratchSearchPaths];
+        
+        [self performSearch:self];
+      }
+      
+      [self.progressIndicator stopAnimation:self];
+    });
+  });
 }
 
 - (void)openResult:(id)path
 {
   [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:path] display:YES completionHandler:NULL];
   
-  self.query = nil;
   [self.window performClose:self];
 }
 
@@ -153,7 +208,7 @@
     if (commandSelector == @selector(moveDown:)) {
       NSInteger nextIndex = self.resultsTableView.selectedRow + 1;
       
-      if (nextIndex >= self.query.resultCount)
+      if (nextIndex >= self.searchResultPaths.count)
         nextIndex = 0;
       
       [self.resultsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:nextIndex] byExtendingSelection:NO];
@@ -166,7 +221,7 @@
       NSInteger nextIndex = self.resultsTableView.selectedRow - 1;
       
       if (nextIndex < 0)
-        nextIndex = 0;
+        nextIndex = self.searchResultPaths.count - 1;
       
       [self.resultsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:nextIndex] byExtendingSelection:NO];
       [self.resultsTableView scrollRowToVisible:nextIndex];
@@ -176,20 +231,6 @@
   }
   
   return NO;
-}
-
-- (void)queryProgressChange:(NSNotification *)notification
-{
-  if ([notification.name isEqualToString:NSMetadataQueryDidStartGatheringNotification]) {
-    [self.progressIndicator startAnimation:self];
-  } else if ([notification.name isEqualToString:NSMetadataQueryDidFinishGatheringNotification]) {
-    [self.progressIndicator stopAnimation:self];
-  }
-}
-
-- (void)windowWillClose:(NSNotification *)notification
-{
-  self.query = nil;
 }
 
 @end

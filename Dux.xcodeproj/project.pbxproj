@@ -153,6 +153,7 @@
 		38D605A01403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		38D605D41403996C00D70F81 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		38D605D614039A0600D70F81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		38DF856B147EFE620004B358 /* Dux.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Dux.entitlements; sourceTree = "<group>"; };
 		38EDD51F1478E5AA0077BAB0 /* DuxXMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLLanguage.h; sourceTree = "<group>"; };
 		38EDD5201478E5AA0077BAB0 /* DuxXMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLLanguage.m; sourceTree = "<group>"; };
 		38EDD5221478E5B70077BAB0 /* DuxXMLBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLBaseElement.h; sourceTree = "<group>"; };
@@ -376,6 +377,7 @@
 				38D605961403859600D70F81 /* Credits.rtf */,
 				38CFE15B1403C96900CA7044 /* appicon.icns */,
 				38CFE15D1403CBCD00CA7044 /* docicon.icns */,
+				38DF856B147EFE620004B358 /* Dux.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -611,7 +613,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
@@ -625,7 +628,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
