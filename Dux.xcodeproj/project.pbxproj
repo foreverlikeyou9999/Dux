@@ -31,6 +31,7 @@
 		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
 		387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */; };
 		387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */; };
+		388682AD1480409F00C362EE /* DuxLineNumberString.m in Sources */ = {isa = PBXBuildFile; fileRef = 388682AC1480409F00C362EE /* DuxLineNumberString.m */; };
 		3886D4B214790FD700970CAE /* DuxCSSLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B114790FD700970CAE /* DuxCSSLanguage.m */; };
 		3886D4B514790FE700970CAE /* DuxCSSBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B414790FE700970CAE /* DuxCSSBaseElement.m */; };
 		3886D4B81479100000970CAE /* DuxCSSCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B71479100000970CAE /* DuxCSSCommentElement.m */; };
@@ -128,6 +129,8 @@
 		387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
 		387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
 		387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPBlockCommentElement.m; sourceTree = "<group>"; };
+		388682AB1480409F00C362EE /* DuxLineNumberString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLineNumberString.h; sourceTree = "<group>"; };
+		388682AC1480409F00C362EE /* DuxLineNumberString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLineNumberString.m; sourceTree = "<group>"; };
 		3886D4B014790FD700970CAE /* DuxCSSLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSLanguage.h; sourceTree = "<group>"; };
 		3886D4B114790FD700970CAE /* DuxCSSLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSLanguage.m; sourceTree = "<group>"; };
 		3886D4B314790FE700970CAE /* DuxCSSBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSBaseElement.h; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				3824F07D1452305700F00B96 /* DuxLanguageElement.m */,
 				38983C7414751B65004DD914 /* DuxLanguageMenuItem.h */,
 				38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */,
+				388682AB1480409F00C362EE /* DuxLineNumberString.h */,
+				388682AC1480409F00C362EE /* DuxLineNumberString.m */,
 				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
 				3804A8161478DA00005C587A /* Languages */,
 			);
@@ -647,6 +652,7 @@
 				38CD8FD4147FA26D00062D34 /* DuxJavaScriptKeywordElement.m in Sources */,
 				38CD8FD7147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
 				38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */,
+				388682AD1480409F00C362EE /* DuxLineNumberString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

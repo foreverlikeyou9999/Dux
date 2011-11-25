@@ -42,6 +42,4 @@
 - (NSUInteger)findBeginingOfSubwordStartingAt:(NSUInteger)offset;
 - (NSUInteger)findEndOfSubwordStartingAt:(NSUInteger)offset;
 
-- (void)drawLineNumber:(NSInteger)aNumber inRect:(NSRect)rect;
-
 @end

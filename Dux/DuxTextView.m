@@ -11,9 +11,7 @@
 #import "DuxTextView.h"
 #import "MyTextDocument.h"
 #import "DuxTextContainer.h"
-
-static NSDictionary *marginAttributes = nil;
-static NSDictionary *compressedMarginAttributes = nil;
+#import "DuxLineNumberString.h"
 
 @implementation DuxTextView
 
@@ -44,16 +42,6 @@ static NSDictionary *compressedMarginAttributes = nil;
 
 - (void)initDuxTextView
 {
-  if (!marginAttributes) {
-    marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
-                         [NSColor darkGrayColor], NSForegroundColorAttributeName,
-                         nil];
-    compressedMarginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
-                                  [NSColor darkGrayColor], NSForegroundColorAttributeName,
-                                  [NSNumber numberWithFloat:-0.7], NSKernAttributeName,
-                                  nil];
-  }
-  
   self.delegate = self;
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
@@ -627,9 +615,10 @@ static NSDictionary *compressedMarginAttributes = nil;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSRect documentVisibleRect = [[self enclosingScrollView] documentVisibleRect];
+	NSRect documentVisibleRect = self.enclosingScrollView.documentVisibleRect;
 	NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
+  NSString *string = self.textStorage.string;
   
   // background
   [[NSColor whiteColor] set];
@@ -650,40 +639,36 @@ static NSDictionary *compressedMarginAttributes = nil;
 	NSUInteger endIndex = glyphRange.location + glyphRange.length;
   
 	// find the first visible line number
-  NSUInteger index = 0;
+  NSUInteger charIndex, index = 0;
 	NSUInteger lineNumber = 1;
-  NSRect lineRect;
-  NSRange lineRange;
+  NSRect visualLineRect;
+  NSRange lineRange, actualLineRange;
 	while (index < startIndex) {
-		lineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-		index = NSMaxRange(lineRange);
+		visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+    charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
+    actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
+    [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
+    
+    index = NSMaxRange(lineRange);
 		lineNumber++;
 	}
   
   // draw line numbers
 	for (index = startIndex; index < endIndex; lineNumber++) {
-		lineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-		index = NSMaxRange(lineRange);
-    
-    [self drawLineNumber:lineNumber inRect:lineRect];
+		visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+    charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
+    actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
+    [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
+		
+    index = NSMaxRange(lineRange);
+    [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:visualLineRect];
   }
   
   NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
-  if (NSMinY(extraLineFragmentRect) >= NSMaxY(lineRect))
-    [self drawLineNumber:lineNumber inRect:extraLineFragmentRect];
+  if (NSMinY(extraLineFragmentRect) >= NSMaxY(visualLineRect))
+    [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:extraLineFragmentRect];
   
   [super drawRect:dirtyRect];
-}
-
-- (void)drawLineNumber:(NSInteger)aNumber inRect:(NSRect)rect
-{
-  NSString *string = [NSString stringWithFormat:@"%d", aNumber, nil];
-  NSSize stringSize = [string sizeWithAttributes:marginAttributes];
-  
-  NSDictionary *atts = (stringSize.width < 26) ? marginAttributes : compressedMarginAttributes;
-    
-  NSPoint point = NSMakePoint(4, rect.origin.y + ((rect.size.height / 2) - (stringSize.height / 2)));
-  [string drawAtPoint: point withAttributes:atts];
 }
 
 @end
