@@ -282,30 +282,29 @@
 
 - (NSArray *)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
 {
+  NSTextStorage *textStorage = self.textStorage;
+  NSString *string = textStorage.string;
+  NSUInteger stringLength = string.length;
+  
   // figure out the partial word
-  NSString *partialWord = [self.textStorage.string substringWithRange:charRange];
+  NSString *partialWord = [string substringWithRange:charRange];
+  NSString *wordPattern = [NSString stringWithFormat:@"\\b%@[a-zA-Z0-9_]+", [NSRegularExpression escapedPatternForString:partialWord]];
+  NSRegularExpression *wordExpression = [[NSRegularExpression alloc] initWithPattern:wordPattern options:0 error:NULL];
   
-  // find every word in the current document
-  NSArray *words = [self.textStorage.string componentsSeparatedByCharactersInSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]];
-  
-  // see which words start with 
-  NSMutableSet *matchingWords = [NSMutableSet set];
-  NSString *word;
-  NSUInteger partialWordLength = partialWord.length;
-  for (word in words) {
-    if (partialWordLength >= word.length)
-      continue;
+  // find every word in the current document that begins with the same string
+  NSMutableSet *completions = [NSMutableSet set];
+  __block NSString *completion;
+  [wordExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, stringLength) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+    completion = [string substringWithRange:match.range];
     
-    if ([[word substringWithRange:NSMakeRange(0, partialWordLength)] isEqualToString:partialWord]) {
-      if (![matchingWords containsObject:word])
-        [matchingWords addObject:word];
+    if ([completions containsObject:completion]) {
+      return;
     }
-  }
+    
+    [completions addObject:completion];
+  }];
   
-  if ([matchingWords count] == 0)
-    return nil;
-  
-  return [matchingWords allObjects];
+  return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
 }
 
 - (IBAction)showCompletions:(id)sender

@@ -183,6 +183,13 @@
   return [(DuxLanguageElement *)[elementStack lastObject] language];
 }
 
+- (DuxLanguageElement *)elementForRange:(NSRange)range ofTextStorage:(NSTextStorage *)textStorage
+{
+  NSArray *elementStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:MIN(range.location, textStorage.length - 1) effectiveRange:NULL];
+  
+  return (DuxLanguageElement *)[elementStack lastObject];
+}
+
 - (BOOL)rangeIsComment:(NSRange)range inTextStorage:(NSTextStorage *)textStorage commentRange:(NSRangePointer)commentRange
 {
   if (textStorage.length == 0)
