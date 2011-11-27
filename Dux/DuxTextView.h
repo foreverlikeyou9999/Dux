@@ -16,11 +16,12 @@
 
 @interface DuxTextView : NSTextView <NSTextViewDelegate>
 {
+  NSUInteger _lastUupdateHighlightedElements;
 }
 
 @property (weak) MyTextDocument *textDocument;
 @property (weak) DuxSyntaxHighlighter *highlighter;
-@property (strong) NSMutableSet *highlightedElements;
+@property (strong) NSSet *highlightedElements;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;
