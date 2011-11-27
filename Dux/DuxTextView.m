@@ -637,7 +637,7 @@
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-  [[NSColor colorWithCalibratedRed:0.854 green:0.906 blue:0.956 alpha:1.000] set];
+  [[NSColor colorWithCalibratedRed:0.976 green:0.951 blue:0.514 alpha:1.000] set];
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
     
@@ -723,7 +723,7 @@
       [self setNeedsDisplay:YES];
     }
     
-    if (self.selectedRange.location == 0 || self.selectedRange.location > self.textStorage.length)
+    if (self.selectedRange.length != 0 || self.selectedRange.location == 0 || self.selectedRange.location > self.textStorage.length)
       return;
     
     NSString *string = self.textStorage.string;
