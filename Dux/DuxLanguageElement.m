@@ -69,4 +69,9 @@ static NSColor *color = nil;
   return NO;
 }
 
+- (BOOL)shouldHighlightOtherIdenticalElements
+{
+  return NO;
+}
+
 @end

@@ -190,6 +190,13 @@
   return (DuxLanguageElement *)[elementStack lastObject];
 }
 
+- (DuxLanguageElement *)elementAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inTextStorage:(NSTextStorage *)textStorage
+{
+  NSArray *elementStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:location longestEffectiveRange:range inRange:NSMakeRange(0, textStorage.length)];
+  
+  return [elementStack lastObject];
+}
+
 - (BOOL)rangeIsComment:(NSRange)range inTextStorage:(NSTextStorage *)textStorage commentRange:(NSRangePointer)commentRange
 {
   if (textStorage.length == 0)

@@ -20,6 +20,7 @@
 
 @property (weak) MyTextDocument *textDocument;
 @property (weak) DuxSyntaxHighlighter *highlighter;
+@property (strong) NSMutableSet *highlightedElements;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;
@@ -41,5 +42,9 @@
 
 - (NSUInteger)findBeginingOfSubwordStartingAt:(NSUInteger)offset;
 - (NSUInteger)findEndOfSubwordStartingAt:(NSUInteger)offset;
+
+- (void)selectionDidChange:(NSNotification *)notif;
+
+- (void)updateHighlightedElements;
 
 @end

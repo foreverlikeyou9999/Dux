@@ -15,6 +15,7 @@
 @interface DuxLanguageElement : NSObject
 
 @property (strong) DuxLanguage *language;
+@property (readonly) BOOL shouldHighlightOtherIdenticalElements;
 
 + (id)sharedInstance;
 

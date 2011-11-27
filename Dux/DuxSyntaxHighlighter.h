@@ -29,6 +29,7 @@
 
 - (DuxLanguage *)languageForRange:(NSRange)range ofTextStorage:(NSTextStorage *)textStorage;
 - (DuxLanguageElement *)elementForRange:(NSRange)range ofTextStorage:(NSTextStorage *)textStorage;
+- (DuxLanguageElement *)elementAtIndex:(NSUInteger)location longestEffectiveRange:(NSRangePointer)range inTextStorage:(NSTextStorage *)textStorage;
 
 - (BOOL)rangeIsComment:(NSRange)range inTextStorage:(NSTextStorage *)textStorage commentRange:(NSRangePointer)commentRange;
 

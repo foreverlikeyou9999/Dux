@@ -19,6 +19,7 @@
 @synthesize goToLinePanel;
 @synthesize goToLineSearchField;
 @synthesize textDocument;
+@synthesize highlightedElements;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -48,6 +49,10 @@
   
   [self replaceTextContainer:[[DuxTextContainer alloc] init]];
   [self.textContainer setWidthTracksTextView:YES];
+  
+  NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
+  [notifCenter addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
 }
 
 - (void)dealloc
@@ -668,6 +673,81 @@
     [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:extraLineFragmentRect];
   
   [super drawRect:dirtyRect];
+}
+
+- (void)selectionDidChange:(NSNotification *)notif
+{
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC); // weird drawing glitches if we do this immediately
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [self updateHighlightedElements];
+  });
+}
+
+- (void)textDidChange:(NSNotification *)notif
+{
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC);  // weird drawing glitches if we do this immediately
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [self updateHighlightedElements];
+  });
+}
+
+- (void)updateHighlightedElements
+{
+  NSTextStorage *textStorage = self.textStorage;
+  
+  if (self.highlightedElements.count > 0) {
+    for (NSValue *range in self.highlightedElements) {
+      [textStorage removeAttribute:NSBackgroundColorAttributeName range:range.rangeValue];
+    }
+    [self setNeedsDisplay:YES];
+  }
+  
+  if (self.selectedRange.location == 0 || self.selectedRange.location > self.textStorage.length)
+    return;
+  
+  NSString *string = self.textStorage.string;
+  NSUInteger stringLength = string.length;
+  
+  // find the current selected element
+  NSRange elementRange;
+  DuxLanguageElement *element = [self.highlighter elementAtIndex:self.selectedRange.location - 1 longestEffectiveRange:&elementRange inTextStorage:textStorage];
+  NSString *elementString = [self.textStorage.string substringWithRange:elementRange];
+  
+  if (!element.shouldHighlightOtherIdenticalElements) {
+    return;
+  }
+  
+  // find other identical elements
+  NSUInteger searchStart = 0;
+  NSRange otherElementRange;
+  DuxLanguageElement *otherElement;
+  self.highlightedElements = [NSMutableArray array];
+  while (searchStart < stringLength) {
+    otherElementRange = [string rangeOfString:elementString options:NSLiteralSearch range:NSMakeRange(searchStart, stringLength - searchStart)];
+    if (otherElementRange.location == NSNotFound)
+      break;
+    
+    searchStart = NSMaxRange(otherElementRange);
+    
+    otherElement = [self.highlighter elementAtIndex:otherElementRange.location longestEffectiveRange:&otherElementRange inTextStorage:textStorage];
+    if (otherElementRange.length != elementRange.length)
+      continue;
+    
+    if (otherElementRange.location == elementRange.location)
+      continue;
+    
+    if (otherElement != element)
+      continue;
+    
+    [self.highlightedElements addObject:[NSValue valueWithRange:otherElementRange]];
+  }
+  
+  if (self.highlightedElements.count > 0) {
+    for (NSValue *range in self.highlightedElements) {
+      [textStorage addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.854 green:0.906 blue:0.956 alpha:1.000] range:range.rangeValue];
+    }
+    [self setNeedsDisplay:YES];
+  }
 }
 
 @end
