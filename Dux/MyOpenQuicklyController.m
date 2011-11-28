@@ -64,15 +64,16 @@
   }
   
   // empty search string?
-  if (self.searchField.stringValue.length == 0) {
+  NSString *searchString = self.searchField.stringValue;
+  if (searchString.length == 0) {
     return;
   }
   
   // build regex pattern from search string
   NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
   NSString *operatorChars = @"*?+[(){}^$|\\./";
-  for (int charPos = 0; charPos < self.searchField.stringValue.length; charPos++) {
-    NSString *character = [self.searchField.stringValue substringWithRange:NSMakeRange(charPos, 1)];
+  for (int charPos = 0; charPos < searchString.length; charPos++) {
+    NSString *character = [searchString substringWithRange:NSMakeRange(charPos, 1)];
     
     if ([operatorChars rangeOfString:character].location != NSNotFound)
       character = [NSString stringWithFormat:@"\\%@", character];
