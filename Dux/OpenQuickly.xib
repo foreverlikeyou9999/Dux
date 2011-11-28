@@ -62,6 +62,7 @@
 							<int key="NSvFlags">266</int>
 							<string key="NSFrame">{{14, 277}, {364, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="943512075"/>
 							<string key="NSReuseIdentifierKey">_NS:248</string>
 							<bool key="NSEnabled">YES</bool>
@@ -102,6 +103,7 @@
 							<int key="NSvFlags">266</int>
 							<string key="NSFrame">{{11, 302}, {458, 22}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="609079133"/>
 							<string key="NSReuseIdentifierKey">_NS:123</string>
 							<bool key="NSEnabled">YES</bool>
@@ -172,6 +174,7 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{480, 219}</string>
 											<reference key="NSSuperview" ref="773768655"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="234408430"/>
 											<string key="NSReuseIdentifierKey">_NS:1197</string>
 											<bool key="NSEnabled">YES</bool>
@@ -254,6 +257,7 @@
 									</array>
 									<string key="NSFrame">{{1, 1}, {480, 219}}</string>
 									<reference key="NSSuperview" ref="668364133"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="389615265"/>
 									<string key="NSReuseIdentifierKey">_NS:1195</string>
 									<reference key="NSDocView" ref="389615265"/>
@@ -265,6 +269,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{224, 17}, {15, 102}}</string>
 									<reference key="NSSuperview" ref="668364133"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="556418555"/>
 									<string key="NSReuseIdentifierKey">_NS:1214</string>
 									<reference key="NSTarget" ref="668364133"/>
@@ -276,6 +281,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 									<reference key="NSSuperview" ref="668364133"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="127090559"/>
 									<string key="NSReuseIdentifierKey">_NS:1216</string>
 									<int key="NSsFlags">1</int>
@@ -286,6 +292,7 @@
 							</array>
 							<string key="NSFrame">{{-1, 45}, {482, 221}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="773768655"/>
 							<string key="NSReuseIdentifierKey">_NS:1193</string>
 							<int key="NSsFlags">133682</int>
@@ -299,6 +306,7 @@
 							<int key="NSvFlags">265</int>
 							<string key="NSFrame">{{377, 267}, {98, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="668364133"/>
 							<string key="NSReuseIdentifierKey">_NS:161</string>
 							<bool key="NSEnabled">YES</bool>
@@ -322,6 +330,7 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{401, 7}, {74, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:161</string>
 							<bool key="NSEnabled">YES</bool>
@@ -345,6 +354,7 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{319, 7}, {82, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="40064046"/>
 							<string key="NSReuseIdentifierKey">_NS:161</string>
 							<bool key="NSEnabled">YES</bool>
@@ -369,6 +379,7 @@
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
 							<string key="NSFrame">{{7, 7}, {32, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="1065276296"/>
 							<string key="NSReuseIdentifierKey">_NS:3954</string>
 							<int key="NSpiFlags">28682</int>
@@ -377,6 +388,7 @@
 					</array>
 					<string key="NSFrameSize">{480, 332}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="17456987"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
@@ -448,47 +460,6 @@
 						<reference key="destination" ref="967362463"/>
 					</object>
 					<int key="connectionID">47</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">doubleClickArgument: selection</string>
-						<reference key="source" ref="389615265"/>
-						<reference key="destination" ref="30529472"/>
-						<object class="NSNibBindingConnector" key="connector" id="872629533">
-							<reference key="NSSource" ref="389615265"/>
-							<reference key="NSDestination" ref="30529472"/>
-							<string key="NSLabel">doubleClickArgument: selection</string>
-							<string key="NSBinding">doubleClickArgument</string>
-							<string key="NSKeyPath">selection</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSSelectorName</string>
-								<string key="NS.object.0">openResult:</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">68</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">doubleClickTarget: self</string>
-						<reference key="source" ref="389615265"/>
-						<reference key="destination" ref="967362463"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="389615265"/>
-							<reference key="NSDestination" ref="967362463"/>
-							<string key="NSLabel">doubleClickTarget: self</string>
-							<string key="NSBinding">doubleClickTarget</string>
-							<string key="NSKeyPath">self</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSSelectorName</string>
-								<string key="NS.object.0">openResult:</string>
-							</object>
-							<reference key="NSPreviousConnector" ref="872629533"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">69</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -597,6 +568,14 @@
 						<reference key="destination" ref="127090559"/>
 					</object>
 					<int key="connectionID">61</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">open:</string>
+						<reference key="source" ref="967362463"/>
+						<reference key="destination" ref="389615265"/>
+					</object>
+					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -830,9 +809,116 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">72</int>
+			<int key="maxID">74</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">DuxOpenQuicklyTableViewCell</string>
+					<string key="superclassName">NSTextFieldCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DuxOpenQuicklyTableViewCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyAppDelegate</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">openQuickly:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">openQuickly:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">openQuickly:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">openQuicklyController</string>
+						<string key="NS.object.0">MyOpenQuicklyController</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">openQuicklyController</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">openQuicklyController</string>
+							<string key="candidateClassName">MyOpenQuicklyController</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyAppDelegate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MyOpenQuicklyController</string>
+					<string key="superclassName">NSWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="browseForSearchIn:">id</string>
+						<string key="cancel:">id</string>
+						<string key="open:">id</string>
+						<string key="performSearch:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="browseForSearchIn:">
+							<string key="name">browseForSearchIn:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cancel:">
+							<string key="name">cancel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="open:">
+							<string key="name">open:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="performSearch:">
+							<string key="name">performSearch:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="openQuicklyWindow">NSWindow</string>
+						<string key="progressIndicator">NSProgressIndicator</string>
+						<string key="resultsTableView">NSTableView</string>
+						<string key="searchField">NSSearchField</string>
+						<string key="searchPath">NSString</string>
+						<string key="searchPathField">NSTextField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="openQuicklyWindow">
+							<string key="name">openQuicklyWindow</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="progressIndicator">
+							<string key="name">progressIndicator</string>
+							<string key="candidateClassName">NSProgressIndicator</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="resultsTableView">
+							<string key="name">resultsTableView</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchField">
+							<string key="name">searchField</string>
+							<string key="candidateClassName">NSSearchField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchPath">
+							<string key="name">searchPath</string>
+							<string key="candidateClassName">NSString</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchPathField">
+							<string key="name">searchPathField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MyOpenQuicklyController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
