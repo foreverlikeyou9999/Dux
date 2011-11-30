@@ -12,6 +12,7 @@
 #import "MyTextDocument.h"
 #import "DuxTextContainer.h"
 #import "DuxLineNumberString.h"
+#import "DuxScrollViewAnimation.h"
 
 @implementation DuxTextView
 
@@ -195,7 +196,11 @@
   
   // jump to the line
   NSRange lineRange = [string rangeOfLineAtOffset:characterLocation];
-  [self scrollRangeToVisible:lineRange];
+  NSUInteger glyphIndex = [self.layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+  NSRect lineRect = [self.layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:NULL];
+  
+  [DuxScrollViewAnimation animatedScrollPointToCenter:NSMakePoint(0, NSMinY(lineRect) + (NSHeight(lineRect) / 2)) inScrollView:self.enclosingScrollView];
+  
   [self setSelectedRange:lineRange];
   [self.goToLinePanel performClose:self];
 }
