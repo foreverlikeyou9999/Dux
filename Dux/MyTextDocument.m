@@ -208,12 +208,56 @@
     return;
   }
   
-  BOOL success = [self reinterprateContentWithEncoding:newEncoding];
-  if (!success) {
-    NSAlert *errorAlert = [NSAlert alertWithMessageText:@"Content could not be re-interpreted" defaultButton:@"Dismiss" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This document could not be re-interpreted, because it cointains invalid characters for the specified encoding."];
-    [errorAlert beginSheetModalForWindow:self.textView.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+  NSAlert *alert = [NSAlert alertWithMessageText:@"Do you want to convert the text to 'Arabic (Mac OS)'?" defaultButton:@"Convert" alternateButton:@"Reinterpret" otherButton:@"Cancel" informativeTextWithFormat:@"Choose 'Convert' if you want to change the contents of the file to be encoded as 'Western (Mac OS Roman)'.\n\nChoose 'Reinterpret' if you believe the file has been opened with an incorrect encoding and you want to reopen it as 'Western (Mac OS Roman)'."];
+  [alert beginSheetModalForWindow:self.textView.window modalDelegate:self didEndSelector:@selector(setEncodingConvertOrReinterpretAlertDidEnd:returnCode:contextInfo:) contextInfo:(void *)newEncoding];
+}
+
+- (void)setEncodingConvertOrReinterpretAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+  NSStringEncoding newEncoding = (NSStringEncoding)contextInfo;
+  
+  if (returnCode == NSAlertOtherReturn) // cancel
     return;
+  
+  if ((int)returnCode == NSAlertDefaultReturn) { // convert
+    BOOL success = [self convertContentToEncoding:newEncoding];
+    if (!success) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *errorAlert = [NSAlert alertWithMessageText:@"Content could not be converted" defaultButton:@"Dismiss" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This document could not be converted, because it cointains invalid characters for the specified encoding."];
+        [errorAlert beginSheetModalForWindow:self.textView.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+      });
+      return;
+    }
+
   }
+  
+  if ((int)returnCode == NSAlertAlternateReturn) { // reinterpret
+    BOOL success = [self reinterprateContentWithEncoding:newEncoding];
+    if (!success) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *errorAlert = [NSAlert alertWithMessageText:@"Content could not be re-interpreted" defaultButton:@"Dismiss" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This document could not be re-interpreted, because it cointains invalid characters for the specified encoding."];
+        [errorAlert beginSheetModalForWindow:self.textView.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+      });
+      return;
+    }
+  }
+}
+
+- (BOOL)convertContentToEncoding:(NSStringEncoding)newEncoding
+{
+  NSData *data = [self.textStorage.string dataUsingEncoding:newEncoding allowLossyConversion:NO];
+  if (!data)
+    return NO;
+  
+  NSString *newString = [[NSString alloc] initWithData:data encoding:newEncoding];
+  if (!newString)
+    return NO;
+
+  self.stringEncoding = newEncoding;
+  self.textView.string = newString;
+  [self updateEncodingMenuItems];
+  
+  return YES;
 }
 
 - (BOOL)reinterprateContentWithEncoding:(NSStringEncoding)newEncoding

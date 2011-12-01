@@ -29,6 +29,7 @@
 
 - (void)loadTextContentIntoStorage; // loads textContentToLoad into self.textStorage. Called in -readFromData, and in -windowControllerDidLoadNib. is a noop if !self.textStorage
 
+- (BOOL)convertContentToEncoding:(NSStringEncoding)newEncoding;
 - (BOOL)reinterprateContentWithEncoding:(NSStringEncoding)newEncoding;
 
 - (void)documentWindowDidBecomeKey:(NSNotification *)notification;
