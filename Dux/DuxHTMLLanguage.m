@@ -30,6 +30,20 @@
   [textView insertText:commentedString replacementRange:commentRange];
 }
 
+- (void)removeCommentsAroundRange:(NSRange)commentRange ofTextView:(NSTextView *)textView
+{
+  NSMutableString *newString = [[textView.textStorage.string substringWithRange:commentRange] mutableCopy];
+  
+  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"^<!\\-\\- ?" options:0 error:NULL];
+  [expression replaceMatchesInString:newString options:0 range:NSMakeRange(0, newString.length) withTemplate:@""];
+  
+  expression = [NSRegularExpression regularExpressionWithPattern:@" ?\\-\\->$" options:0 error:NULL];
+  [expression replaceMatchesInString:newString options:0 range:NSMakeRange(0, newString.length) withTemplate:@""];
+  
+  [textView insertText:[newString copy] replacementRange:commentRange];
+  [textView setSelectedRange:NSMakeRange(commentRange.location, newString.length)];
+}
+
 + (BOOL)isDefaultLanguageForURL:(NSURL *)URL textContents:(NSString *)textContents
 {
   static NSArray *extensions = nil;

@@ -40,6 +40,8 @@
 		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
 		38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
+		38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */; };
+		38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */; };
 		38CD8FA7147F8F0500062D34 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */; };
 		38CD8FAC147F9CF000062D34 /* DuxCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAB147F9CF000062D34 /* DuxCLanguage.m */; };
 		38CD8FAF147F9CFB00062D34 /* DuxCBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAE147F9CFB00062D34 /* DuxCBaseElement.m */; };
@@ -147,6 +149,10 @@
 		38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
 		38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxOpenQuicklyTableViewCell.h; sourceTree = "<group>"; };
 		38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxOpenQuicklyTableViewCell.m; sourceTree = "<group>"; };
+		38BC9214148764B700CE73EB /* DuxHTMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLCommentElement.h; sourceTree = "<group>"; };
+		38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLCommentElement.m; sourceTree = "<group>"; };
+		38BC9218148766DD00CE73EB /* DuxXMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLCommentElement.h; sourceTree = "<group>"; };
+		38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLCommentElement.m; sourceTree = "<group>"; };
 		38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextContainer.h; sourceTree = "<group>"; };
 		38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextContainer.m; sourceTree = "<group>"; };
 		38CD8FAA147F9CF000062D34 /* DuxCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCLanguage.h; sourceTree = "<group>"; };
@@ -301,6 +307,8 @@
 				38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */,
 				384FDFDE14710EFC00BD0D8D /* DuxHTMLEntityElement.h */,
 				384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */,
+				38BC9214148764B700CE73EB /* DuxHTMLCommentElement.h */,
+				38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */,
 			);
 			name = HTML;
 			sourceTree = "<group>";
@@ -511,6 +519,8 @@
 				38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */,
 				38EDD52B1478E5E90077BAB0 /* DuxXMLEntityElement.h */,
 				38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */,
+				38BC9218148766DD00CE73EB /* DuxXMLCommentElement.h */,
+				38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */,
 			);
 			name = XML;
 			sourceTree = "<group>";
@@ -659,6 +669,8 @@
 				38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */,
 				388682AD1480409F00C362EE /* DuxLineNumberString.m in Sources */,
 				3822EAAB148623970068330B /* DuxScrollViewAnimation.m in Sources */,
+				38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */,
+				38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

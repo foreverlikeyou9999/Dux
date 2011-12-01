@@ -220,7 +220,11 @@
         offset = NSMaxRange(effectiveRange);
         continue;
       }
-      return NO;
+      if (isFirst) {
+        return NO;
+      } else {
+        break;
+      }
     }
     
     if (isFirst) {

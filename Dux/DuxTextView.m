@@ -207,14 +207,16 @@
 
 - (IBAction)commentSelection:(id)sender
 {
-  // if there's no selection, grab the entire line
+  // get the selected range
   NSRange commentRange = self.selectedRange;
-  if (commentRange.length == 0) {
-    commentRange = [self.textStorage.string rangeOfLineAtOffset:self.selectedRange.location];
+  
+  // if there's no selection, drop back by one character
+  if (commentRange.length == 0 && commentRange.location > 0) {
+    commentRange.location--;
   }
   
   // if the last character is a newline, select one less character (this gives nicer results in most situations)
-  if ([self.textStorage.string characterAtIndex:NSMaxRange(commentRange) - 1] == '\n') {
+  if (commentRange.length > 0 && [self.textStorage.string characterAtIndex:NSMaxRange(commentRange) - 1] == '\n') {
     commentRange.length--;
   }
   
@@ -224,6 +226,11 @@
     
     [self uncomment:uncommentRange];
     return;
+  }
+  
+  // if there is no selected text, comment the whole line
+  if (commentRange.length == 0) {
+    commentRange = [self.textStorage.string rangeOfLineAtOffset:self.selectedRange.location];
   }
   
   // find the language, and ask it to remove commenting

@@ -12,10 +12,12 @@
 #import "DuxXMLLanguage.h"
 #import "DuxXMLTagElement.h"
 #import "DuxXMLEntityElement.h"
+#import "DuxXMLCommentElement.h"
 
 static NSCharacterSet *nextElementCharacterSet;
 static DuxXMLTagElement *tagElement;
 static DuxXMLEntityElement *entityElement;
+static DuxXMLCommentElement *commentElement;
 
 @implementation DuxXMLBaseElement
 
@@ -27,6 +29,7 @@ static DuxXMLEntityElement *entityElement;
   
   tagElement = [DuxXMLTagElement sharedInstance];
   entityElement = [DuxXMLEntityElement sharedInstance];
+  commentElement = [DuxXMLCommentElement sharedInstance];
 }
 
 - (id)init
@@ -43,11 +46,20 @@ static DuxXMLEntityElement *entityElement;
   if (foundRange.location == NSNotFound)
     return string.length - startingAt;
   
-  // what next?
+  // did we find a comment?
   unichar characterFound = [string.string characterAtIndex:foundRange.location];
+  if (characterFound == '<' && string.length > foundRange.location + 3) {
+    if ([[string.string substringWithRange:NSMakeRange(foundRange.location + 1, 3)] isEqualToString:@"!--"])
+      characterFound = '!';
+  }
+  
+  // what next?
   switch (characterFound) {
     case '<':
       *nextElement = tagElement;
+      return foundRange.location - startingAt;
+    case '!':
+      *nextElement = commentElement;
       return foundRange.location - startingAt;
     case '&':
       *nextElement = entityElement;
