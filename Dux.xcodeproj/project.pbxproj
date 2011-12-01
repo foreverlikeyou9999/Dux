@@ -751,6 +751,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
 				CODE_SIGN_IDENTITY = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";

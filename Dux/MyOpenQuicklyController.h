@@ -17,6 +17,7 @@
   NSTextField *__weak searchPathField;
   NSTableView *__weak resultsTableView;
   NSProgressIndicator *__weak progressIndicator;
+  NSOperationQueue *updateResultsQueue;
 }
 
 @property (weak) IBOutlet NSSearchField *searchField;

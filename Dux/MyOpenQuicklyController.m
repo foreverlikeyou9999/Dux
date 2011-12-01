@@ -41,6 +41,9 @@
     if (self.searchPath && ![[NSFileManager defaultManager] isWritableFileAtPath:self.searchPath]) {
       self.searchPath = nil;
     }
+    
+    updateResultsQueue = [[NSOperationQueue alloc] init];
+    updateResultsQueue.maxConcurrentOperationCount = 1;
   }
   
   return self;
@@ -69,6 +72,9 @@
     return;
   }
   
+  // clear selection
+  [self.resultsTableView deselectAll:self];
+  
   // build regex pattern from search string
   NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
   NSString *operatorChars = @"*?+[(){}^$|\\./";
@@ -84,18 +90,59 @@
   
   NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
   
-  NSMutableArray *mutableSearchResults = [NSMutableArray array];
-  for (NSURL *url in self.searchPaths) {
-    if ([expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
-      continue;
-    
-    [mutableSearchResults addObject:url];
-  }
-  [mutableSearchResults sortUsingComparator:(NSComparator)^(id leftObj, id rightObj) {
-    return [[(NSURL *)leftObj lastPathComponent] compare:[(NSURL *)rightObj lastPathComponent]];
-  }];
+  // cancel the operation queue
+  [updateResultsQueue cancelAllOperations];
+  [updateResultsQueue waitUntilAllOperationsAreFinished];
   
-  self.searchResultPaths = [mutableSearchResults copy];
+  NSArray *operationSearchPaths = [self.searchPaths copy];
+  MyOpenQuicklyController *blockSelf = self; // avoid retain cycle warnings
+  
+  __block NSBlockOperation *updateResultsBlock = [NSBlockOperation blockOperationWithBlock:^{
+    NSMutableArray *mutableSearchResults = [NSMutableArray array];
+    NSUInteger itemsCheckedSinceLastUIUpdate = 0; // when this reaches 10000, we update the GUI to reflect our progress so far
+    BOOL haveNewResults = NO;
+    
+    for (NSURL *url in operationSearchPaths) {
+      if (updateResultsBlock.isCancelled)
+        break;
+      
+      if (itemsCheckedSinceLastUIUpdate++ == 10000) { // update GUI
+        if (haveNewResults) {
+          dispatch_async(dispatch_get_main_queue(), ^{
+            BOOL wasNoSelection = blockSelf.resultsTableView.selectedRow == -1;
+            blockSelf.searchResultPaths = [mutableSearchResults copy];
+            if (wasNoSelection)
+              [blockSelf.resultsTableView deselectAll:blockSelf];
+          });
+          if (updateResultsBlock.isCancelled)
+            break;
+        }
+        
+        itemsCheckedSinceLastUIUpdate = 0;
+      }
+      
+      if ([expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
+        continue;
+      
+      NSUInteger urlIndex = [mutableSearchResults indexOfObject:url inSortedRange:NSMakeRange(0, mutableSearchResults.count) options:NSBinarySearchingInsertionIndex usingComparator:(NSComparator)^(id leftObj, id rightObj) {
+        return [[(NSURL *)leftObj lastPathComponent] compare:[(NSURL *)rightObj lastPathComponent]];
+      }];
+      [mutableSearchResults insertObject:url atIndex:urlIndex];
+      haveNewResults = YES;
+    }
+    if (updateResultsBlock.isCancelled)
+      return;
+    
+    if (haveNewResults) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL wasNoSelection = blockSelf.resultsTableView.selectedRow == -1;
+        blockSelf.searchResultPaths = [mutableSearchResults copy];
+        if (wasNoSelection)
+          [blockSelf.resultsTableView deselectAll:blockSelf];
+      });
+    }
+  }];
+  [updateResultsQueue addOperation:updateResultsBlock];
 }
 
 - (IBAction)cancel:(id)sender
@@ -108,7 +155,11 @@
   if (self.searchResultPaths.count == 0)
     return;
   
-  NSURL *resultURL = [self.searchResultPaths objectAtIndex:self.resultsTableView.selectedRow];
+  NSInteger selectedRow = self.resultsTableView.selectedRow;
+  if (selectedRow == -1)
+    selectedRow = 0; // if no selection, use 1st row instead
+  
+  NSURL *resultURL = [self.searchResultPaths objectAtIndex:selectedRow];
   
   [self openResult:resultURL];
 }
