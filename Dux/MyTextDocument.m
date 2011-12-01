@@ -28,6 +28,7 @@
     self = [super init];
     if (self) {
       textContentToLoad = @"";
+      stringEncoding = NSUTF8StringEncoding;
     }
     return self;
 }
