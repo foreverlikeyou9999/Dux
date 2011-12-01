@@ -10,6 +10,7 @@
 
 #import "MyAppDelegate.h"
 #import "NSStringDuxAdditions.h"
+#import "DuxPreferencesWindowController.h"
 
 @implementation MyAppDelegate
 @synthesize openQuicklyController;
@@ -29,6 +30,11 @@
   }
   
   [self.openQuicklyController showOpenQuicklyPanel];
+}
+
+- (IBAction)showPreferences:(id)sender
+{
+  [DuxPreferencesWindowController showPreferencesWindow];
 }
 
 @end

@@ -18,5 +18,6 @@
 @property (nonatomic,strong) IBOutlet MyOpenQuicklyController *openQuicklyController;
 
 - (IBAction)openQuickly:(id)sender;
+- (IBAction)showPreferences:(id)sender;
 
 @end

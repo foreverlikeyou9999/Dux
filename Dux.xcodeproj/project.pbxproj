@@ -42,6 +42,8 @@
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
 		38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */; };
 		38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */; };
+		38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38BC921C1487733B00CE73EB /* PreferencesWindow.xib */; };
+		38BC92201487735500CE73EB /* DuxPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */; };
 		38CD8FA7147F8F0500062D34 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */; };
 		38CD8FAC147F9CF000062D34 /* DuxCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAB147F9CF000062D34 /* DuxCLanguage.m */; };
 		38CD8FAF147F9CFB00062D34 /* DuxCBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAE147F9CFB00062D34 /* DuxCBaseElement.m */; };
@@ -153,6 +155,9 @@
 		38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLCommentElement.m; sourceTree = "<group>"; };
 		38BC9218148766DD00CE73EB /* DuxXMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLCommentElement.h; sourceTree = "<group>"; };
 		38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLCommentElement.m; sourceTree = "<group>"; };
+		38BC921C1487733B00CE73EB /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
+		38BC921E1487735500CE73EB /* DuxPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPreferencesWindowController.h; sourceTree = "<group>"; };
+		38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPreferencesWindowController.m; sourceTree = "<group>"; };
 		38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextContainer.h; sourceTree = "<group>"; };
 		38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextContainer.m; sourceTree = "<group>"; };
 		38CD8FAA147F9CF000062D34 /* DuxCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCLanguage.h; sourceTree = "<group>"; };
@@ -365,6 +370,16 @@
 			name = "Open Quickly";
 			sourceTree = "<group>";
 		};
+		38BC921B1487731E00CE73EB /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				38BC921E1487735500CE73EB /* DuxPreferencesWindowController.h */,
+				38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */,
+				38BC921C1487733B00CE73EB /* PreferencesWindow.xib */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
 		38CD8FA9147F9CD000062D34 /* C/C++ */ = {
 			isa = PBXGroup;
 			children = (
@@ -484,6 +499,7 @@
 				38D6059C1403859700D70F81 /* MyTextDocument.xib */,
 				38D6059F1403859700D70F81 /* MainMenu.xib */,
 				380AED3914500340005770D7 /* Text View */,
+				38BC921B1487731E00CE73EB /* Preferences */,
 				38A72CB11409057E008C26C9 /* Open Quickly */,
 				3837FAA81475E009002CC459 /* Misc */,
 				38D6058E1403859600D70F81 /* Supporting Files */,
@@ -581,6 +597,7 @@
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
+				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +688,7 @@
 				3822EAAB148623970068330B /* DuxScrollViewAnimation.m in Sources */,
 				38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */,
 				38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */,
+				38BC92201487735500CE73EB /* DuxPreferencesWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
