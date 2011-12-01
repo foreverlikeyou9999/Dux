@@ -20,7 +20,10 @@ static NSColor *entityColor;
 {
   [super initialize];
   
-  nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@";"];
+  NSMutableCharacterSet *mutableSet = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+  [mutableSet addCharactersInString:@"&#;"];
+  nextElementCharacterSet = [mutableSet invertedSet];
+  
   entityColor = [NSColor colorWithCalibratedRed:0.329 green:0.443 blue:0.459 alpha:1.000];
 }
 
