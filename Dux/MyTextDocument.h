@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSTextStorage *textStorage;
 @property (unsafe_unretained) IBOutlet DuxTextView *textView;
 @property (nonatomic, strong) DuxSyntaxHighlighter *syntaxtHighlighter;
+@property NSStringEncoding stringEncoding;
 
 // Newline style to be used when inserting new text.
 // The mask returned will only ever contain one of
@@ -28,14 +29,18 @@
 
 - (void)loadTextContentIntoStorage; // loads textContentToLoad into self.textStorage. Called in -readFromData, and in -windowControllerDidLoadNib. is a noop if !self.textStorage
 
+- (BOOL)reinterprateContentWithEncoding:(NSStringEncoding)newEncoding;
+
 - (void)documentWindowDidBecomeKey:(NSNotification *)notification;
 
 - (void)updateSyntaxMenuStates;
 - (void)updateNewlineStyleMenuStates;
 - (void)updateLineEndingsInUseMenuItem;
+- (void)updateEncodingMenuItems;
 
 - (IBAction)setDuxLanguage:(id)sender;
 - (IBAction)setActiveNewlineStyleFromMenuItem:(NSMenuItem *)sender;
 - (IBAction)convertToNewlineStyleFromMenuItem:(NSMenuItem *)sender;
+- (IBAction)setActiveEncoding:(NSMenuItem *)sender;
 
 @end

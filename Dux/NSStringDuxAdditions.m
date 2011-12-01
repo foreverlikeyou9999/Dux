@@ -14,6 +14,33 @@
 
 static NSCharacterSet *newlineCharacterSet = nil;
 
++ (id)stringWithUnknownData:(NSData *)data usedEncoding:(NSStringEncoding *)enc
+{
+  // list encodings, in the order we should check (the order was chosen after trial/error)
+  NSUInteger encodingsCount = 6;
+  NSUInteger encodings[6] = {
+    NSUTF8StringEncoding,               //  Unicode (UTF-8)
+    NSWindowsCP1252StringEncoding,      //  Western (Windows Latin 1)
+    NSUnicodeStringEncoding,            //  Unicode (UTF-16)
+    NSISOLatin1StringEncoding,          //  Western (ISO Latin 1)
+    NSMacOSRomanStringEncoding,         //  Western (Mac OS Roman)
+    NSNonLossyASCIIStringEncoding       //  Non-lossy ASCII
+  };
+  
+  NSString *string = nil;
+  NSUInteger encodingIndex;
+  for (encodingIndex = 0; encodingIndex < encodingsCount && !string; encodingIndex++) {
+    string = [[NSString alloc] initWithData:data encoding:encodings[encodingIndex]];
+    
+    if (string) {
+      *enc = encodings[encodingIndex];
+      return string;
+    }
+  }
+  
+  return nil;
+}
+
 - (NSRange)rangeOfLineAtOffset:(NSUInteger)location
 {
   if (!newlineCharacterSet) {

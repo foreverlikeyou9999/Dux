@@ -20,6 +20,8 @@ typedef NSUInteger DuxNewlineOptions;
 
 @interface NSString (NSStringDuxAdditions)
 
++ (id)stringWithUnknownData:(NSData *)data usedEncoding:(NSStringEncoding *)enc;
+
 - (NSRange)rangeOfLineAtOffset:(NSUInteger)location;
 - (NSUInteger)beginingOfLineAtOffset:(NSUInteger)location;
 - (NSUInteger)endOfLineAtOffset:(NSUInteger)location;

@@ -16,6 +16,7 @@
 @synthesize textView;
 @synthesize syntaxtHighlighter;
 @synthesize activeNewlineStyle;
+@synthesize stringEncoding;
 
 + (void)initialize
 {
@@ -62,25 +63,35 @@
   [self.textView.layoutManager ensureLayoutForTextContainer:self.textView.textContainer];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWindowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.textView.window];
+  
+  // show encoding alert
+  if (self.stringEncoding != NSUTF8StringEncoding) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSAlert *encodingWarningAlert = [[NSAlert alloc] init];
+      encodingWarningAlert.alertStyle = NSCriticalAlertStyle;
+      encodingWarningAlert.messageText = @"File could not be read as UTF-8";
+      encodingWarningAlert.informativeText = @"Dux has guessed the encoding, but could be wrong. Please use the Editor -> Text Encoding menu to choose the correct encoding for this file.";
+      [encodingWarningAlert addButtonWithTitle:@"Dismiss"];
+      
+      [encodingWarningAlert beginSheetModalForWindow:self.textView.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    });
+  }
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-  return [self.textStorage.string dataUsingEncoding:NSUTF8StringEncoding];
+  return [self.textStorage.string dataUsingEncoding:self.stringEncoding];
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
-  textContentToLoad = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  if (!textContentToLoad) textContentToLoad = [[NSString alloc] initWithData:data encoding:NSUnicodeStringEncoding];
-  if (!textContentToLoad) textContentToLoad = [[NSString alloc] initWithData:data encoding:NSWindowsCP1252StringEncoding];    /* WinLatin1 */
-  if (!textContentToLoad) textContentToLoad = [[NSString alloc] initWithData:data encoding:NSMacOSRomanStringEncoding];
-  if (!textContentToLoad) textContentToLoad = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
-  if (!textContentToLoad) textContentToLoad = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+  NSStringEncoding encoding;
+  textContentToLoad = [NSString stringWithUnknownData:data usedEncoding:&encoding];
   if (!textContentToLoad) {
     *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:nil];
     return NO;
   }
+  self.stringEncoding = encoding;
   
   [self loadTextContentIntoStorage];
   
@@ -136,6 +147,7 @@
     [self updateSyntaxMenuStates];
     [self updateNewlineStyleMenuStates];
     [self updateLineEndingsInUseMenuItem];
+    [self updateEncodingMenuItems];
   });
 }
 
@@ -187,6 +199,41 @@
   [self updateLineEndingsInUseMenuItem];
 }
 
+- (IBAction)setActiveEncoding:(NSMenuItem *)sender
+{
+  NSStringEncoding newEncoding = sender.tag;
+  if (newEncoding == self.stringEncoding) {
+    NSBeep();
+    return;
+  }
+  
+  BOOL success = [self reinterprateContentWithEncoding:newEncoding];
+  if (!success) {
+    NSAlert *errorAlert = [NSAlert alertWithMessageText:@"Content could not be re-interpreted" defaultButton:@"Dismiss" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This document could not be re-interpreted, because it cointains invalid characters for the specified encoding."];
+    [errorAlert beginSheetModalForWindow:self.textView.window modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    return;
+  }
+}
+
+- (BOOL)reinterprateContentWithEncoding:(NSStringEncoding)newEncoding
+{ 
+  // convert to NSData with current encoding
+  NSData *data = [self.textStorage.string dataUsingEncoding:self.stringEncoding];
+  
+  // try to read with the new encoding
+  NSString *newString = [[NSString alloc] initWithData:data encoding:newEncoding];
+  if (!newString) {
+    return NO;
+  }
+  
+  // apply new string
+  self.stringEncoding = newEncoding;
+  self.textView.string = newString;
+  [self updateEncodingMenuItems];
+  
+  return YES;
+}
+
 - (void)updateNewlineStyleMenuStates
 {
   if ([[NSApp keyWindow].windowController document] != self)
@@ -234,6 +281,21 @@
       menuItem.title = [NSString stringWithFormat:@"In use: %@", [styleNames componentsJoinedByString:@", "]];
     });
   });
+}
+
+- (void)updateEncodingMenuItems
+{
+  if ([[NSApp keyWindow].windowController document] != self)
+    return;
+  
+  NSArray *menuItems = [[[NSApplication sharedApplication].mainMenu itemWithTitle:@"Editor"].submenu itemWithTitle:@"Text Encoding"].submenu.itemArray;
+  
+  for (NSMenuItem *menuItem in menuItems) {
+    if (menuItem.action != @selector(setActiveEncoding:))
+      continue;
+    
+    menuItem.state = (menuItem.tag == self.stringEncoding) ? NSOnState : NSOffState;
+  }
 }
 
 @end
