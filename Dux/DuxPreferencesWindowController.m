@@ -9,6 +9,7 @@
 //
 
 #import "DuxPreferencesWindowController.h"
+#import "DuxPreferences.h"
 
 @implementation DuxPreferencesWindowController
 @synthesize fontTextField;
@@ -48,8 +49,6 @@
 {
   [super windowDidLoad];
   
-  [fontTextField setEnabled:NO];
-  
   [showLineNumbersButton setEnabled:NO];
   [showPageGuideButton setEnabled:NO];
   [pageGuidePositionTextField setEnabled:NO];
@@ -62,6 +61,20 @@
   
   [lineWrappingButton setEnabled:NO];
   [lineWrappingSizeTextField setEnabled:NO];
+}
+
+- (IBAction)selectEditorFont:(id)sender
+{
+  [[NSFontManager sharedFontManager] setSelectedFont:[DuxPreferences editorFont] isMultiple:NO];
+  [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
+}
+
+- (void)changeFont:(id)sender
+{
+  NSFont *oldFont = [DuxPreferences editorFont];
+  NSFont *newFont = [sender convertFont:oldFont];
+  
+  [DuxPreferences setEditorFont:newFont];
 }
 
 @end

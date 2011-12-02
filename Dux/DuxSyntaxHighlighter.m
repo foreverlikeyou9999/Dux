@@ -9,6 +9,7 @@
 //
 
 #import "DuxSyntaxHighlighter.h"
+#import "DuxPreferences.h"
 
 @implementation DuxSyntaxHighlighter
 
@@ -19,7 +20,16 @@
   
   baseLanguage = [DuxPlainTextLanguage sharedInstance];
   
+  NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
+  
   return self;
+}
+
+- (void)dealloc
+{
+  NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+  [notifCenter removeObserver:self];
 }
 
 - (NSDictionary *)baseAttributes
@@ -36,7 +46,7 @@
   
   // bsaic attributes
   baseAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-    [NSFont fontWithName:@"Menlo" size:13], NSFontAttributeName,
+    [DuxPreferences editorFont], NSFontAttributeName,
     [paragraphStyle copy], NSParagraphStyleAttributeName,
   nil];
   
@@ -238,6 +248,11 @@
   commentRange->location = newCommentRange.location;
   commentRange->length = newCommentRange.length;
   return YES;
+}
+
+- (void)editorFontDidChange:(NSNotification *)notif
+{
+  baseAttributes = nil; // this will ensure base attributes are re-created next time they're used
 }
 
 @end

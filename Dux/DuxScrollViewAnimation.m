@@ -48,6 +48,8 @@
     return end/2*(t * t * t + 2) + start - 1.f;
   };
   
+  
+  
   dispatch_sync(dispatch_get_main_queue(), ^{
     
     NSPoint progressPoint = self.originPoint;

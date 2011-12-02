@@ -33,4 +33,6 @@
 
 - (BOOL)rangeIsComment:(NSRange)range inTextStorage:(NSTextStorage *)textStorage commentRange:(NSRangePointer)commentRange;
 
+- (void)editorFontDidChange:(NSNotification *)notif;
+
 @end

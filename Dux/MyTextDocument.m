@@ -9,6 +9,7 @@
 //
 
 #import "MyTextDocument.h"
+#import "DuxPreferences.h"
 
 @implementation MyTextDocument
 
@@ -127,7 +128,7 @@
   // load contents into storage
   [self.textStorage beginEditing];
   [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withString:textContentToLoad];
-  NSDictionary *attributes = [NSDictionary dictionaryWithObject:[NSFont fontWithName:@"Menlo" size:13] forKey:NSFontAttributeName];
+  NSDictionary *attributes = [NSDictionary dictionaryWithObject:[DuxPreferences editorFont] forKey:NSFontAttributeName];
   [self.textStorage setAttributes:attributes range:NSMakeRange(0, self.textStorage.length)];
   [self.textStorage endEditing];
   

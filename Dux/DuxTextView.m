@@ -13,6 +13,7 @@
 #import "DuxTextContainer.h"
 #import "DuxLineNumberString.h"
 #import "DuxScrollViewAnimation.h"
+#import "DuxPreferences.h"
 
 @implementation DuxTextView
 
@@ -54,6 +55,7 @@
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
   [notifCenter addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
+  [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
 }
 
 - (void)dealloc
@@ -781,6 +783,14 @@
     if (self.highlightedElements.count > 0) {
       [self setNeedsDisplay:YES];
     }
+  });
+}
+
+- (void)editorFontDidChange:(NSNotification *)notif
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.textStorage setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, self.textStorage.length)];
+    [self.highlighter updateHighlightingForStorage:self.textStorage];
   });
 }
 

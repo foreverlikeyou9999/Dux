@@ -26,4 +26,7 @@
 @property (weak) IBOutlet NSButton *lineWrappingButton;
 @property (weak) IBOutlet NSTextField *lineWrappingSizeTextField;
 
+- (IBAction)selectEditorFont:(id)sender;
+
+
 @end

@@ -44,6 +44,7 @@
 		38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */; };
 		38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38BC921C1487733B00CE73EB /* PreferencesWindow.xib */; };
 		38BC92201487735500CE73EB /* DuxPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */; };
+		38BC92231488151700CE73EB /* DuxPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC92221488151700CE73EB /* DuxPreferences.m */; };
 		38CD8FA7147F8F0500062D34 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */; };
 		38CD8FAC147F9CF000062D34 /* DuxCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAB147F9CF000062D34 /* DuxCLanguage.m */; };
 		38CD8FAF147F9CFB00062D34 /* DuxCBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAE147F9CFB00062D34 /* DuxCBaseElement.m */; };
@@ -158,6 +159,8 @@
 		38BC921C1487733B00CE73EB /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		38BC921E1487735500CE73EB /* DuxPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxPreferencesWindowController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxPreferencesWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		38BC92211488151700CE73EB /* DuxPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPreferences.h; sourceTree = "<group>"; };
+		38BC92221488151700CE73EB /* DuxPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPreferences.m; sourceTree = "<group>"; };
 		38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextContainer.h; sourceTree = "<group>"; };
 		38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextContainer.m; sourceTree = "<group>"; };
 		38CD8FAA147F9CF000062D34 /* DuxCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxCLanguage.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -373,6 +376,8 @@
 		38BC921B1487731E00CE73EB /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				38BC92211488151700CE73EB /* DuxPreferences.h */,
+				38BC92221488151700CE73EB /* DuxPreferences.m */,
 				38BC921E1487735500CE73EB /* DuxPreferencesWindowController.h */,
 				38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */,
 				38BC921C1487733B00CE73EB /* PreferencesWindow.xib */,
@@ -689,6 +694,7 @@
 				38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */,
 				38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */,
 				38BC92201487735500CE73EB /* DuxPreferencesWindowController.m in Sources */,
+				38BC92231488151700CE73EB /* DuxPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

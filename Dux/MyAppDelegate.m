@@ -10,10 +10,16 @@
 
 #import "MyAppDelegate.h"
 #import "NSStringDuxAdditions.h"
+#import "DuxPreferences.h"
 #import "DuxPreferencesWindowController.h"
 
 @implementation MyAppDelegate
 @synthesize openQuicklyController;
+
++ (void)initialize
+{
+  [DuxPreferences registerDefaults];
+}
 
 - (id)init
 {
