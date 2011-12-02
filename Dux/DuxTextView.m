@@ -651,7 +651,7 @@
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-  [[NSColor colorWithCalibratedRed:0.976 green:0.951 blue:0.514 alpha:1.000] set];
+  [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
     
@@ -663,6 +663,7 @@
 
   
   // line numbers background
+  [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
   [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
   [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
   [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
@@ -770,15 +771,12 @@
       if (otherElementRange.length != elementRange.length)
         continue;
       
-      if (otherElementRange.location == elementRange.location)
-        continue;
-      
       if (otherElement != element)
         continue;
       
       [newHighlightedElements addObject:[NSValue valueWithRange:otherElementRange]];
     }
-    self.highlightedElements = [newHighlightedElements copy];
+    self.highlightedElements = newHighlightedElements.count > 1 ? [newHighlightedElements copy] : [NSSet set];
     
     if (self.highlightedElements.count > 0) {
       [self setNeedsDisplay:YES];
