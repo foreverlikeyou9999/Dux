@@ -12,4 +12,6 @@
 
 @interface DuxTextContainer : NSTextContainer
 
+@property float leftGutterWidth; // margin for line numbers/etc
+
 @end

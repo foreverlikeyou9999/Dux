@@ -22,6 +22,7 @@
 @property (weak) MyTextDocument *textDocument;
 @property (weak) DuxSyntaxHighlighter *highlighter;
 @property (strong) NSSet *highlightedElements;
+@property BOOL showLineNumbers;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;

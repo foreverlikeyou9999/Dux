@@ -17,6 +17,10 @@
 + (NSFont *)editorFont;
 + (void)setEditorFont:(NSFont *)newFont;
 
++ (BOOL)showLineNumbers;
++ (void)setShowLineNumbers:(BOOL)newValue;
+
 @end
 
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;
+extern NSString *DuxPreferencesShowLineNumbersDidChangeNotification;

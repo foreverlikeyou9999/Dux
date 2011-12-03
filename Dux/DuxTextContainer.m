@@ -12,9 +12,11 @@
 
 @implementation DuxTextContainer
 
+@synthesize leftGutterWidth;
+
 - (NSRect)lineFragmentRectForProposedRect:(NSRect)proposedRect sweepDirection:(NSLineSweepDirection)sweepDirection movementDirection:(NSLineMovementDirection)movementDirection remainingRect:(NSRectPointer)remainingRect
 {
-  proposedRect.origin.x = 34;
+  proposedRect.origin.x = self.leftGutterWidth;
   
   return [super lineFragmentRectForProposedRect:proposedRect sweepDirection:sweepDirection movementDirection:movementDirection remainingRect:remainingRect];
 }

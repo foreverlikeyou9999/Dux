@@ -49,7 +49,8 @@
 {
   [super windowDidLoad];
   
-  [showLineNumbersButton setEnabled:NO];
+  showLineNumbersButton.state = [DuxPreferences showLineNumbers] ? NSOnState : NSOffState;
+  
   [showPageGuideButton setEnabled:NO];
   [pageGuidePositionTextField setEnabled:NO];
   [showOtherInstancesOfSelectedSymbolButton setEnabled:NO];
@@ -67,6 +68,11 @@
 {
   [[NSFontManager sharedFontManager] setSelectedFont:[DuxPreferences editorFont] isMultiple:NO];
   [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
+}
+
+- (IBAction)setShowLineNumbers:(id)sender
+{
+  [DuxPreferences setShowLineNumbers:showLineNumbersButton.state == NSOnState];
 }
 
 - (void)changeFont:(id)sender

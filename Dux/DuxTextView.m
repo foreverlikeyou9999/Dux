@@ -22,6 +22,7 @@
 @synthesize goToLineSearchField;
 @synthesize textDocument;
 @synthesize highlightedElements;
+@synthesize showLineNumbers;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -49,13 +50,18 @@
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
   
-  [self replaceTextContainer:[[DuxTextContainer alloc] init]];
-  [self.textContainer setWidthTracksTextView:YES];
+  self.showLineNumbers = [DuxPreferences showLineNumbers];
+  
+  DuxTextContainer *container = [[DuxTextContainer alloc] init];
+  [self replaceTextContainer:container];
+  container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
+  container.widthTracksTextView = YES;
   
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
   [notifCenter addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
   [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
+  [notifCenter addObserver:self selector:@selector(showLineNumbersDidChange:) name:DuxPreferencesShowLineNumbersDidChangeNotification object:nil];
 }
 
 - (void)dealloc
@@ -663,45 +669,47 @@
 
   
   // line numbers background
-  [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
-  [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
-  [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
-  [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
-      
-  // draw line numbers
-  glyphRange = [layoutManager glyphRangeForBoundingRect:documentVisibleRect inTextContainer:textContainer];
-	NSUInteger startIndex = glyphRange.location;
-	NSUInteger endIndex = glyphRange.location + glyphRange.length;
-  
-	// find the first visible line number
-  NSUInteger charIndex, index = 0;
-	NSUInteger lineNumber = 1;
-  NSRect visualLineRect;
-  NSRange lineRange, actualLineRange;
-	while (index < startIndex) {
-		visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-    charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
-    actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
-    [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
+  if (self.showLineNumbers) {
+    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
+    [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
+    [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
     
-    index = NSMaxRange(lineRange);
-		lineNumber++;
-	}
-  
-  // draw line numbers
-	for (index = startIndex; index < endIndex; lineNumber++) {
-		visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-    charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
-    actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
-    [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
-		
-    index = NSMaxRange(lineRange);
-    [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:visualLineRect];
+    // draw line numbers
+    glyphRange = [layoutManager glyphRangeForBoundingRect:documentVisibleRect inTextContainer:textContainer];
+    NSUInteger startIndex = glyphRange.location;
+    NSUInteger endIndex = glyphRange.location + glyphRange.length;
+    
+    // find the first visible line number
+    NSUInteger charIndex, index = 0;
+    NSUInteger lineNumber = 1;
+    NSRect visualLineRect;
+    NSRange lineRange, actualLineRange;
+    while (index < startIndex) {
+      visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+      charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
+      actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
+      [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
+      
+      index = NSMaxRange(lineRange);
+      lineNumber++;
+    }
+    
+    // draw line numbers
+    for (index = startIndex; index < endIndex; lineNumber++) {
+      visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+      charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
+      actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
+      [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
+      
+      index = NSMaxRange(lineRange);
+      [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:visualLineRect];
+    }
+    
+    NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
+    if (NSMinY(extraLineFragmentRect) >= NSMaxY(visualLineRect))
+      [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:extraLineFragmentRect];
   }
-  
-  NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
-  if (NSMinY(extraLineFragmentRect) >= NSMaxY(visualLineRect))
-    [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:extraLineFragmentRect];
   
   [super drawRect:dirtyRect];
 }
@@ -790,6 +798,15 @@
     [self.textStorage setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, self.textStorage.length)];
     [self.highlighter updateHighlightingForStorage:self.textStorage];
   });
+}
+
+- (void)showLineNumbersDidChange:(NSNotification *)notif
+{
+  self.showLineNumbers = [DuxPreferences showLineNumbers];
+  [(DuxTextContainer *)self.textContainer setLeftGutterWidth:self.showLineNumbers ? 34 : 0];
+  
+  [self.layoutManager invalidateLayoutForCharacterRange:NSMakeRange(0, self.string.length) actualCharacterRange:NULL];
+  [self setNeedsDisplay:YES];
 }
 
 @end

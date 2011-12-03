@@ -27,6 +27,7 @@
 @property (weak) IBOutlet NSTextField *lineWrappingSizeTextField;
 
 - (IBAction)selectEditorFont:(id)sender;
+- (IBAction)setShowLineNumbers:(id)sender;
 
 
 @end

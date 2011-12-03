@@ -29,6 +29,8 @@ static NSUserDefaults *userDefaults;
   [defaults setObject:font.fontName forKey:@"DuxEditorFontName"];
   [defaults setObject:[NSNumber numberWithFloat:font.pointSize] forKey:@"DuxEditorFontSize"];
   
+  [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"DuxEditorShowLineNumbers"];
+  
   [userDefaults registerDefaults:defaults.copy];
 }
 
@@ -46,6 +48,19 @@ static NSUserDefaults *userDefaults;
   [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesEditorFontDidChangeNotification object:self];
 }
 
++ (BOOL)showLineNumbers
+{
+  return [userDefaults boolForKey:@"DuxEditorShowLineNumbers"];
+}
+
++ (void)setShowLineNumbers:(BOOL)newValue
+{
+  [userDefaults setBool:newValue forKey:@"DuxEditorShowLineNumbers"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesShowLineNumbersDidChangeNotification object:self];
+}
+
 @end
 
 const NSString *DuxPreferencesEditorFontDidChangeNotification = @"DuxPreferencesEditorFontDidChangeNotification";
+const NSString *DuxPreferencesShowLineNumbersDidChangeNotification = @"DuxPreferencesShowLineNumbersDidChangeNotification";
