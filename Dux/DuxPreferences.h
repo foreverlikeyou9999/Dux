@@ -20,7 +20,14 @@
 + (BOOL)showLineNumbers;
 + (void)setShowLineNumbers:(BOOL)newValue;
 
++ (BOOL)showPageGuide;
++ (void)setShowPageGuide:(BOOL)newValue;
++ (NSUInteger)pageGuidePosition;
++ (void)setPageGuidePosition:(NSUInteger)newValue;
+
 @end
 
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;
 extern NSString *DuxPreferencesShowLineNumbersDidChangeNotification;
+extern NSString *DuxPreferencesShowPageGuideDidChangeNotification;
+extern NSString *DuxPreferencesPageGuidePositionDidChangeNotification;

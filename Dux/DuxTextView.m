@@ -23,6 +23,8 @@
 @synthesize textDocument;
 @synthesize highlightedElements;
 @synthesize showLineNumbers;
+@synthesize showPageGuide;
+@synthesize pageGuidePosition;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -51,6 +53,8 @@
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
   
   self.showLineNumbers = [DuxPreferences showLineNumbers];
+  self.showPageGuide = [DuxPreferences showPageGuide];
+  self.pageGuidePosition = [DuxPreferences pageGuidePosition];
   
   DuxTextContainer *container = [[DuxTextContainer alloc] init];
   [self replaceTextContainer:container];
@@ -62,6 +66,8 @@
   [notifCenter addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
   [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(showLineNumbersDidChange:) name:DuxPreferencesShowLineNumbersDidChangeNotification object:nil];
+  [notifCenter addObserver:self selector:@selector(showPageGuideDidChange:) name:DuxPreferencesShowPageGuideDidChangeNotification object:nil];
+  [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
 }
 
 - (void)dealloc
@@ -648,9 +654,15 @@
   [[NSColor whiteColor] set];
   NSRectFill(dirtyRect);
   
-  // page margin
-  [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
-  [NSBezierPath strokeLineFromPoint:NSMakePoint(800.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(800.5, NSMaxY(documentVisibleRect))];
+  // page guide
+  if (self.showPageGuide) {
+    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
+    float position = self.pageGuidePosition;
+    if (self.showLineNumbers)
+      position += 34;
+    position += 0.5;
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(position, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position, NSMaxY(documentVisibleRect))];
+  }
   
   // draw highlighted elements
   NSRange glyphRange;
@@ -806,6 +818,20 @@
   [(DuxTextContainer *)self.textContainer setLeftGutterWidth:self.showLineNumbers ? 34 : 0];
   
   [self.layoutManager invalidateLayoutForCharacterRange:NSMakeRange(0, self.string.length) actualCharacterRange:NULL];
+  [self setNeedsDisplay:YES];
+}
+
+- (void)showPageGuideDidChange:(NSNotification *)notif
+{
+  self.showPageGuide = [DuxPreferences showPageGuide];
+  
+  [self setNeedsDisplay:YES];
+}
+
+- (void)pageGuidePositionDidChange:(NSNotification *)notif
+{
+  self.pageGuidePosition = [DuxPreferences pageGuidePosition];
+  
   [self setNeedsDisplay:YES];
 }
 

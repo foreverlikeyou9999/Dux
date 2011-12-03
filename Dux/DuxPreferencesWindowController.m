@@ -45,14 +45,14 @@
   return self;
 }
 
-- (void)windowDidLoad
+- (void)awakeFromNib
 {
-  [super windowDidLoad];
+  [super awakeFromNib];
   
-  showLineNumbersButton.state = [DuxPreferences showLineNumbers] ? NSOnState : NSOffState;
+  self.showLineNumbersButton.state = [DuxPreferences showLineNumbers] ? NSOnState : NSOffState;
+  self.showPageGuideButton.state = [DuxPreferences showPageGuide] ? NSOnState : NSOffState;
+  self.pageGuidePositionTextField.integerValue = [DuxPreferences pageGuidePosition];
   
-  [showPageGuideButton setEnabled:NO];
-  [pageGuidePositionTextField setEnabled:NO];
   [showOtherInstancesOfSelectedSymbolButton setEnabled:NO];
   
   [indentStylePopUpButton setEnabled:NO];
@@ -72,7 +72,17 @@
 
 - (IBAction)setShowLineNumbers:(id)sender
 {
-  [DuxPreferences setShowLineNumbers:showLineNumbersButton.state == NSOnState];
+  [DuxPreferences setShowLineNumbers:self.showLineNumbersButton.state == NSOnState];
+}
+
+- (IBAction)setShowPageGuide:(id)sender
+{
+  [DuxPreferences setShowPageGuide:self.showPageGuideButton.state == NSOnState];
+}
+
+- (IBAction)setPageGuidePosition:(id)sender
+{
+  [DuxPreferences setPageGuidePosition:self.pageGuidePositionTextField.integerValue];
 }
 
 - (void)changeFont:(id)sender

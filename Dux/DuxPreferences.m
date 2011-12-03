@@ -29,7 +29,9 @@ static NSUserDefaults *userDefaults;
   [defaults setObject:font.fontName forKey:@"DuxEditorFontName"];
   [defaults setObject:[NSNumber numberWithFloat:font.pointSize] forKey:@"DuxEditorFontSize"];
   
-  [defaults setObject:[NSNumber numberWithBool:NO] forKey:@"DuxEditorShowLineNumbers"];
+  [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorShowLineNumbers"];
+  [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorPageGuide"];
+  [defaults setObject:[NSNumber numberWithInt:800] forKey:@"DuxEditorPageGuidePosition"];
   
   [userDefaults registerDefaults:defaults.copy];
 }
@@ -60,7 +62,34 @@ static NSUserDefaults *userDefaults;
   [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesShowLineNumbersDidChangeNotification object:self];
 }
 
++ (BOOL)showPageGuide
+{
+  return [userDefaults boolForKey:@"DuxEditorShowPageGuide"];
+}
+
++ (void)setShowPageGuide:(BOOL)newValue
+{
+  [userDefaults setBool:newValue forKey:@"DuxEditorShowPageGuide"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesShowPageGuideDidChangeNotification object:self];
+}
+
++ (NSUInteger)pageGuidePosition
+{
+  return [userDefaults integerForKey:@"DuxEditorPageGuidePosition"];
+}
+
++ (void)setPageGuidePosition:(NSUInteger)newValue
+{
+  [userDefaults setInteger:newValue forKey:@"DuxEditorPageGuidePosition"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesPageGuidePositionDidChangeNotification object:self];
+}
+
 @end
 
 const NSString *DuxPreferencesEditorFontDidChangeNotification = @"DuxPreferencesEditorFontDidChangeNotification";
 const NSString *DuxPreferencesShowLineNumbersDidChangeNotification = @"DuxPreferencesShowLineNumbersDidChangeNotification";
+const NSString *DuxPreferencesShowPageGuideDidChangeNotification = @"DuxPreferencesShowPageGuideDidChangeNotification";
+const NSString *DuxPreferencesPageGuidePositionDidChangeNotification = @"DuxPreferencesPageGuidePositionDidChangeNotification";
+
