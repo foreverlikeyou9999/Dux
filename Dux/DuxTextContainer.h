@@ -15,3 +15,5 @@
 @property float leftGutterWidth; // margin for line numbers/etc
 
 @end
+
+extern NSString *DuxTextContainerSizeDidChangeNotification;

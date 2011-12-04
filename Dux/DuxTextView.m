@@ -61,12 +61,7 @@
   container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
   container.widthTracksTextView = YES;
 	
-	linePositions[0] = 0;
-	linePositions[1] = -2;
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-    [self updateLinePositions];
-		[self setNeedsDisplay:YES];
-	});
+	[self invalidateLinePositions];
   
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
@@ -77,6 +72,7 @@
 	[notifCenter addObserver:self selector:@selector(showOtherInstancesOfSelectedSymbolDidChange:) name:DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
+	[notifCenter addObserver:self selector:@selector(textContainerSizeDidChange:) name:DuxTextContainerSizeDidChangeNotification object:container];
 }
 
 - (void)dealloc
@@ -855,8 +851,12 @@
   }
 
   
-  // line numbers background
+  // line numbers
   if (self.showLineNumbers) {
+		if (linePositionsNeedUpdating)
+			[self updateLinePositions];
+		
+		// background
     [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
     [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
     [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
@@ -890,7 +890,7 @@
 - (void)textDidChange:(NSNotification *)notif
 {
   [self updateHighlightedElements];
-	[self updateLinePositions];
+	[self invalidateLinePositions];
 }
 
 - (void)updateHighlightedElements
@@ -965,10 +965,18 @@
   });
 }
 
+- (void)invalidateLinePositions
+{
+	linePositionsNeedUpdating = YES;
+	[self setNeedsDisplay:YES];
+}
+
 - (void)updateLinePositions
 {
 	if (!self.showLineNumbers)
 		return;
+	
+	NSDate *debugStart = [NSDate date];
 	
 	// init
 	NSString *string = self.string;
@@ -1013,6 +1021,9 @@
 
 	// terminate the array
 	linePositions[lineIndex] = -2;
+	linePositionsNeedUpdating = NO;
+	
+	NSLog(@"line positions calculated in %f seconds", 0 - [debugStart timeIntervalSinceNow]);
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
@@ -1038,9 +1049,7 @@
   
   [self.layoutManager invalidateLayoutForCharacterRange:NSMakeRange(0, self.string.length) actualCharacterRange:NULL];
 	
-	[self updateLinePositions];
-	
-  [self setNeedsDisplay:YES];
+	[self invalidateLinePositions];
 }
 
 - (void)showPageGuideDidChange:(NSNotification *)notif
@@ -1060,6 +1069,11 @@
   self.pageGuidePosition = [DuxPreferences pageGuidePosition];
   
   [self setNeedsDisplay:YES];
+}
+
+- (void)textContainerSizeDidChange:(NSNotification *)notif
+{
+	[self invalidateLinePositions];
 }
 
 @end

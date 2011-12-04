@@ -21,4 +21,13 @@
   return [super lineFragmentRectForProposedRect:proposedRect sweepDirection:sweepDirection movementDirection:movementDirection remainingRect:remainingRect];
 }
 
+- (void)setContainerSize:(NSSize)size
+{
+	[super setContainerSize:size];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:DuxTextContainerSizeDidChangeNotification object:self];
+}
+
 @end
+
+const NSString *DuxTextContainerSizeDidChangeNotification = @"DuxTextContainerSizeDidChangeNotification";

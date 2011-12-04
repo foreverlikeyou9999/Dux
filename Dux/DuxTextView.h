@@ -17,6 +17,7 @@
 @interface DuxTextView : NSTextView <NSTextViewDelegate>
 {
   NSUInteger _lastUupdateHighlightedElements;
+	BOOL linePositionsNeedUpdating;
 	float linePositions[100000]; // pixel position (y) of every line, used to draw line numbers (we do not draw line numbers after 99,999 lines). The last line will be followed by a float who's value is less than -1
 }
 
@@ -53,6 +54,7 @@
 - (void)selectionDidChange:(NSNotification *)notif;
 
 - (void)updateHighlightedElements;
+- (void)invalidateLinePositions;
 - (void)updateLinePositions;
 
 - (BOOL)insertionPointInLeadingWhitespace;
