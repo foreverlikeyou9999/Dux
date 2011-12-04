@@ -32,6 +32,7 @@ static NSUserDefaults *userDefaults;
   [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorShowLineNumbers"];
   [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorPageGuide"];
   [defaults setObject:[NSNumber numberWithInteger:800] forKey:@"DuxEditorPageGuidePosition"];
+	[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorShowOtherInstancesOfSelectedSymbol"];
   [defaults setObject:[NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace] forKey:@"DuxEditorTabIndentBehaviour"];
 	[defaults setObject:[NSNumber numberWithBool:NO] forKey:@"DuxEditorIndentWithSpaces"];
 	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorTabWidth"];
@@ -90,6 +91,18 @@ static NSUserDefaults *userDefaults;
   [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesPageGuidePositionDidChangeNotification object:self];
 }
 
++ (BOOL)showOtherInstancesOfSelectedSymbol
+{
+	return [userDefaults boolForKey:@"DuxEditorShowOtherInstancesOfSelectedSymbol"];
+}
+
++ (void)setShowOtherInstancesOfSelectedSymbol:(BOOL)newValue
+{
+	[userDefaults setBool:newValue forKey:@"DuxEditorShowOtherInstancesOfSelectedSymbol"];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification object:self];
+}
+
 + (DuxTabIndentBehaviour)tabIndentBehaviour
 {
   return [userDefaults integerForKey:@"DuxEditorTabIndentBehaviour"];
@@ -144,6 +157,7 @@ const NSString *DuxPreferencesEditorFontDidChangeNotification = @"DuxPreferences
 const NSString *DuxPreferencesShowLineNumbersDidChangeNotification = @"DuxPreferencesShowLineNumbersDidChangeNotification";
 const NSString *DuxPreferencesShowPageGuideDidChangeNotification = @"DuxPreferencesShowPageGuideDidChangeNotification";
 const NSString *DuxPreferencesPageGuidePositionDidChangeNotification = @"DuxPreferencesPageGuidePositionDidChangeNotification";
+const NSString *DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification = @"DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification";
 const NSString *DuxPreferencesTabIndentBehaviourDidChangeNotification = @"DuxPreferencesTabIndentBehaviourDidChangeNotification";
 const NSString *DuxPreferencesIndentWithSpacesDidChangeNotification = @"DuxPreferencesIndentWithSpacesDidChangeNotification";
 const NSString *DuxPreferencesTabWidthDidChangeNotification = @"DuxPreferencesTabWidthDidChangeNotification";

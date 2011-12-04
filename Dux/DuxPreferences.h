@@ -31,6 +31,8 @@ typedef NSUInteger DuxTabIndentBehaviour;
 + (void)setShowPageGuide:(BOOL)newValue;
 + (NSUInteger)pageGuidePosition;
 + (void)setPageGuidePosition:(NSUInteger)newValue;
++ (BOOL)showOtherInstancesOfSelectedSymbol;
++ (void)setShowOtherInstancesOfSelectedSymbol:(BOOL)newValue;
 
 + (DuxTabIndentBehaviour)tabIndentBehaviour;
 + (void)setTabIndentBehaviour:(DuxTabIndentBehaviour)newValue;
@@ -47,6 +49,7 @@ typedef NSUInteger DuxTabIndentBehaviour;
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;
 extern NSString *DuxPreferencesShowLineNumbersDidChangeNotification;
 extern NSString *DuxPreferencesShowPageGuideDidChangeNotification;
+extern NSString *DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification;
 extern NSString *DuxPreferencesPageGuidePositionDidChangeNotification;
 extern NSString *DuxPreferencesTabIndentBehaviourDidChangeNotification;
 extern NSString *DuxPreferencesIndentWithSpacesDidChangeNotification;

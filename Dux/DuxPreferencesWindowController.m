@@ -52,13 +52,12 @@
   self.showLineNumbersButton.state = [DuxPreferences showLineNumbers] ? NSOnState : NSOffState;
   self.showPageGuideButton.state = [DuxPreferences showPageGuide] ? NSOnState : NSOffState;
   self.pageGuidePositionTextField.integerValue = [DuxPreferences pageGuidePosition];
+	self.showOtherInstancesOfSelectedSymbolButton.state = [DuxPreferences showOtherInstancesOfSelectedSymbol] ? NSOnState : NSOffState;
   
 	[self.indentStylePopUpButton selectItemWithTag:(int)[DuxPreferences indentWithSpaces]];
 	[self.tabWidthTextField setIntValue:(int)[DuxPreferences tabWidth]];
 	[self.indentWidthTextField setIntValue:(int)[DuxPreferences indentWidth]];
   [self.tabKeyBehaviourPopUpButton selectItemWithTag:[DuxPreferences tabIndentBehaviour]];
-  
-  [showOtherInstancesOfSelectedSymbolButton setEnabled:NO];
   
   [lineWrappingButton setEnabled:NO];
   [lineWrappingSizeTextField setEnabled:NO];
@@ -103,6 +102,11 @@
 - (IBAction)setIndentWidth:(id)sender
 {
 	[DuxPreferences setIndentWidth:(NSUInteger)self.indentWidthTextField.intValue];
+}
+
+- (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender
+{
+	[DuxPreferences setShowOtherInstancesOfSelectedSymbol:self.showOtherInstancesOfSelectedSymbolButton.state == NSOnState];
 }
 
 - (void)changeFont:(id)sender

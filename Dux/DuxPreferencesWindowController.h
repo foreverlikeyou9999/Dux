@@ -34,6 +34,7 @@
 - (IBAction)setIndentWithSpaces:(id)sender;
 - (IBAction)setTabWidth:(id)sender;
 - (IBAction)setIndentWidth:(id)sender;
+- (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender;
 
 
 @end

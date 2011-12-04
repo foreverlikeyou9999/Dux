@@ -67,6 +67,7 @@
   [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(showLineNumbersDidChange:) name:DuxPreferencesShowLineNumbersDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(showPageGuideDidChange:) name:DuxPreferencesShowPageGuideDidChangeNotification object:nil];
+	[notifCenter addObserver:self selector:@selector(showOtherInstancesOfSelectedSymbolDidChange:) name:DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
 }
@@ -925,6 +926,10 @@
       self.highlightedElements = [NSSet set];
       [self setNeedsDisplay:YES];
     }
+		
+		if (![DuxPreferences showOtherInstancesOfSelectedSymbol]) {
+			return;
+		}
     
     if (self.selectedRange.length != 0 || self.selectedRange.location == 0 || self.selectedRange.location > self.textStorage.length)
       return;
@@ -1002,6 +1007,11 @@
   self.showPageGuide = [DuxPreferences showPageGuide];
   
   [self setNeedsDisplay:YES];
+}
+
+- (void)showOtherInstancesOfSelectedSymbolDidChange:(NSNotification *)notif
+{
+	[self updateHighlightedElements];
 }
 
 - (void)pageGuidePositionDidChange:(NSNotification *)notif
