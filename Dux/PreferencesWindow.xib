@@ -376,18 +376,18 @@
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
 								<int key="NSPeriodicInterval">75</int>
-								<object class="NSMenuItem" key="NSMenuItem" id="53450562">
+								<object class="NSMenuItem" key="NSMenuItem" id="520854529">
 									<reference key="NSMenu" ref="815806746"/>
-									<string key="NSTitle">Spaces</string>
+									<string key="NSTitle">Tabs</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<int key="NSState">1</int>
-									<object class="NSCustomResource" key="NSOnImage" id="795166967">
+									<object class="NSCustomResource" key="NSOnImage" id="843239332">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">NSMenuCheckmark</string>
 									</object>
-									<object class="NSCustomResource" key="NSMixedImage" id="1030757361">
+									<object class="NSCustomResource" key="NSMixedImage" id="451780426">
 										<string key="NSClassName">NSImage</string>
 										<string key="NSResourceName">NSMenuMixedState</string>
 									</object>
@@ -398,16 +398,17 @@
 								<object class="NSMenu" key="NSMenu" id="815806746">
 									<string key="NSTitle">OtherViews</string>
 									<array class="NSMutableArray" key="NSMenuItems">
-										<reference ref="53450562"/>
-										<object class="NSMenuItem" id="520854529">
+										<reference ref="520854529"/>
+										<object class="NSMenuItem" id="53450562">
 											<reference key="NSMenu" ref="815806746"/>
-											<string key="NSTitle">Tabs</string>
+											<string key="NSTitle">Spaces</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="795166967"/>
-											<reference key="NSMixedImage" ref="1030757361"/>
+											<reference key="NSOnImage" ref="843239332"/>
+											<reference key="NSMixedImage" ref="451780426"/>
 											<string key="NSAction">_popUpItemAction:</string>
+											<int key="NSTag">1</int>
 											<reference key="NSTarget" ref="19228221"/>
 										</object>
 									</array>
@@ -446,8 +447,8 @@
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<int key="NSState">1</int>
-									<reference key="NSOnImage" ref="795166967"/>
-									<reference key="NSMixedImage" ref="1030757361"/>
+									<reference key="NSOnImage" ref="843239332"/>
+									<reference key="NSMixedImage" ref="451780426"/>
 									<string key="NSAction">_popUpItemAction:</string>
 									<int key="NSTag">2</int>
 									<reference key="NSTarget" ref="571333812"/>
@@ -463,8 +464,8 @@
 											<string key="NSKeyEquiv"/>
 											<int key="NSKeyEquivModMask">1048576</int>
 											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="795166967"/>
-											<reference key="NSMixedImage" ref="1030757361"/>
+											<reference key="NSOnImage" ref="843239332"/>
+											<reference key="NSMixedImage" ref="451780426"/>
 											<string key="NSAction">_popUpItemAction:</string>
 											<reference key="NSTarget" ref="571333812"/>
 										</object>
@@ -473,8 +474,8 @@
 											<string key="NSTitle">Inserts tab character</string>
 											<string key="NSKeyEquiv"/>
 											<int key="NSMnemonicLoc">2147483647</int>
-											<reference key="NSOnImage" ref="795166967"/>
-											<reference key="NSMixedImage" ref="1030757361"/>
+											<reference key="NSOnImage" ref="843239332"/>
+											<reference key="NSMixedImage" ref="451780426"/>
 											<string key="NSAction">_popUpItemAction:</string>
 											<int key="NSTag">1</int>
 											<reference key="NSTarget" ref="571333812"/>
@@ -983,6 +984,30 @@
 						<reference key="destination" ref="96781671"/>
 					</object>
 					<int key="connectionID">107</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setIndentWithSpaces:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="657016836"/>
+					</object>
+					<int key="connectionID">108</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setTabWidth:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="385246231"/>
+					</object>
+					<int key="connectionID">109</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setIndentWidth:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="589886510"/>
+					</object>
+					<int key="connectionID">110</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1575,7 +1600,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">107</int>
+			<int key="maxID">110</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

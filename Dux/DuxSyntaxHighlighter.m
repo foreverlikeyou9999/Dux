@@ -22,6 +22,7 @@
   
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
+	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
   
   return self;
 }
@@ -52,7 +53,7 @@
   
   // now that we have the other atts, set the tab width based on the size of a space
   CGFloat spaceWidth = [@" " sizeWithAttributes:baseAttributes].width;
-  [paragraphStyle setDefaultTabInterval:spaceWidth * 2];
+  [paragraphStyle setDefaultTabInterval:spaceWidth * [DuxPreferences tabWidth]];
   [paragraphStyle setHeadIndent:spaceWidth * 10];
   
   NSMutableDictionary *mutableAtts = [baseAttributes mutableCopy];
@@ -251,6 +252,11 @@
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
+{
+  baseAttributes = nil; // this will ensure base attributes are re-created next time they're used
+}
+
+- (void)editorTabWidthDidChange:(NSNotification *)notif
 {
   baseAttributes = nil; // this will ensure base attributes are re-created next time they're used
 }

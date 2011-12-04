@@ -68,6 +68,7 @@
   [notifCenter addObserver:self selector:@selector(showLineNumbersDidChange:) name:DuxPreferencesShowLineNumbersDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(showPageGuideDidChange:) name:DuxPreferencesShowPageGuideDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
+	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
 }
 
 - (void)dealloc
@@ -956,6 +957,14 @@
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.textStorage setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, self.textStorage.length)];
+    [self.highlighter updateHighlightingForStorage:self.textStorage];
+  });
+}
+
+- (void)editorTabWidthDidChange:(NSNotification *)notif
 {
   dispatch_async(dispatch_get_main_queue(), ^{
     [self.textStorage setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, self.textStorage.length)];

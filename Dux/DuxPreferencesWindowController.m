@@ -53,13 +53,12 @@
   self.showPageGuideButton.state = [DuxPreferences showPageGuide] ? NSOnState : NSOffState;
   self.pageGuidePositionTextField.integerValue = [DuxPreferences pageGuidePosition];
   
+	[self.indentStylePopUpButton selectItemWithTag:(int)[DuxPreferences indentWithSpaces]];
+	[self.tabWidthTextField setIntValue:(int)[DuxPreferences tabWidth]];
+	[self.indentWidthTextField setIntValue:(int)[DuxPreferences indentWidth]];
   [self.tabKeyBehaviourPopUpButton selectItemWithTag:[DuxPreferences tabIndentBehaviour]];
   
   [showOtherInstancesOfSelectedSymbolButton setEnabled:NO];
-  
-  [indentStylePopUpButton setEnabled:NO];
-  [tabWidthTextField setEnabled:NO];
-  [indentWidthTextField setEnabled:NO];
   
   [lineWrappingButton setEnabled:NO];
   [lineWrappingSizeTextField setEnabled:NO];
@@ -89,6 +88,21 @@
 - (IBAction)setTabIndentBehaviour:(id)sender
 {
   [DuxPreferences setTabIndentBehaviour:self.tabKeyBehaviourPopUpButton.selectedTag];
+}
+
+- (IBAction)setIndentWithSpaces:(id)sender
+{
+	[DuxPreferences setIndentWithSpaces:(BOOL)self.indentStylePopUpButton.selectedTag];
+}
+
+- (IBAction)setTabWidth:(id)sender
+{
+	[DuxPreferences setTabWidth:(NSUInteger)self.tabWidthTextField.intValue];
+}
+
+- (IBAction)setIndentWidth:(id)sender
+{
+	[DuxPreferences setIndentWidth:(NSUInteger)self.indentWidthTextField.intValue];
 }
 
 - (void)changeFont:(id)sender

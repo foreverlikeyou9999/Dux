@@ -33,6 +33,9 @@ static NSUserDefaults *userDefaults;
   [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorPageGuide"];
   [defaults setObject:[NSNumber numberWithInteger:800] forKey:@"DuxEditorPageGuidePosition"];
   [defaults setObject:[NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace] forKey:@"DuxEditorTabIndentBehaviour"];
+	[defaults setObject:[NSNumber numberWithBool:NO] forKey:@"DuxEditorIndentWithSpaces"];
+	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorTabWidth"];
+	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorIndentWidth"];
   
   [userDefaults registerDefaults:defaults.copy];
 }
@@ -101,17 +104,38 @@ static NSUserDefaults *userDefaults;
 
 + (BOOL)indentWithSpaces
 {
-  return YES;
+	return [userDefaults boolForKey:@"DuxEditorIndentWithSpaces"];
+}
+
++ (void)setIndentWithSpaces:(BOOL)newValue
+{
+	[userDefaults setInteger:newValue forKey:@"DuxEditorIndentWithSpaces"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesIndentWithSpacesDidChangeNotification object:self];
 }
 
 + (NSUInteger)tabWidth
 {
-  return 2;
+	return [userDefaults integerForKey:@"DuxEditorTabWidth"];
+}
+
++ (void)setTabWidth:(NSUInteger)newValue
+{
+	[userDefaults setInteger:newValue forKey:@"DuxEditorTabWidth"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesTabWidthDidChangeNotification object:self];
 }
 
 + (NSUInteger)indentWidth
 {
-  return 2;
+	return [userDefaults integerForKey:@"DuxEditorIndentWidth"];
+}
+
++ (void)setIndentWidth:(NSUInteger)newValue
+{
+	[userDefaults setInteger:newValue forKey:@"DuxEditorIndentWidth"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesIndentWidthDidChangeNotification object:self];
 }
 
 @end
@@ -121,4 +145,6 @@ const NSString *DuxPreferencesShowLineNumbersDidChangeNotification = @"DuxPrefer
 const NSString *DuxPreferencesShowPageGuideDidChangeNotification = @"DuxPreferencesShowPageGuideDidChangeNotification";
 const NSString *DuxPreferencesPageGuidePositionDidChangeNotification = @"DuxPreferencesPageGuidePositionDidChangeNotification";
 const NSString *DuxPreferencesTabIndentBehaviourDidChangeNotification = @"DuxPreferencesTabIndentBehaviourDidChangeNotification";
-
+const NSString *DuxPreferencesIndentWithSpacesDidChangeNotification = @"DuxPreferencesIndentWithSpacesDidChangeNotification";
+const NSString *DuxPreferencesTabWidthDidChangeNotification = @"DuxPreferencesTabWidthDidChangeNotification";
+const NSString *DuxPreferencesIndentWidthDidChangeNotification = @"DuxPreferencesIndentWidthDidChangeNotification";

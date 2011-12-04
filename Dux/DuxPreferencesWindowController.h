@@ -31,6 +31,9 @@
 - (IBAction)setShowPageGuide:(id)sender;
 - (IBAction)setPageGuidePosition:(id)sender;
 - (IBAction)setTabIndentBehaviour:(id)sender;
+- (IBAction)setIndentWithSpaces:(id)sender;
+- (IBAction)setTabWidth:(id)sender;
+- (IBAction)setIndentWidth:(id)sender;
 
 
 @end

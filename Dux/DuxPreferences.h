@@ -36,8 +36,11 @@ typedef NSUInteger DuxTabIndentBehaviour;
 + (void)setTabIndentBehaviour:(DuxTabIndentBehaviour)newValue;
 
 + (BOOL)indentWithSpaces;
++ (void)setIndentWithSpaces:(BOOL)newValue;
 + (NSUInteger)tabWidth; // in number spaces
++ (void)setTabWidth:(NSUInteger)newValue;
 + (NSUInteger)indentWidth;
++ (void)setIndentWidth:(NSUInteger)newValue;
 
 @end
 
@@ -46,3 +49,6 @@ extern NSString *DuxPreferencesShowLineNumbersDidChangeNotification;
 extern NSString *DuxPreferencesShowPageGuideDidChangeNotification;
 extern NSString *DuxPreferencesPageGuidePositionDidChangeNotification;
 extern NSString *DuxPreferencesTabIndentBehaviourDidChangeNotification;
+extern NSString *DuxPreferencesIndentWithSpacesDidChangeNotification;
+extern NSString *DuxPreferencesTabWidthDidChangeNotification;
+extern NSString *DuxPreferencesIndentWidthDidChangeNotification;
