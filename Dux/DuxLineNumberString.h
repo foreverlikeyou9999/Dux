@@ -22,5 +22,6 @@
 
 // draw the line
 - (void)drawInRect:(NSRect)lineFragmentRect;
+- (void)drawAtY:(float)lineY;
 
 @end

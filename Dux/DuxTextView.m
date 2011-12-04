@@ -60,6 +60,13 @@
   [self replaceTextContainer:container];
   container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
   container.widthTracksTextView = YES;
+	
+	linePositions[0] = 0;
+	linePositions[1] = -2;
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+    [self updateLinePositions];
+		[self setNeedsDisplay:YES];
+	});
   
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
@@ -817,7 +824,6 @@
 	NSRect documentVisibleRect = self.enclosingScrollView.documentVisibleRect;
 	NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
-  NSString *string = self.textStorage.string;
   
   // background
   [[NSColor whiteColor] set];
@@ -856,40 +862,21 @@
     [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
     [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
     
-    // draw line numbers
-    glyphRange = [layoutManager glyphRangeForBoundingRect:documentVisibleRect inTextContainer:textContainer];
-    NSUInteger startIndex = glyphRange.location;
-    NSUInteger endIndex = glyphRange.location + glyphRange.length;
-    
-    // find the first visible line number
-    NSUInteger charIndex, index = 0;
-    NSUInteger lineNumber = 1;
-    NSRect visualLineRect;
-    NSRange lineRange, actualLineRange;
-    while (index < startIndex) {
-      visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-      charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
-      actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
-      [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
-      
-      index = NSMaxRange(lineRange);
-      lineNumber++;
-    }
-    
-    // draw line numbers
-    for (index = startIndex; index < endIndex; lineNumber++) {
-      visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
-      charIndex = [layoutManager characterIndexForGlyphAtIndex:lineRange.location];
-      actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
-      [layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&lineRange];
-      
-      index = NSMaxRange(lineRange);
-      [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:visualLineRect];
-    }
-    
-    NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
-    if (NSMinY(extraLineFragmentRect) >= NSMaxY(visualLineRect))
-      [[DuxLineNumberString stringForNumber:lineNumber] drawInRect:extraLineFragmentRect];
+		// find the first visible line
+		NSUInteger lineIndex = 0;
+		float lineY;
+		for (lineIndex = 0, lineY = linePositions[lineIndex]; true; lineIndex++) {
+			lineY = linePositions[lineIndex];
+			if (lineY < -1)
+				break;
+			
+			if ((lineY + 20) < NSMinY(dirtyRect))
+				continue;
+			if ((lineY - 20) > NSMaxY(dirtyRect))
+				break;
+			
+			[[DuxLineNumberString stringForNumber:lineIndex + 1] drawAtY:lineY];
+		}
   }
   
   [super drawRect:dirtyRect];
@@ -903,6 +890,7 @@
 - (void)textDidChange:(NSNotification *)notif
 {
   [self updateHighlightedElements];
+	[self updateLinePositions];
 }
 
 - (void)updateHighlightedElements
@@ -977,6 +965,56 @@
   });
 }
 
+- (void)updateLinePositions
+{
+	if (!self.showLineNumbers)
+		return;
+	
+	// init
+	NSString *string = self.string;
+	
+	NSLayoutManager *layoutManager = self.layoutManager;
+	NSTextContainer *textContainer = self.textContainer;
+	
+	NSUInteger glyphIndex = 0;
+	NSUInteger maxGlyphIndex = [layoutManager glyphRangeForTextContainer:textContainer].length;
+	NSUInteger charIndex = 0;
+	NSUInteger lineIndex = 0;
+	
+	NSRect visualLineRect;
+	NSRange visualLineRange, actualLineRange;
+	
+	// calculate height of every line
+	while (glyphIndex < maxGlyphIndex && lineIndex < 99999) {
+		// find the first visual line rect
+		visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&visualLineRange];
+		
+		// save it
+		linePositions[lineIndex] = visualLineRect.origin.y;
+		
+		// find the actual line range for this rect
+		charIndex = [layoutManager characterIndexForGlyphAtIndex:visualLineRange.location];
+		actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
+		
+		// find the last visual line rect
+		[layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&visualLineRange];
+		
+		// move on to the next line
+		glyphIndex = NSMaxRange(visualLineRange);
+		lineIndex++;
+	}
+	
+	// check for extra line fragment rect
+	NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
+	if (extraLineFragmentRect.size.height > 0.01 && lineIndex < 99999) {
+		linePositions[lineIndex] = extraLineFragmentRect.origin.y;
+		lineIndex++;
+	}
+
+	// terminate the array
+	linePositions[lineIndex] = -2;
+}
+
 - (void)editorFontDidChange:(NSNotification *)notif
 {
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -999,6 +1037,9 @@
   [(DuxTextContainer *)self.textContainer setLeftGutterWidth:self.showLineNumbers ? 34 : 0];
   
   [self.layoutManager invalidateLayoutForCharacterRange:NSMakeRange(0, self.string.length) actualCharacterRange:NULL];
+	
+	[self updateLinePositions];
+	
   [self setNeedsDisplay:YES];
 }
 
