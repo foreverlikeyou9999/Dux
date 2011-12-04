@@ -103,7 +103,7 @@
 														<bool key="EncodedWithXMLCoder">YES</bool>
 														<reference ref="80752944"/>
 													</object>
-													<int key="NSLMFlags">6</int>
+													<int key="NSLMFlags">134</int>
 													<nil key="NSDelegate"/>
 												</object>
 												<reference key="NSTextView" ref="803346101"/>
@@ -443,9 +443,13 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string>commentSelection:</string>
 							<string>goToLinePanelButtonClicked:</string>
 							<string>jumpToLine:</string>
+							<string>shiftSelectionLeft:</string>
+							<string>shiftSelectionRight:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -458,6 +462,8 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string>commentSelection:</string>
 							<string>goToLinePanelButtonClicked:</string>
 							<string>jumpToLine:</string>
+							<string>shiftSelectionLeft:</string>
+							<string>shiftSelectionRight:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -471,6 +477,14 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">jumpToLine:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">shiftSelectionLeft:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">shiftSelectionRight:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

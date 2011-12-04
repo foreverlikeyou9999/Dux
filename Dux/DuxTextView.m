@@ -26,6 +26,15 @@
 @synthesize showPageGuide;
 @synthesize pageGuidePosition;
 
+static NSCharacterSet *newlineCharacterSet;
+
++ (void)initialize
+{
+	[super initialize];
+	
+	newlineCharacterSet = [NSCharacterSet newlineCharacterSet];
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
   if (!(self = [super initWithCoder:aDecoder]))
@@ -111,7 +120,7 @@
 {
   // find the start of the current line
   NSUInteger lineStart = 0;
-  NSRange newlineRange = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch range:NSMakeRange(0, self.selectedRange.location)];
+  NSRange newlineRange = [self.textStorage.string rangeOfCharacterFromSet:newlineCharacterSet options:NSBackwardsSearch range:NSMakeRange(0, self.selectedRange.location)];
   if (newlineRange.location != NSNotFound) {
     lineStart = newlineRange.location + 1;
   }
@@ -176,7 +185,7 @@
   NSUInteger stringLength = string.length;
   NSUInteger characterLocation = 0;
   while (atLine < targetLine) {
-    characterLocation = [string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
+    characterLocation = [string rangeOfCharacterFromSet:newlineCharacterSet options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
     
     if (characterLocation == NSNotFound) {
       NSBeep();
@@ -976,42 +985,43 @@
 	if (!self.showLineNumbers)
 		return;
 	
-	NSDate *debugStart = [NSDate date];
-	
 	// init
 	NSString *string = self.string;
+	NSUInteger stringLength = string.length;
+  NSInteger characterIndex = 0;
 	
 	NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
 	
-	NSUInteger glyphIndex = 0;
-	NSUInteger maxGlyphIndex = [layoutManager glyphRangeForTextContainer:textContainer].length;
-	NSUInteger charIndex = 0;
 	NSUInteger lineIndex = 0;
-	
-	NSRect visualLineRect;
-	NSRange visualLineRange, actualLineRange;
-	
-	// calculate height of every line
-	while (glyphIndex < maxGlyphIndex && lineIndex < 99999) {
-		// find the first visual line rect
-		visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&visualLineRange];
+	NSUInteger glyphIndex = 0;
+	NSUInteger glyphLength = [layoutManager glyphRangeForTextContainer:textContainer].length;
+	while (glyphIndex < glyphLength && lineIndex < 99999) {
+		if (glyphIndex >= glyphLength)
+			break;
 		
-		// save it
+		// find visual line rect
+		NSRange lineGlyphRange;
+		NSRect visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&lineGlyphRange];
 		linePositions[lineIndex] = visualLineRect.origin.y;
 		
-		// find the actual line range for this rect
-		charIndex = [layoutManager characterIndexForGlyphAtIndex:visualLineRange.location];
-		actualLineRange = [string lineRangeForRange:NSMakeRange(charIndex, 0)];
+		// is this the actual end of the line?
+		characterIndex = [layoutManager characterIndexForGlyphAtIndex:NSMaxRange(lineGlyphRange)] - 1;
 		
-		// find the last visual line rect
-		[layoutManager lineFragmentRectForGlyphAtIndex:NSMaxRange(actualLineRange) - 1 effectiveRange:&visualLineRange];
+		while (characterIndex >= 0 && characterIndex < stringLength && visualLineRect.size.width > 0.01 && ![newlineCharacterSet characterIsMember:[string characterAtIndex:characterIndex]]) {
+			glyphIndex = NSMaxRange(lineGlyphRange);
+			if (glyphIndex >= glyphLength)
+				break;
 		
-		// move on to the next line
-		glyphIndex = NSMaxRange(visualLineRange);
+			visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&lineGlyphRange];
+			characterIndex = [layoutManager characterIndexForGlyphAtIndex:NSMaxRange(lineGlyphRange)] - 1;
+		}
+		
+		// move on
+		glyphIndex = NSMaxRange(lineGlyphRange);
 		lineIndex++;
 	}
-	
+
 	// check for extra line fragment rect
 	NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
 	if (extraLineFragmentRect.size.height > 0.01 && lineIndex < 99999) {
@@ -1022,8 +1032,6 @@
 	// terminate the array
 	linePositions[lineIndex] = -2;
 	linePositionsNeedUpdating = NO;
-	
-	NSLog(@"line positions calculated in %f seconds", 0 - [debugStart timeIntervalSinceNow]);
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
