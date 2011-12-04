@@ -254,7 +254,10 @@
 
 - (IBAction)shiftSelectionRight:(id)sender
 {
-  // build an array of stings that sholud be inserted (each array item is an NSDictionary, containing "string" and "location" values)
+	if ([DuxPreferences indentWidth] == 0) // indenting disabled
+		return;
+	
+  // build an array of stings that sholud be inserted (each array item is an NSDictionary, containing "string" and "range" values)
   NSMutableArray *whitespaceStringsToInsert = [NSMutableArray array];
   
   for (NSValue *selectedRangeValue in self.selectedRanges) {
@@ -263,16 +266,29 @@
       
       // increase the whitespace to the apropriate number of spaces
       NSString *whitespaceChar = [DuxPreferences indentWithSpaces] ? @" " : @"\t";
-      NSString *newWhitespace = [whitespace stringByAppendingString:whitespaceChar];
-      while ([self countSpacesInLeadingWhitespace:newWhitespace] % [DuxPreferences indentWidth] != 0) {
-        newWhitespace = [newWhitespace stringByAppendingString:whitespaceChar];
+			NSUInteger targetCount = [self countSpacesInLeadingWhitespace:whitespace] + [DuxPreferences indentWidth];
+			targetCount -= targetCount % [DuxPreferences indentWidth];
+			
+      NSMutableString *newWhitespace = whitespace.mutableCopy;
+			[newWhitespace appendString:whitespaceChar];
+      while ([self countSpacesInLeadingWhitespace:newWhitespace] < targetCount) {
+        [newWhitespace appendString:whitespaceChar];
       }
+			
+			// if we now have too many spaces, remove the last character and add spaces until we reach the right amount (possible if tabWidth is not exactly modulo indentWidth)
+			if ([self countSpacesInLeadingWhitespace:newWhitespace] != targetCount) {
+				[newWhitespace replaceCharactersInRange:NSMakeRange(newWhitespace.length - 1, 1) withString:@""];
+				while ([self countSpacesInLeadingWhitespace:newWhitespace] < targetCount) {
+					[newWhitespace appendString:@" "];
+				}
+			}
       
       // drop the existing whitespace from the insert string (we're done with it)
-      newWhitespace = [newWhitespace substringFromIndex:whitespace.length];
+			[newWhitespace replaceCharactersInRange:NSMakeRange(0, whitespace.length) withString:@""];
       
       // record it to be inserted later
-      [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:newWhitespace, @"string", [NSNumber numberWithUnsignedInteger:lineRangeValue.rangeValue.location + whitespace.length], @"location", nil]];
+			NSRange insertRange = NSMakeRange(lineRangeValue.rangeValue.location + whitespace.length, 0);
+      [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:newWhitespace.copy, @"string", [NSValue valueWithRange:insertRange], @"range", nil]];
     }
   }
   
@@ -282,9 +298,10 @@
   NSUInteger insertionOffset = 0;
   for (NSDictionary *insertion in whitespaceStringsToInsert) {
     NSString *whitespace = [insertion valueForKey:@"string"];
-    NSUInteger location = [[insertion valueForKey:@"location"] unsignedIntegerValue] + insertionOffset;
+		NSRange insertRange = [[insertion valueForKey:@"range"] rangeValue];
+		insertRange.location += insertionOffset;
     
-    [self replaceCharactersInRange:NSMakeRange(location, 0) withString:whitespace];
+    [self replaceCharactersInRange:insertRange withString:whitespace];
     
     insertionOffset += whitespace.length;
     
@@ -292,9 +309,9 @@
     for (NSValue *selectedRangeValue in selectedRanges) {
       NSRange selectedRange = selectedRangeValue.rangeValue;
       
-      if (NSMaxRange(selectedRange) < location) {
+      if (NSMaxRange(selectedRange) < insertRange.location) {
         // selected range before insertion. do nothing
-      } else if (selectedRange.location >= location) {
+      } else if ((selectedRange.length == 0 && selectedRange.location >= insertRange.location) || (selectedRange.length > 0 && selectedRange.location > insertRange.location)) {
         // selected range after insertion. increase location by insertion size
         selectedRange.location += whitespace.length;
       } else {
@@ -312,28 +329,82 @@
 
 - (IBAction)shiftSelectionLeft:(id)sender
 {
-  // figure out the range of the string we are shifting
-  NSRange originalSelectedRange = self.selectedRange;
-  NSRange shiftRange = originalSelectedRange;
+	if ([DuxPreferences indentWidth] == 0) // indenting disabled
+		return;
+	
+  // build an array of stings that sholud be inserted (each array item is an NSDictionary, containing "string" and "range" values)
+  NSMutableArray *whitespaceStringsToInsert = [NSMutableArray array];
   
-  NSUInteger beginingOfLine = [self.textStorage.string beginingOfLineAtOffset:self.selectedRange.location];
-  shiftRange = NSMakeRange(beginingOfLine, NSMaxRange(shiftRange) - beginingOfLine);
-  
-  NSUInteger endOfLine = [self.textStorage.string endOfLineAtOffset:NSMaxRange(self.selectedRange)];
-  shiftRange = NSMakeRange(shiftRange.location, endOfLine - shiftRange.location);
-  
-  // increase indent level
-  NSString *existingString = [self.textStorage.string substringWithRange:shiftRange];
-  
-  NSString *shiftedString = [existingString stringByReplacingOccurrencesOfString:@"(\n|^)  " withString:@"$1" options:NSRegularExpressionSearch range:NSMakeRange(0, existingString.length)];
-  
-  [self insertText:shiftedString replacementRange:shiftRange];
-  
-  if (originalSelectedRange.length == 0) {
-    [self setSelectedRange:NSMakeRange(originalSelectedRange.location - (existingString.length - shiftedString.length), 0)];
-  } else {
-    [self setSelectedRange:NSMakeRange(shiftRange.location, shiftedString.length)];
+  for (NSValue *selectedRangeValue in self.selectedRanges) {
+    for (NSValue *lineRangeValue in [self.string lineEnumeratorForLinesInRange:selectedRangeValue.rangeValue]) {
+      NSString *whitespace = [self.string whitespaceForLineBeginingAtLocation:lineRangeValue.rangeValue.location];
+      
+			// figure out the apropriate indent width
+			NSUInteger targetCount = [self countSpacesInLeadingWhitespace:whitespace];
+			if (targetCount < [DuxPreferences indentWidth]) {
+				targetCount = 0;
+			} else {
+				targetCount -= [DuxPreferences indentWidth];
+			}
+			targetCount += targetCount % [DuxPreferences indentWidth];
+			
+      // reduce the whitespace to the apropriate number of spaces
+      NSMutableString *newWhitespace = whitespace.mutableCopy;
+      while ([self countSpacesInLeadingWhitespace:newWhitespace] > targetCount) {
+        [newWhitespace replaceCharactersInRange:NSMakeRange(newWhitespace.length -1, 1) withString:@""];
+      }
+			NSRange insertRange = NSMakeRange(lineRangeValue.rangeValue.location + newWhitespace.length, whitespace.length - newWhitespace.length);
+			NSString *insertString = @"";
+			
+			// if we now don't have enough spaces, add some until we have the right amount (this can happen if there's an odd combination of tabs/spaces)
+			while ([self countSpacesInLeadingWhitespace:newWhitespace] < targetCount) {
+				insertString = [insertString stringByAppendingString:@" "];
+			}
+      
+      // record it to be inserted later
+      [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:insertString, @"string", [NSValue valueWithRange:insertRange], @"range", nil]];
+    }
   }
+  
+  // insert the strings, maintaining the current selected range
+  NSArray *selectedRanges = self.selectedRanges;
+  
+  NSInteger insertionOffset = 0;
+  for (NSDictionary *insertion in whitespaceStringsToInsert) {
+    NSString *whitespace = [insertion valueForKey:@"string"];
+		NSRange insertRange = [[insertion valueForKey:@"range"] rangeValue];
+		insertRange.location += insertionOffset;
+    
+    [self replaceCharactersInRange:insertRange withString:whitespace];
+    
+    insertionOffset -= (insertRange.length - whitespace.length);
+    
+    NSMutableArray *newSelectedRanges = [NSMutableArray array];
+    for (NSValue *selectedRangeValue in selectedRanges) {
+      NSRange selectedRange = selectedRangeValue.rangeValue;
+      
+      if (NSMaxRange(selectedRange) < insertRange.location) {
+        // selected range before insertion. do nothing
+      } else if (selectedRange.location > insertRange.location) {
+        // selected range after insertion. reduce location by insertion size
+        selectedRange.location -= (insertRange.length - whitespace.length);
+      } else {
+        // selected range includes insertion. reduce it's length
+				if (selectedRange.length > (insertRange.length - whitespace.length)) {
+					selectedRange.length -= (insertRange.length - whitespace.length);
+				} else {
+					selectedRange.length = 0;
+				}
+      }
+			
+			if (selectedRange.length > 0 || newSelectedRanges.count == 0) // can only have a single zero length range
+				[newSelectedRanges addObject:[NSValue valueWithRange:selectedRange]];
+    }
+    selectedRanges = [newSelectedRanges copy];
+  }
+  
+  // restore modified selected ranges
+  [self setSelectedRanges:selectedRanges];
 }
 
 - (NSArray *)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
