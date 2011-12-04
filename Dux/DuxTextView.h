@@ -51,4 +51,7 @@
 
 - (void)updateHighlightedElements;
 
+- (BOOL)insertionPointInLeadingWhitespace;
+- (BOOL)tabShouldIndentWithCurrentSelectedRange;
+
 @end

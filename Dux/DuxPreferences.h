@@ -10,6 +10,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+enum {
+  DuxTabAlwaysIndents = 0,
+  DuxTabNeverIndents = 1,
+  DuxTabIndentInLeadingWhitespace = 2
+};
+typedef NSUInteger DuxTabIndentBehaviour;
+
 @interface DuxPreferences : NSObject
 
 + (void)registerDefaults;
@@ -25,9 +32,13 @@
 + (NSUInteger)pageGuidePosition;
 + (void)setPageGuidePosition:(NSUInteger)newValue;
 
++ (DuxTabIndentBehaviour)tabIndentBehaviour;
++ (void)setTabIndentBehaviour:(DuxTabIndentBehaviour)newValue;
+
 @end
 
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;
 extern NSString *DuxPreferencesShowLineNumbersDidChangeNotification;
 extern NSString *DuxPreferencesShowPageGuideDidChangeNotification;
 extern NSString *DuxPreferencesPageGuidePositionDidChangeNotification;
+extern NSString *DuxPreferencesTabIndentBehaviourDidChangeNotification;

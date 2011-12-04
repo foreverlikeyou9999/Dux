@@ -31,7 +31,8 @@ static NSUserDefaults *userDefaults;
   
   [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorShowLineNumbers"];
   [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorPageGuide"];
-  [defaults setObject:[NSNumber numberWithInt:800] forKey:@"DuxEditorPageGuidePosition"];
+  [defaults setObject:[NSNumber numberWithInteger:800] forKey:@"DuxEditorPageGuidePosition"];
+  [defaults setObject:[NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace] forKey:@"DuxEditorTabIndentBehaviour"];
   
   [userDefaults registerDefaults:defaults.copy];
 }
@@ -86,10 +87,23 @@ static NSUserDefaults *userDefaults;
   [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesPageGuidePositionDidChangeNotification object:self];
 }
 
++ (DuxTabIndentBehaviour)tabIndentBehaviour
+{
+  return [userDefaults integerForKey:@"DuxEditorTabIndentBehaviour"];
+}
+
++ (void)setTabIndentBehaviour:(DuxTabIndentBehaviour)newValue
+{
+  [userDefaults setInteger:newValue forKey:@"DuxEditorTabIndentBehaviour"];
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesTabIndentBehaviourDidChangeNotification object:self];
+}
+
 @end
 
 const NSString *DuxPreferencesEditorFontDidChangeNotification = @"DuxPreferencesEditorFontDidChangeNotification";
 const NSString *DuxPreferencesShowLineNumbersDidChangeNotification = @"DuxPreferencesShowLineNumbersDidChangeNotification";
 const NSString *DuxPreferencesShowPageGuideDidChangeNotification = @"DuxPreferencesShowPageGuideDidChangeNotification";
 const NSString *DuxPreferencesPageGuidePositionDidChangeNotification = @"DuxPreferencesPageGuidePositionDidChangeNotification";
+const NSString *DuxPreferencesTabIndentBehaviourDidChangeNotification = @"DuxPreferencesTabIndentBehaviourDidChangeNotification";
 

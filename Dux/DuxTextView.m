@@ -427,9 +427,50 @@
       
       [self deleteSubwordForward:self];
       return;
+    case NSTabCharacter:
+    case 25: // shift-tab
+      if (![self tabShouldIndentWithCurrentSelectedRange]) {
+        break;
+      }
+      
+      if (theEvent.modifierFlags & NSShiftKeyMask) {
+        [self shiftSelectionLeft:self];
+      } else {
+        [self shiftSelectionRight:self];
+      }
+      return;
   }
   
   [super keyDown:theEvent];
+}
+
+- (BOOL)insertionPointInLeadingWhitespace
+{
+  if (self.selectedRange.length != 0)
+    return NO;
+  
+  if (self.selectedRange.location == 0)
+    return YES;
+  
+  NSUInteger currentLineStart = [self.string rangeOfLineAtOffset:self.selectedRange.location].location;
+  if (currentLineStart == self.selectedRange.location)
+    return YES;
+  
+  NSCharacterSet *nonWhitespaceCharacterSet = [[NSCharacterSet whitespaceCharacterSet] invertedSet];
+  NSUInteger charLocation = [self.string rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:NSLiteralSearch range:NSMakeRange(currentLineStart, self.selectedRange.location - currentLineStart)].location;
+  
+  return charLocation == NSNotFound;
+}
+
+- (BOOL)tabShouldIndentWithCurrentSelectedRange
+{
+  if ([DuxPreferences tabIndentBehaviour] == DuxTabAlwaysIndents)
+    return YES;
+  
+  if ([DuxPreferences tabIndentBehaviour] == DuxTabNeverIndents)
+    return NO;
+
+  return [self insertionPointInLeadingWhitespace];
 }
 
 - (NSUInteger)findBeginingOfSubwordStartingAt:(NSUInteger)offset

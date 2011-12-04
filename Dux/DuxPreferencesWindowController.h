@@ -30,6 +30,7 @@
 - (IBAction)setShowLineNumbers:(id)sender;
 - (IBAction)setShowPageGuide:(id)sender;
 - (IBAction)setPageGuidePosition:(id)sender;
+- (IBAction)setTabIndentBehaviour:(id)sender;
 
 
 @end

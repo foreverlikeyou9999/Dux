@@ -53,12 +53,13 @@
   self.showPageGuideButton.state = [DuxPreferences showPageGuide] ? NSOnState : NSOffState;
   self.pageGuidePositionTextField.integerValue = [DuxPreferences pageGuidePosition];
   
+  [self.tabKeyBehaviourPopUpButton selectItemWithTag:[DuxPreferences tabIndentBehaviour]];
+  
   [showOtherInstancesOfSelectedSymbolButton setEnabled:NO];
   
   [indentStylePopUpButton setEnabled:NO];
   [tabWidthTextField setEnabled:NO];
   [indentWidthTextField setEnabled:NO];
-  [tabKeyBehaviourPopUpButton setEnabled:NO];
   
   [lineWrappingButton setEnabled:NO];
   [lineWrappingSizeTextField setEnabled:NO];
@@ -83,6 +84,11 @@
 - (IBAction)setPageGuidePosition:(id)sender
 {
   [DuxPreferences setPageGuidePosition:self.pageGuidePositionTextField.integerValue];
+}
+
+- (IBAction)setTabIndentBehaviour:(id)sender
+{
+  [DuxPreferences setTabIndentBehaviour:self.tabKeyBehaviourPopUpButton.selectedTag];
 }
 
 - (void)changeFont:(id)sender
