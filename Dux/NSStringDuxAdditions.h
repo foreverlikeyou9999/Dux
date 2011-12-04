@@ -9,6 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DuxStringLineEnumerator.h"
 
 enum {
   DuxNewlineUnknown = 0,
@@ -22,14 +23,19 @@ typedef NSUInteger DuxNewlineOptions;
 
 + (id)stringWithUnknownData:(NSData *)data usedEncoding:(NSStringEncoding *)enc;
 
+- (DuxStringLineEnumerator *)lineEnumeratorForLinesInRange:(NSRange)range;
 - (NSRange)rangeOfLineAtOffset:(NSUInteger)location;
 - (NSUInteger)beginingOfLineAtOffset:(NSUInteger)location;
 - (NSUInteger)endOfLineAtOffset:(NSUInteger)location;
+
+- (NSString *)whitespaceForLineBeginingAtLocation:(NSUInteger)lineBegining;
 
 - (DuxNewlineOptions)newlineStyles;
 - (DuxNewlineOptions)newlineStyleForFirstNewline;
 + (NSString *)stringForNewlineStyle:(DuxNewlineOptions)newlineStyle;
 
 - (NSString *)stringByReplacingNewlinesWithNewline:(DuxNewlineOptions)newlineStyle;
+
+- (NSUInteger)countOccurancesOfString:(NSString *)substring;
 
 @end

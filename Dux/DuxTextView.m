@@ -135,12 +135,6 @@
   }
 }
 
-- (void)insertTab:(id)sender
-{
-  // insert two spaces instead of a tab
-  [self insertText:@"  "];
-}
-
 - (void)deleteBackward:(id)sender
 {
   // when deleting spaces, delete twice each time the delete key is pressed
@@ -260,29 +254,75 @@
 
 - (IBAction)shiftSelectionRight:(id)sender
 {
-  // figure out the range of the string we are shifting
-  NSRange originalSelectedRange = self.selectedRange;
-  NSRange shiftRange = originalSelectedRange;
+  // build an array of stings that sholud be inserted (each array item is an NSDictionary, containing "string" and "location" values)
+  NSMutableArray *whitespaceStringsToInsert = [NSMutableArray array];
   
-  NSUInteger beginingOfLine = [self.textStorage.string beginingOfLineAtOffset:self.selectedRange.location];
-  shiftRange = NSMakeRange(beginingOfLine, NSMaxRange(shiftRange) - beginingOfLine);
-  
-  NSUInteger endOfLine = [self.textStorage.string endOfLineAtOffset:NSMaxRange(self.selectedRange)];
-  shiftRange = NSMakeRange(shiftRange.location, endOfLine - shiftRange.location);
-  
-  // increase indent level
-  NSString *existingString = [self.textStorage.string substringWithRange:shiftRange];
-  
-  NSString *shiftedString= [NSString stringWithFormat:@"  %@", existingString];
-  shiftedString = [shiftedString stringByReplacingOccurrencesOfString:@"(\n)" withString:@"$1  " options:NSRegularExpressionSearch range:NSMakeRange(0, shiftedString.length)];
-  
-  [self insertText:shiftedString replacementRange:shiftRange];
-  
-  if (originalSelectedRange.length == 0) {
-    [self setSelectedRange:NSMakeRange(originalSelectedRange.location + (shiftedString.length - existingString.length), 0)];
-  } else {
-    [self setSelectedRange:NSMakeRange(shiftRange.location, shiftedString.length)];
+  for (NSValue *selectedRangeValue in self.selectedRanges) {
+    for (NSValue *lineRangeValue in [self.string lineEnumeratorForLinesInRange:selectedRangeValue.rangeValue]) {
+      NSString *whitespace = [self.string whitespaceForLineBeginingAtLocation:lineRangeValue.rangeValue.location];
+      
+      // figure out how many spaces wide the whitespace currently is
+      NSUInteger spacesWide = 0;
+      NSUInteger charLocation;
+      for (charLocation = 0; charLocation < whitespace.length; charLocation++) {
+        switch ([whitespace characterAtIndex:charLocation]) {
+          case ' ':
+            spacesWide++;
+            break;
+          case '\t':
+            spacesWide++;
+            while (spacesWide % 2 != 0) {
+              spacesWide++;
+            }
+            break;
+        }
+      }
+      
+      // increase the whitespace to the new number of spaces
+      NSString *newWhitespace = @" ";
+      spacesWide++;
+      while (spacesWide % 2 != 0) {
+        newWhitespace = [newWhitespace stringByAppendingString:@" "];
+        spacesWide++;
+      }
+      
+      // record it to be inserted later
+      [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:newWhitespace, @"string", [NSNumber numberWithUnsignedInteger:lineRangeValue.rangeValue.location + whitespace.length], @"location", nil]];
+    }
   }
+  
+  // insert the strings, maintaining the current selected range
+  NSArray *selectedRanges = self.selectedRanges;
+  
+  NSUInteger insertionOffset = 0;
+  for (NSDictionary *insertion in whitespaceStringsToInsert) {
+    NSString *whitespace = [insertion valueForKey:@"string"];
+    NSUInteger location = [[insertion valueForKey:@"location"] unsignedIntegerValue] + insertionOffset;
+    
+    [self replaceCharactersInRange:NSMakeRange(location, 0) withString:whitespace];
+    
+    insertionOffset += whitespace.length;
+    
+    NSMutableArray *newSelectedRanges = [NSMutableArray array];
+    for (NSValue *selectedRangeValue in selectedRanges) {
+      NSRange selectedRange = selectedRangeValue.rangeValue;
+      
+      if (NSMaxRange(selectedRange) < location) {
+        // selected range before insertion. do nothing
+      } else if (selectedRange.location > location) {
+        // selected range after insertion. increase location by insertion size
+        selectedRange.location += whitespace.length;
+      } else {
+        // selected range includes insertion. extend it's length
+        selectedRange.length += whitespace.length;
+      }
+      [newSelectedRanges addObject:[NSValue valueWithRange:selectedRange]];
+    }
+    selectedRanges = [newSelectedRanges copy];
+  }
+  
+  // restore modified selected ranges
+  [self setSelectedRanges:selectedRanges];
 }
 
 - (IBAction)shiftSelectionLeft:(id)sender
@@ -439,6 +479,7 @@
         [self shiftSelectionRight:self];
       }
       return;
+    
   }
   
   [super keyDown:theEvent];

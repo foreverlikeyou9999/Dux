@@ -12,7 +12,16 @@
 
 @implementation NSString (NSStringDuxAdditions)
 
-static NSCharacterSet *newlineCharacterSet = nil;
+static NSCharacterSet *newlineCharacterSet;
+static NSCharacterSet *nonWhitespaceCharacterSet;
+
++ (void)initialize
+{
+  [super initialize];
+  
+  newlineCharacterSet = [NSCharacterSet newlineCharacterSet];
+  nonWhitespaceCharacterSet = [[NSCharacterSet whitespaceCharacterSet] invertedSet];
+}
 
 + (id)stringWithUnknownData:(NSData *)data usedEncoding:(NSStringEncoding *)enc
 {
@@ -43,10 +52,6 @@ static NSCharacterSet *newlineCharacterSet = nil;
 
 - (NSRange)rangeOfLineAtOffset:(NSUInteger)location
 {
-  if (!newlineCharacterSet) {
-    newlineCharacterSet = [NSCharacterSet newlineCharacterSet];
-  }
-  
   NSUInteger lineBegining = [self rangeOfCharacterFromSet:newlineCharacterSet options:NSBackwardsSearch range:NSMakeRange(0, location)].location;
   if (lineBegining == NSNotFound) {
     lineBegining = 0;
@@ -64,10 +69,6 @@ static NSCharacterSet *newlineCharacterSet = nil;
 
 - (NSUInteger)beginingOfLineAtOffset:(NSUInteger)location
 {
-  if (!newlineCharacterSet) {
-    newlineCharacterSet = [NSCharacterSet newlineCharacterSet];
-  }
-  
   NSUInteger lineBegining = [self rangeOfCharacterFromSet:newlineCharacterSet options:NSBackwardsSearch range:NSMakeRange(0, location)].location;
   
   if (lineBegining == NSNotFound) {
@@ -79,10 +80,6 @@ static NSCharacterSet *newlineCharacterSet = nil;
 
 - (NSUInteger)endOfLineAtOffset:(NSUInteger)location
 {
-  if (!newlineCharacterSet) {
-    newlineCharacterSet = [NSCharacterSet newlineCharacterSet];
-  }
-  
   NSUInteger lineEnd = [self rangeOfCharacterFromSet:newlineCharacterSet options:0 range:NSMakeRange(location, self.length - location)].location;
   
   if (lineEnd == NSNotFound) {
@@ -100,7 +97,7 @@ static NSCharacterSet *newlineCharacterSet = nil;
   DuxNewlineOptions newlineStyles = DuxNewlineUnknown;
   DuxNewlineOptions characterNewlineType;
   while (characterLocation < stringLength) {
-    characterLocation = [self rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
+    characterLocation = [self rangeOfCharacterFromSet:newlineCharacterSet options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
     
     if (characterLocation == NSNotFound) {
       break;
@@ -134,7 +131,7 @@ static NSCharacterSet *newlineCharacterSet = nil;
 {
   DuxNewlineOptions newlineStyle;
   
-  NSUInteger characterLocation = [self rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch range:NSMakeRange(0, (self.length))].location;
+  NSUInteger characterLocation = [self rangeOfCharacterFromSet:newlineCharacterSet options:NSLiteralSearch range:NSMakeRange(0, (self.length))].location;
     
   if (characterLocation == NSNotFound) {
     return DuxNewlineUnknown;
@@ -181,9 +178,8 @@ static NSCharacterSet *newlineCharacterSet = nil;
   NSUInteger previousCharacterLocation = 0;
   NSUInteger characterLocation = 0;
   DuxNewlineOptions characterNewlineType;
-  NSCharacterSet *newlineCharset = [NSCharacterSet newlineCharacterSet];
   while (characterLocation < stringLength) {
-    characterLocation = [self rangeOfCharacterFromSet:newlineCharset options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
+    characterLocation = [self rangeOfCharacterFromSet:newlineCharacterSet options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
     
     if (characterLocation == NSNotFound) {
       if (previousCharacterLocation != stringLength)
@@ -220,6 +216,46 @@ static NSCharacterSet *newlineCharacterSet = nil;
   }
   
   return [newString copy];
+}
+
+- (DuxStringLineEnumerator *)lineEnumeratorForLinesInRange:(NSRange)range
+{
+  return [[DuxStringLineEnumerator alloc] initWithString:self forLinesInRange:range];
+}
+
+- (NSString *)whitespaceForLineBeginingAtLocation:(NSUInteger)lineBegining
+{
+  if (self.length == 0)
+    return @"";
+  
+  NSUInteger charLocation = [self rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:NSLiteralSearch range:NSMakeRange(lineBegining, self.length - lineBegining)].location;
+  
+  if (charLocation == NSNotFound)
+    charLocation = self.length;
+  
+  if (charLocation == lineBegining)
+    return @"";
+  
+  return [self substringWithRange:NSMakeRange(lineBegining, charLocation - lineBegining)];
+}
+
+- (NSUInteger)countOccurancesOfString:(NSString *)substring
+{
+  NSUInteger count = 0;
+  NSUInteger searchPosition = 0;
+  NSUInteger stringLength = self.length;
+  
+  while (searchPosition < stringLength) {
+    searchPosition = [self rangeOfString:substring options:NSLiteralSearch range:NSMakeRange(searchPosition, stringLength - searchPosition)].location;
+    
+    if (searchPosition == NSNotFound)
+      break;
+    
+    count++;
+    searchPosition += substring.length;
+  }
+  
+  return count;
 }
 
 @end
