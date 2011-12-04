@@ -36,6 +36,8 @@
 
 - (IBAction)commentSelection:(id)sender; // will forward to uncommentSelection: if the selection is commented
 - (IBAction)uncomment:(NSRange)commentRange;
+- (IBAction)shiftSelectionLeft:(id)sender;
+- (IBAction)shiftSelectionRight:(id)sender;
 
 - (void)moveSubwordBackward:(id)sender;
 - (void)moveSubwordBackwardAndModifySelection:(id)sender;

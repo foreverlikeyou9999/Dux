@@ -137,26 +137,13 @@
 
 - (void)deleteBackward:(id)sender
 {
-  // when deleting spaces, delete twice each time the delete key is pressed
-  if (self.selectedRange.length == 0 && self.selectedRange.location > 1) {
-    if ([[self.textStorage.string substringWithRange:NSMakeRange(self.selectedRange.location - 2, 2)] isEqualToString:@"  "]) {
-      [super deleteBackward:sender];
-    }
+  // when deleting in leading whitespace, indent left instead
+	if ([self insertionPointInLeadingWhitespace] && [self.string beginingOfLineAtOffset:self.selectedRange.location] != self.selectedRange.location) {
+		[self shiftSelectionLeft:self];
+		return;
   }
   
   [super deleteBackward:sender];
-}
-
-- (void)deleteForward:(id)sender
-{
-  // when deleting spaces, delete twice each time the delete key is pressed
-  if (self.selectedRange.length == 0 && self.selectedRange.location < (self.textStorage.length - 1)) {
-    if ([[self.textStorage.string substringWithRange:NSMakeRange(self.selectedRange.location, 2)] isEqualToString:@"  "]) {
-      [super deleteForward:sender];
-    }
-  }
-  
-  [super deleteForward:sender];
 }
 
 - (IBAction)jumpToLine:(id)sender
@@ -566,6 +553,9 @@
 
 - (BOOL)insertionPointInLeadingWhitespace
 {
+	if (self.selectedRanges.count > 1)
+		return NO;
+	
   if (self.selectedRange.length != 0)
     return NO;
   
