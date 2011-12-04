@@ -245,8 +245,9 @@
 	if ([DuxPreferences indentWidth] == 0) // indenting disabled
 		return;
 	
-  // build an array of stings that sholud be inserted (each array item is an NSDictionary, containing "string" and "range" values)
-  NSMutableArray *whitespaceStringsToInsert = [NSMutableArray array];
+  // build an array of stings that sholud be inserted
+  NSMutableArray *insertRanges = [NSMutableArray array];
+	NSMutableArray *insertStrings = [NSMutableArray array];
   
   for (NSValue *selectedRangeValue in self.selectedRanges) {
     for (NSValue *lineRangeValue in [self.string lineEnumeratorForLinesInRange:selectedRangeValue.rangeValue]) {
@@ -276,17 +277,24 @@
       
       // record it to be inserted later
 			NSRange insertRange = NSMakeRange(lineRangeValue.rangeValue.location + whitespace.length, 0);
-      [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:newWhitespace.copy, @"string", [NSValue valueWithRange:insertRange], @"range", nil]];
+      [insertRanges addObject:[NSValue valueWithRange:insertRange]];
+			[insertStrings addObject:newWhitespace.copy];
     }
   }
+	
+	// give parent class a chance to cancel this edit, and let it do it's undo manager stuff
+	if (![self shouldChangeTextInRanges:insertRanges replacementStrings:insertStrings]) {
+		return;
+	}
   
   // insert the strings, maintaining the current selected range
   NSArray *selectedRanges = self.selectedRanges;
   
   NSUInteger insertionOffset = 0;
-  for (NSDictionary *insertion in whitespaceStringsToInsert) {
-    NSString *whitespace = [insertion valueForKey:@"string"];
-		NSRange insertRange = [[insertion valueForKey:@"range"] rangeValue];
+	NSUInteger insertIndex;
+  for (insertIndex = 0; insertIndex < insertRanges.count; insertIndex++) {
+    NSString *whitespace = [insertStrings objectAtIndex:insertIndex];
+		NSRange insertRange = [[insertRanges objectAtIndex:insertIndex] rangeValue];
 		insertRange.location += insertionOffset;
     
     [self replaceCharactersInRange:insertRange withString:whitespace];
@@ -320,8 +328,9 @@
 	if ([DuxPreferences indentWidth] == 0) // indenting disabled
 		return;
 	
-  // build an array of stings that sholud be inserted (each array item is an NSDictionary, containing "string" and "range" values)
-  NSMutableArray *whitespaceStringsToInsert = [NSMutableArray array];
+  // build an array of stings that sholud be inserted
+	NSMutableArray *insertRanges = [NSMutableArray array];
+	NSMutableArray *insertStrings = [NSMutableArray array];
   
   for (NSValue *selectedRangeValue in self.selectedRanges) {
     for (NSValue *lineRangeValue in [self.string lineEnumeratorForLinesInRange:selectedRangeValue.rangeValue]) {
@@ -350,17 +359,24 @@
 			}
       
       // record it to be inserted later
-      [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:insertString, @"string", [NSValue valueWithRange:insertRange], @"range", nil]];
+			[insertRanges addObject:[NSValue valueWithRange:insertRange]];
+			[insertStrings addObject:insertString];
     }
   }
+	
+	// give parent class a chance to cancel this edit, and let it do it's undo manager stuff
+	if (![self shouldChangeTextInRanges:insertRanges replacementStrings:insertStrings]) {
+		return;
+	}
   
   // insert the strings, maintaining the current selected range
   NSArray *selectedRanges = self.selectedRanges;
   
   NSInteger insertionOffset = 0;
-  for (NSDictionary *insertion in whitespaceStringsToInsert) {
-    NSString *whitespace = [insertion valueForKey:@"string"];
-		NSRange insertRange = [[insertion valueForKey:@"range"] rangeValue];
+	NSUInteger insertIndex;
+  for (insertIndex = 0; insertIndex < insertRanges.count; insertIndex++) {
+    NSString *whitespace = [insertStrings objectAtIndex:insertIndex];
+		NSRange insertRange = [[insertRanges objectAtIndex:insertIndex] rangeValue];
 		insertRange.location += insertionOffset;
     
     [self replaceCharactersInRange:insertRange withString:whitespace];
