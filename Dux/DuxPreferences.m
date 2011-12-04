@@ -99,6 +99,21 @@ static NSUserDefaults *userDefaults;
   [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesTabIndentBehaviourDidChangeNotification object:self];
 }
 
++ (BOOL)indentWithSpaces
+{
+  return YES;
+}
+
++ (NSUInteger)tabWidth
+{
+  return 2;
+}
+
++ (NSUInteger)indentWidth
+{
+  return 2;
+}
+
 @end
 
 const NSString *DuxPreferencesEditorFontDidChangeNotification = @"DuxPreferencesEditorFontDidChangeNotification";

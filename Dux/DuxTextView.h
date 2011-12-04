@@ -54,4 +54,6 @@
 - (BOOL)insertionPointInLeadingWhitespace;
 - (BOOL)tabShouldIndentWithCurrentSelectedRange;
 
+- (NSUInteger)countSpacesInLeadingWhitespace:(NSString *)lineString;
+
 @end

@@ -35,6 +35,10 @@ typedef NSUInteger DuxTabIndentBehaviour;
 + (DuxTabIndentBehaviour)tabIndentBehaviour;
 + (void)setTabIndentBehaviour:(DuxTabIndentBehaviour)newValue;
 
++ (BOOL)indentWithSpaces;
++ (NSUInteger)tabWidth; // in number spaces
++ (NSUInteger)indentWidth;
+
 @end
 
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;

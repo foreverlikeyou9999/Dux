@@ -261,30 +261,15 @@
     for (NSValue *lineRangeValue in [self.string lineEnumeratorForLinesInRange:selectedRangeValue.rangeValue]) {
       NSString *whitespace = [self.string whitespaceForLineBeginingAtLocation:lineRangeValue.rangeValue.location];
       
-      // figure out how many spaces wide the whitespace currently is
-      NSUInteger spacesWide = 0;
-      NSUInteger charLocation;
-      for (charLocation = 0; charLocation < whitespace.length; charLocation++) {
-        switch ([whitespace characterAtIndex:charLocation]) {
-          case ' ':
-            spacesWide++;
-            break;
-          case '\t':
-            spacesWide++;
-            while (spacesWide % 2 != 0) {
-              spacesWide++;
-            }
-            break;
-        }
+      // increase the whitespace to the apropriate number of spaces
+      NSString *whitespaceChar = [DuxPreferences indentWithSpaces] ? @" " : @"\t";
+      NSString *newWhitespace = [whitespace stringByAppendingString:whitespaceChar];
+      while ([self countSpacesInLeadingWhitespace:newWhitespace] % [DuxPreferences indentWidth] != 0) {
+        newWhitespace = [newWhitespace stringByAppendingString:whitespaceChar];
       }
       
-      // increase the whitespace to the new number of spaces
-      NSString *newWhitespace = @" ";
-      spacesWide++;
-      while (spacesWide % 2 != 0) {
-        newWhitespace = [newWhitespace stringByAppendingString:@" "];
-        spacesWide++;
-      }
+      // drop the existing whitespace from the insert string (we're done with it)
+      newWhitespace = [newWhitespace substringFromIndex:whitespace.length];
       
       // record it to be inserted later
       [whitespaceStringsToInsert addObject:[NSDictionary dictionaryWithObjectsAndKeys:newWhitespace, @"string", [NSNumber numberWithUnsignedInteger:lineRangeValue.rangeValue.location + whitespace.length], @"location", nil]];
@@ -309,7 +294,7 @@
       
       if (NSMaxRange(selectedRange) < location) {
         // selected range before insertion. do nothing
-      } else if (selectedRange.location > location) {
+      } else if (selectedRange.location >= location) {
         // selected range after insertion. increase location by insertion size
         selectedRange.location += whitespace.length;
       } else {
@@ -376,6 +361,29 @@
   }];
   
   return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
+}
+
+- (NSUInteger)countSpacesInLeadingWhitespace:(NSString *)lineString
+{
+  NSUInteger spacesWide = 0;
+  NSUInteger charLocation;
+  for (charLocation = 0; charLocation < lineString.length; charLocation++) {
+    switch ([lineString characterAtIndex:charLocation]) {
+      case ' ':
+        spacesWide++;
+        break;
+      case '\t':
+        spacesWide++;
+        while (spacesWide % [DuxPreferences tabWidth] != 0) {
+          spacesWide++;
+        }
+        break;
+      default: // found a non
+        charLocation = lineString.length;
+    }
+  }
+  
+  return spacesWide;
 }
 
 - (IBAction)showCompletions:(id)sender
