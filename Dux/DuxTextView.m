@@ -999,8 +999,13 @@ static NSCharacterSet *newlineCharacterSet;
       continue;
     }
     
+    // are we in between a CR and LF character? (windows newlines)
+    if (characterIndex > 0 && [string characterAtIndex:characterIndex - 1] == '\r' && [string characterAtIndex:characterIndex] == '\n') {
+      characterIndex++;
+    }
+    
     // record line range
-    NSRange lineRange = [string rangeOfLineAtOffset:characterIndex];
+    NSRange lineRange = NSMakeRange(characterIndex, [string endOfLineAtOffset:characterIndex] - characterIndex);
     lineCharacterIndexes[lineIndex] = lineRange.location;
     
     // count number of spaces in leading whitespace
