@@ -21,8 +21,6 @@
 @synthesize tabWidthTextField;
 @synthesize indentWidthTextField;
 @synthesize tabKeyBehaviourPopUpButton;
-@synthesize lineWrappingButton;
-@synthesize lineWrappingSizeTextField;
 
 + (void)showPreferencesWindow
 {
@@ -58,9 +56,6 @@
 	[self.tabWidthTextField setIntValue:(int)[DuxPreferences tabWidth]];
 	[self.indentWidthTextField setIntValue:(int)[DuxPreferences indentWidth]];
   [self.tabKeyBehaviourPopUpButton selectItemWithTag:[DuxPreferences tabIndentBehaviour]];
-  
-  [lineWrappingButton setEnabled:NO];
-  [lineWrappingSizeTextField setEnabled:NO];
 }
 
 - (IBAction)selectEditorFont:(id)sender

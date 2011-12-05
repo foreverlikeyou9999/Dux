@@ -23,8 +23,6 @@
 @property (weak) IBOutlet NSTextField *tabWidthTextField;
 @property (weak) IBOutlet NSTextField *indentWidthTextField;
 @property (weak) IBOutlet NSPopUpButton *tabKeyBehaviourPopUpButton;
-@property (weak) IBOutlet NSButton *lineWrappingButton;
-@property (weak) IBOutlet NSTextField *lineWrappingSizeTextField;
 
 - (IBAction)selectEditorFont:(id)sender;
 - (IBAction)setShowLineNumbers:(id)sender;
