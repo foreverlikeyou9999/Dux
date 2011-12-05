@@ -13,6 +13,7 @@
 
 @implementation MyTextDocument
 
+@synthesize editorWindow;
 @synthesize textStorage;
 @synthesize textView;
 @synthesize syntaxtHighlighter;

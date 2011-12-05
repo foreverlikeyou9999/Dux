@@ -16,6 +16,7 @@
 @interface MyTextDocument : NSDocument {
   NSString *textContentToLoad; // text content to be loaded by -loadTextContentIntoStorage
 }
+@property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
 
 @property (nonatomic, strong) NSTextStorage *textStorage;
 @property (unsafe_unretained) IBOutlet DuxTextView *textView;

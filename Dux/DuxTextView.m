@@ -69,8 +69,6 @@ static NSCharacterSet *newlineCharacterSet;
   [self replaceTextContainer:container];
   container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
   container.widthTracksTextView = YES;
-	
-	[self invalidateLinePositions];
   
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
@@ -862,30 +860,14 @@ static NSCharacterSet *newlineCharacterSet;
   
   // line numbers
   if (self.showLineNumbers) {
-		if (linePositionsNeedUpdating)
-			[self updateLinePositions];
-		
 		// background
     [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
     [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
     [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
     [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
     
-		// find the first visible line
-		NSUInteger lineIndex = 0;
-		float lineY;
-		for (lineIndex = 0, lineY = linePositions[lineIndex]; true; lineIndex++) {
-			lineY = linePositions[lineIndex];
-			if (lineY < -1)
-				break;
-			
-			if ((lineY + 20) < NSMinY(dirtyRect))
-				continue;
-			if ((lineY - 20) > NSMaxY(dirtyRect))
-				break;
-			
-			[[DuxLineNumberString stringForNumber:lineIndex + 1] drawAtY:lineY];
-		}
+    // line numbers
+    [self drawLineNumbersInRect:dirtyRect];
   }
   
   [super drawRect:dirtyRect];
@@ -899,7 +881,6 @@ static NSCharacterSet *newlineCharacterSet;
 - (void)textDidChange:(NSNotification *)notif
 {
   [self updateHighlightedElements];
-	[self invalidateLinePositions];
 }
 
 - (void)updateHighlightedElements
@@ -974,64 +955,91 @@ static NSCharacterSet *newlineCharacterSet;
   });
 }
 
-- (void)invalidateLinePositions
+- (void)drawLineNumbersInRect:(NSRect)targetRect
 {
-	linePositionsNeedUpdating = YES;
-	[self setNeedsDisplay:YES];
-}
-
-- (void)updateLinePositions
-{
-	if (!self.showLineNumbers)
-		return;
-	
 	// init
 	NSString *string = self.string;
 	NSUInteger stringLength = string.length;
-  NSInteger characterIndex = 0;
-	
-	NSLayoutManager *layoutManager = self.layoutManager;
+  NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
 	
-	NSUInteger lineIndex = 0;
+  NSUInteger lineIndex = 0;
+  NSInteger characterIndex = 0;
 	NSUInteger glyphIndex = 0;
 	NSUInteger glyphLength = [layoutManager glyphRangeForTextContainer:textContainer].length;
-	while (glyphIndex < glyphLength && lineIndex < 99999) {
+  float lineY;
+  
+  // are there any lines at all?
+  if (glyphLength == 0) {
+    NSRect extraFragmentRect = [layoutManager extraLineFragmentRect];
+    if (NSHeight(extraFragmentRect) > 0.01 && NSMinY(extraFragmentRect) < NSMaxY(targetRect)) {
+      [[DuxLineNumberString stringForNumber:1] drawAtY:NSMinY(extraFragmentRect)];
+    }
+    return;
+  }
+
+	
+  // first of all, we need to know the character index of every line
+  if (lineCharacterIndexesLastUpdateStringHash != string.hash) {
+    characterIndex = 0;
+    lineIndex = 0;
+    while (lineIndex < 99999) {
+      if (characterIndex >= stringLength) {
+        lineCharacterIndexes[lineIndex] = NSNotFound;
+        lineIndex++;
+        continue;
+      }
+      
+      NSRange lineRange = [string rangeOfLineAtOffset:characterIndex];
+      lineCharacterIndexes[lineIndex] = lineRange.location;
+      
+      characterIndex = NSMaxRange(lineRange) + 1;
+      lineIndex++;
+    }
+    lineCharacterIndexesLastUpdateStringHash = string.hash;
+  }
+  
+  // now we calculate the actual line positions  
+  // figure out what line is the first one within targetRect
+  characterIndex = [layoutManager characterIndexForPoint:targetRect.origin inTextContainer:textContainer fractionOfDistanceBetweenInsertionPoints:NULL];
+  lineIndex = 1;
+  while (lineIndex < 99999) {
+    if (lineCharacterIndexes[lineIndex] >= characterIndex) {
+      lineIndex--;
+      break;
+    }
+    
+    lineIndex++;
+  }
+  
+  // draw the line numbers
+	while (lineIndex < 99999) {
+    if (lineCharacterIndexes[lineIndex] == NSNotFound)
+      break;
+    
+    // find the glyph index forthe line
+    glyphIndex = [layoutManager glyphIndexForCharacterAtIndex:lineCharacterIndexes[lineIndex]];
 		if (glyphIndex >= glyphLength)
 			break;
 		
-		// find visual line rect
-		NSRange lineGlyphRange;
-		NSRect visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&lineGlyphRange];
-		linePositions[lineIndex] = visualLineRect.origin.y;
+		// draw the line
+		lineY = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:NULL].origin.y;
+    [[DuxLineNumberString stringForNumber:lineIndex + 1] drawAtY:lineY];
 		
-		// is this the actual end of the line?
-		characterIndex = [layoutManager characterIndexForGlyphAtIndex:NSMaxRange(lineGlyphRange)] - 1;
-		
-		while (characterIndex >= 0 && characterIndex < stringLength && visualLineRect.size.width > 0.01 && ![newlineCharacterSet characterIsMember:[string characterAtIndex:characterIndex]]) {
-			glyphIndex = NSMaxRange(lineGlyphRange);
-			if (glyphIndex >= glyphLength)
-				break;
-		
-			visualLineRect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&lineGlyphRange];
-			characterIndex = [layoutManager characterIndexForGlyphAtIndex:NSMaxRange(lineGlyphRange)] - 1;
-		}
-		
+    // are we done?
+    if (lineY > NSMaxY(targetRect)) {
+      break;
+    }
+    
 		// move on
-		glyphIndex = NSMaxRange(lineGlyphRange);
 		lineIndex++;
 	}
-
-	// check for extra line fragment rect
-	NSRect extraLineFragmentRect = [layoutManager extraLineFragmentRect];
-	if (extraLineFragmentRect.size.height > 0.01 && lineIndex < 99999) {
-		linePositions[lineIndex] = extraLineFragmentRect.origin.y;
-		lineIndex++;
-	}
-
-	// terminate the array
-	linePositions[lineIndex] = -2;
-	linePositionsNeedUpdating = NO;
+  
+  // draw "extra" line fragment rect
+  NSRect extraFragmentRect = [layoutManager extraLineFragmentRect];
+  if (NSHeight(extraFragmentRect) > 0.01 && NSMinY(extraFragmentRect) < NSMaxY(targetRect)) {
+    [[DuxLineNumberString stringForNumber:lineIndex + 1] drawAtY:NSMinY(extraFragmentRect)];
+  }
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
@@ -1057,7 +1065,7 @@ static NSCharacterSet *newlineCharacterSet;
   
   [self.layoutManager invalidateLayoutForCharacterRange:NSMakeRange(0, self.string.length) actualCharacterRange:NULL];
 	
-	[self invalidateLinePositions];
+  [self setNeedsDisplay:YES];
 }
 
 - (void)showPageGuideDidChange:(NSNotification *)notif
@@ -1081,7 +1089,7 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)textContainerSizeDidChange:(NSNotification *)notif
 {
-	[self invalidateLinePositions];
+  [self setNeedsDisplay:YES];
 }
 
 @end

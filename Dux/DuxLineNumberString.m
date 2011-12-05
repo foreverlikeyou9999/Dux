@@ -77,7 +77,7 @@ static NSTextStorage *textStorage = nil;
 {
   [textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:string attributes:marginAttributes]];
   
-  NSPoint drawPoint = NSMakePoint(-4, lineY + 3);
+  NSPoint drawPoint = NSMakePoint(-4, lineY + 2);
   [layoutManager drawGlyphsForGlyphRange:[layoutManager glyphRangeForTextContainer:textContainer] atPoint:drawPoint];
 }
 
