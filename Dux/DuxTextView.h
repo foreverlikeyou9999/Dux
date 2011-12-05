@@ -18,7 +18,7 @@
 {
   NSUInteger _lastUupdateHighlightedElements;
 	
-  NSUInteger lineCharacterIndexesLastUpdateStringHash;
+  NSUInteger lastProcessLinesStringHash;
   NSUInteger lineCharacterIndexes[100000]; // characted index of every line. used to draw line numbers. Unused line indexes contain NSNotFound. We do not draw line numbers after 99,999 lines (too slow, and the gutter is too narrow to fit them anyway)
 }
 
@@ -55,6 +55,7 @@
 - (void)selectionDidChange:(NSNotification *)notif;
 
 - (void)updateHighlightedElements;
+- (void)processLines;
 - (void)drawLineNumbersInRect:(NSRect)targetRect;
 
 - (BOOL)insertionPointInLeadingWhitespace;

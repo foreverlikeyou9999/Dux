@@ -38,28 +38,10 @@
   if (baseAttributes)
     return baseAttributes;
   
-  // basic paragraph style
-  NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-  [paragraphStyle setTabStops:[NSArray array]];
-  [paragraphStyle setAlignment:NSLeftTextAlignment];
-  [paragraphStyle setBaseWritingDirection:NSWritingDirectionLeftToRight];
-  [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-  
-  // bsaic attributes
   baseAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
     [DuxPreferences editorFont], NSFontAttributeName,
-    [paragraphStyle copy], NSParagraphStyleAttributeName,
   nil];
-  
-  // now that we have the other atts, set the tab width based on the size of a space
-  CGFloat spaceWidth = [@" " sizeWithAttributes:baseAttributes].width;
-  [paragraphStyle setDefaultTabInterval:spaceWidth * [DuxPreferences tabWidth]];
-  [paragraphStyle setHeadIndent:spaceWidth * 10];
-  
-  NSMutableDictionary *mutableAtts = [baseAttributes mutableCopy];
-  [mutableAtts setValue:[paragraphStyle copy] forKey:NSParagraphStyleAttributeName];
-  baseAttributes = [mutableAtts copy];
-  
+
   return baseAttributes;
 }
 
@@ -153,17 +135,15 @@
     // figure out what we need to do
     NSRange attsRange = NSMakeRange(highlightIndex, elementLength);
     NSRange oldAttsRange;
-    NSArray *oldElementStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:highlightIndex effectiveRange:&oldAttsRange];
+    NSArray *oldElementStack = [textStorage attribute:@"DuxLanguageElementStack" atIndex:highlightIndex longestEffectiveRange:&oldAttsRange inRange:NSMakeRange(0, textStorage.length)];
     
     // trim oldAttsRange down so it's no larger than attsRange, for example if we are doing <tag><other tag> then oldAttsRange will be larger
     oldAttsRange = NSIntersectionRange(oldAttsRange, attsRange);
     
     // apply new value if there's anything to apply
-    if (attsRange.length != 0 && !(NSEqualRanges(attsRange, oldAttsRange) && [elementStack isEqual:oldElementStack])) {
-      NSMutableDictionary *atts = [[textStorage attributesAtIndex:attsRange.location effectiveRange:NULL] mutableCopy];
-      [atts setValue:elementStack forKey:@"DuxLanguageElementStack"];
-      [atts setValue:[thisElement color] forKey:NSForegroundColorAttributeName];
-      [textStorage setAttributes:[atts copy] range:attsRange];
+    if (attsRange.length != 0 && !(attsRange.location >= oldAttsRange.location && NSMaxRange(attsRange) <= NSMaxRange(oldAttsRange) && [elementStack isEqual:oldElementStack])) {
+      [textStorage addAttribute:NSForegroundColorAttributeName value:[thisElement color] range:attsRange];
+      [textStorage addAttribute:@"DuxLanguageElementStack" value:elementStack range:attsRange];
     }
     
     // prepare for next element

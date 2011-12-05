@@ -955,11 +955,101 @@ static NSCharacterSet *newlineCharacterSet;
   });
 }
 
+- (void)processLines
+{
+  NSString *string = self.string;
+  if (lastProcessLinesStringHash == string.hash)
+    return;
+  
+  NSUInteger stringLength = string.length;
+  NSUInteger characterIndex = 0;
+  NSUInteger lineIndex = 0;
+  
+  if (stringLength == 0) {
+    while (lineIndex < 99999) {
+      if (characterIndex >= stringLength) {
+        lineCharacterIndexes[lineIndex] = NSNotFound;
+        lineIndex++;
+        continue;
+      }
+    }
+    return;
+  }
+  
+  NSTextStorage *textStorage = self.textStorage;
+  BOOL didBeginEditingTextStorage = NO;
+  
+  NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+  [paragraphStyle setTabStops:[NSArray array]];
+  [paragraphStyle setAlignment:NSLeftTextAlignment];
+  [paragraphStyle setBaseWritingDirection:NSWritingDirectionLeftToRight];
+  [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+  
+  float spaceWidth = [@" " sizeWithAttributes:[textStorage attributesAtIndex:0 effectiveRange:NULL]].width;
+  [paragraphStyle setDefaultTabInterval:spaceWidth * [DuxPreferences tabWidth]];
+  float headIndentWidth = spaceWidth * ([DuxPreferences tabWidth] * 2);
+  
+  NSUInteger whitespaceCount;
+  NSNumber *oldWhitespaceCount;
+  
+  while (lineIndex < 99999) {
+    if (characterIndex >= stringLength) {
+      lineCharacterIndexes[lineIndex] = NSNotFound;
+      lineIndex++;
+      continue;
+    }
+    
+    // record line range
+    NSRange lineRange = [string rangeOfLineAtOffset:characterIndex];
+    lineCharacterIndexes[lineIndex] = lineRange.location;
+    
+    // count number of spaces in leading whitespace
+    if (lineRange.length > 0) {
+      whitespaceCount = 0;
+      for (characterIndex = lineRange.location; characterIndex < NSMaxRange(lineRange); characterIndex++) {
+        switch ([string characterAtIndex:characterIndex]) {
+          case ' ':
+            whitespaceCount++;
+            break;
+          case '\t':
+            whitespaceCount++;
+            while (whitespaceCount % [DuxPreferences tabWidth] != 0) {
+              whitespaceCount++;
+            }
+            break;
+          default: // found a non-whitespace char
+            characterIndex = NSMaxRange(lineRange);
+        }
+      }
+      
+      // if it isn't already correct, update head intent to match whitespace
+      oldWhitespaceCount = [textStorage attribute:@"DuxEditorLeadingWhitespaceCount" atIndex:lineRange.location effectiveRange:0];
+      if (!oldWhitespaceCount || [oldWhitespaceCount integerValue] != whitespaceCount) {
+        if (!didBeginEditingTextStorage) {
+          didBeginEditingTextStorage = YES;
+          [textStorage beginEditing];
+        }
+        
+        [textStorage addAttribute:@"DuxEditorLeadingWhitespaceCount" value:[NSNumber numberWithInteger:whitespaceCount] range:lineRange];
+        [paragraphStyle setHeadIndent:headIndentWidth + (whitespaceCount * spaceWidth)];
+        [textStorage addAttribute:NSParagraphStyleAttributeName value:[paragraphStyle copy] range:lineRange];
+      }
+    }
+    
+    characterIndex = NSMaxRange(lineRange) + 1;
+    lineIndex++;
+  }
+  if (didBeginEditingTextStorage) {
+    [textStorage endEditing];
+  }
+  
+  lastProcessLinesStringHash = string.hash;  
+}
+
 - (void)drawLineNumbersInRect:(NSRect)targetRect
 {
 	// init
-	NSString *string = self.string;
-	NSUInteger stringLength = string.length;
+  [self processLines];
   NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
 	
@@ -976,27 +1066,6 @@ static NSCharacterSet *newlineCharacterSet;
       [[DuxLineNumberString stringForNumber:1] drawAtY:NSMinY(extraFragmentRect)];
     }
     return;
-  }
-
-	
-  // first of all, we need to know the character index of every line
-  if (lineCharacterIndexesLastUpdateStringHash != string.hash) {
-    characterIndex = 0;
-    lineIndex = 0;
-    while (lineIndex < 99999) {
-      if (characterIndex >= stringLength) {
-        lineCharacterIndexes[lineIndex] = NSNotFound;
-        lineIndex++;
-        continue;
-      }
-      
-      NSRange lineRange = [string rangeOfLineAtOffset:characterIndex];
-      lineCharacterIndexes[lineIndex] = lineRange.location;
-      
-      characterIndex = NSMaxRange(lineRange) + 1;
-      lineIndex++;
-    }
-    lineCharacterIndexesLastUpdateStringHash = string.hash;
   }
   
   // now we calculate the actual line positions  
