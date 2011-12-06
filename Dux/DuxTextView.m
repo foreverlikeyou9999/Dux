@@ -852,7 +852,7 @@ static NSCharacterSet *newlineCharacterSet;
 		NSRange insertRange = [[insertRanges objectAtIndex:insertIndex] rangeValue];
 		insertRange.location += insertionOffset;
     
-    // if the range ends at the end of file, add a newline first
+    // if the range ends at the end of the line (or end of file), add a newline first
     if (self.string.length == NSMaxRange(self.selectedRange) || NSMaxRange(insertRange) == [self.string endOfLineAtOffset:NSMaxRange(insertRange)]) {
       [self replaceCharactersInRange:insertRange withString:newlineString];
       insertRange.location += newlineString.length;
