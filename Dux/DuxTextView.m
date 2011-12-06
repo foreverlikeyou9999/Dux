@@ -813,6 +813,66 @@ static NSCharacterSet *newlineCharacterSet;
   [self insertText:@"" replacementRange:newRange];
 }
 
+- (void)delete:(id)sender
+{
+  [self deleteToBeginningOfLine:sender];
+}
+
+- (void)duplicate:(id)sender
+{
+  NSArray *ranges;
+  NSRange newSelectionSubrange = NSMakeRange(NSNotFound, 0); // if NSNotFound, new selection will be the inserted text. else new selection will be a subrange of the inserted text
+  if (self.selectedRange.length == 0) {
+    NSRange lineRange = [self.string rangeOfLineAtOffset:self.selectedRange.location];
+    ranges = [NSArray arrayWithObject:[NSValue valueWithRange:lineRange]];
+    newSelectionSubrange = NSMakeRange(self.selectedRange.location - lineRange.location, 0);
+  } else {
+    ranges = self.selectedRanges;
+  }
+  
+  NSMutableArray *insertStrings = [NSMutableArray array];
+  NSMutableArray *insertRanges = [NSMutableArray array];
+  for (NSValue *rangeValue in ranges) {
+    [insertStrings addObject:[self.string substringWithRange:rangeValue.rangeValue]];
+    [insertRanges addObject:[NSValue valueWithRange:NSMakeRange(NSMaxRange(rangeValue.rangeValue), 0)]];
+  }
+  
+  // give parent class a chance to cancel this edit, and let it do it's undo manager stuff
+	if (![self shouldChangeTextInRanges:insertRanges replacementStrings:insertStrings]) {
+		return;
+	}
+  
+  // insert the strings
+  NSUInteger insertionOffset = 0;
+	NSUInteger insertIndex;
+  NSMutableArray *newSelectedRanges = [NSMutableArray array];
+  NSString *newlineString = [NSString stringForNewlineStyle:self.textDocument.activeNewlineStyle];
+  for (insertIndex = 0; insertIndex < insertRanges.count; insertIndex++) {
+    NSString *insertString = [insertStrings objectAtIndex:insertIndex];
+		NSRange insertRange = [[insertRanges objectAtIndex:insertIndex] rangeValue];
+		insertRange.location += insertionOffset;
+    
+    // if the range ends at the end of file, add a newline first
+    if (self.string.length == NSMaxRange(self.selectedRange) || NSMaxRange(insertRange) == [self.string endOfLineAtOffset:NSMaxRange(insertRange)]) {
+      [self replaceCharactersInRange:insertRange withString:newlineString];
+      insertRange.location += newlineString.length;
+    }
+    
+    // do the insert
+    [self replaceCharactersInRange:insertRange withString:insertString];
+    
+    // update selection
+    if (newSelectionSubrange.location == NSNotFound) {
+      [newSelectedRanges addObject:[NSValue valueWithRange:NSMakeRange(insertRange.location, insertString.length)]];
+    } else {
+      [newSelectedRanges addObject:[NSValue valueWithRange:NSMakeRange(insertRange.location + newSelectionSubrange.location, newSelectionSubrange.length)]];
+    }
+    
+    insertionOffset += insertString.length;
+  }
+  [self setSelectedRanges:[newSelectedRanges copy]];
+}
+
 - (void)setNeedsDisplayInRect:(NSRect)rect avoidAdditionalLayout:(BOOL)flag
 {
   // force all screen draws to be the full width
