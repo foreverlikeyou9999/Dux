@@ -37,6 +37,7 @@ static NSUserDefaults *userDefaults;
 	[defaults setObject:[NSNumber numberWithBool:NO] forKey:@"DuxEditorIndentWithSpaces"];
 	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorTabWidth"];
 	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorIndentWidth"];
+  [defaults setObject:[NSArray arrayWithObjects:@"pdf", @"jpg", @"png", @"gif", @"zip", @"ico", @"doc", @"docx", @"xls", @"xlsx", @"swf", nil] forKey:@"OpenQuicklyExcludesFilesWithExtension"];
   
   [userDefaults registerDefaults:defaults.copy];
 }
@@ -149,6 +150,11 @@ static NSUserDefaults *userDefaults;
 	[userDefaults setInteger:newValue forKey:@"DuxEditorIndentWidth"];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:DuxPreferencesIndentWidthDidChangeNotification object:self];
+}
+
++ (NSArray *)openQuicklyExcludesFilesWithExtension
+{
+  return [userDefaults arrayForKey:@"OpenQuicklyExcludesFilesWithExtension"];
 }
 
 @end

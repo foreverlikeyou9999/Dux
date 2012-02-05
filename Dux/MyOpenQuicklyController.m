@@ -207,6 +207,7 @@
   
   // enumerate all the files in the path
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
+  NSSet *excludeFilesWithExtension = [NSSet setWithArray:[DuxPreferences openQuicklyExcludesFilesWithExtension]];
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSMutableArray *scratchSearchPaths = [NSMutableArray arrayWithCapacity:200];
     
@@ -223,6 +224,10 @@
         // do not add directories to the list of search pathns
         continue;
       }
+      
+      // ignore certain file types
+      if ([excludeFilesWithExtension containsObject:fileURL.pathExtension])
+        continue;
       
       // add this to a scratch list of search paths
       [scratchSearchPaths addObject:fileURL];

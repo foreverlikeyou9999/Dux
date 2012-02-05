@@ -9,6 +9,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "DuxPreferences.h"
 
 @interface MyOpenQuicklyController : NSWindowController <NSTextFieldDelegate> {
   NSWindow *openQuicklyWindow;

@@ -44,6 +44,8 @@ typedef NSUInteger DuxTabIndentBehaviour;
 + (NSUInteger)indentWidth;
 + (void)setIndentWidth:(NSUInteger)newValue;
 
++ (NSArray *)openQuicklyExcludesFilesWithExtension;
+
 @end
 
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;
