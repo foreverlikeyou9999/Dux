@@ -43,4 +43,25 @@
   [DuxPreferencesWindowController showPreferencesWindow];
 }
 
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
+{
+  BOOL isDirectory;
+  [[NSFileManager defaultManager] fileExistsAtPath:filename isDirectory:&isDirectory];
+  
+  if (isDirectory) {
+    if (!openQuicklyController) {
+      [NSBundle loadNibNamed:@"OpenQuickly" owner:self];
+    }
+    
+    self.openQuicklyController.searchPath = filename;
+    [[NSUserDefaults standardUserDefaults] setValue:filename forKey:@"OpenQuicklySearchPath"];
+    [self.openQuicklyController showOpenQuicklyPanel];
+    
+    return YES;
+  }
+  
+  [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:filename] display:YES error:NULL];
+  return YES;
+}
+
 @end
