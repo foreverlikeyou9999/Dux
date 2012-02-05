@@ -124,8 +124,20 @@
       if ([expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
         continue;
       
-      NSUInteger urlIndex = [mutableSearchResults indexOfObject:url inSortedRange:NSMakeRange(0, mutableSearchResults.count) options:NSBinarySearchingInsertionIndex usingComparator:(NSComparator)^(id leftObj, id rightObj) {
-        return [[(NSURL *)leftObj lastPathComponent] compare:[(NSURL *)rightObj lastPathComponent]];
+      NSUInteger urlIndex = [mutableSearchResults indexOfObject:url inSortedRange:NSMakeRange(0, mutableSearchResults.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(NSURL *leftObj, NSURL *rightObj) {
+        NSString *leftLastPathComponent = leftObj.lastPathComponent;
+        NSUInteger leftLength = leftLastPathComponent.length;
+        
+        NSString *rightLastPathComponent = rightObj.lastPathComponent;
+        NSUInteger rightLength = rightLastPathComponent.length;
+        
+        if (leftLength < rightLength) {
+          return -1;
+        } else if (leftLength > rightLength) {
+          return 1;
+        } else {
+          return [leftLastPathComponent compare:rightLastPathComponent];
+        }
       }];
       [mutableSearchResults insertObject:url atIndex:urlIndex];
       haveNewResults = YES;
