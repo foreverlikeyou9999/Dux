@@ -14,13 +14,6 @@
 
 @synthesize leftGutterWidth;
 
-- (NSRect)lineFragmentRectForProposedRect:(NSRect)proposedRect sweepDirection:(NSLineSweepDirection)sweepDirection movementDirection:(NSLineMovementDirection)movementDirection remainingRect:(NSRectPointer)remainingRect
-{
-  proposedRect.origin.x = self.leftGutterWidth;
-  
-  return [super lineFragmentRectForProposedRect:proposedRect sweepDirection:sweepDirection movementDirection:movementDirection remainingRect:remainingRect];
-}
-
 - (void)setContainerSize:(NSSize)size
 {
 	[super setContainerSize:size];

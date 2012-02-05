@@ -66,9 +66,17 @@ static NSCharacterSet *newlineCharacterSet;
   self.pageGuidePosition = [DuxPreferences pageGuidePosition];
   
   DuxTextContainer *container = [[DuxTextContainer alloc] init];
-  [self replaceTextContainer:container];
   container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
   container.widthTracksTextView = YES;
+  [super setTextContainerInset:NSMakeSize(container.leftGutterWidth / 2, 0)]; // set the inset to half the container's left gutter width
+  
+  // disable line wrap? currently commented out, because it's a bit buggy
+//  container.containerSize = NSMakeSize(FLT_MAX, FLT_MAX);
+//  container.widthTracksTextView = NO;
+//  self.horizontallyResizable = YES;
+  
+  // apply the text view
+  [self replaceTextContainer:container];
   
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(selectionDidChange:) name:NSTextViewDidChangeSelectionNotification object:self];
@@ -80,6 +88,15 @@ static NSCharacterSet *newlineCharacterSet;
   [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(textContainerSizeDidChange:) name:DuxTextContainerSizeDidChangeNotification object:container];
+}
+
+- (NSPoint)textContainerOrigin
+{
+  DuxTextContainer *container = (id)self.textContainer;
+  if (![container isKindOfClass:[DuxTextContainer class]]) // this means the text view isn't yet fully setup
+    return [super textContainerOrigin];
+  
+  return NSMakePoint(container.leftGutterWidth, 0);
 }
 
 - (void)dealloc
