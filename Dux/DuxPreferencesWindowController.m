@@ -11,7 +11,14 @@
 #import "DuxPreferencesWindowController.h"
 #import "DuxPreferences.h"
 
+@interface DuxPreferencesWindowController ()
+
+- (void)editorFontDidChange:(NSNotification *)notif;
+
+@end
+
 @implementation DuxPreferencesWindowController
+
 @synthesize fontTextField;
 @synthesize showLineNumbersButton;
 @synthesize showPageGuideButton;
@@ -47,6 +54,9 @@
 {
   [super awakeFromNib];
   
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
+  [self editorFontDidChange:nil];
+  
   self.showLineNumbersButton.state = [DuxPreferences showLineNumbers] ? NSOnState : NSOffState;
   self.showPageGuideButton.state = [DuxPreferences showPageGuide] ? NSOnState : NSOffState;
   self.pageGuidePositionTextField.integerValue = [DuxPreferences pageGuidePosition];
@@ -58,10 +68,9 @@
   [self.tabKeyBehaviourPopUpButton selectItemWithTag:[DuxPreferences tabIndentBehaviour]];
 }
 
-- (IBAction)selectEditorFont:(id)sender
+- (void)editorFontDidChange:(NSNotification *)notif
 {
-  [[NSFontManager sharedFontManager] setSelectedFont:[DuxPreferences editorFont] isMultiple:NO];
-  [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
+  [self.fontTextField setStringValue:[NSString stringWithFormat:@"%@ - %0.1f", [DuxPreferences editorFont].displayName, [DuxPreferences editorFont].pointSize]];
 }
 
 - (IBAction)setShowLineNumbers:(id)sender
@@ -102,14 +111,6 @@
 - (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender
 {
 	[DuxPreferences setShowOtherInstancesOfSelectedSymbol:self.showOtherInstancesOfSelectedSymbolButton.state == NSOnState];
-}
-
-- (void)changeFont:(id)sender
-{
-  NSFont *oldFont = [DuxPreferences editorFont];
-  NSFont *newFont = [sender convertFont:oldFont];
-  
-  [DuxPreferences setEditorFont:newFont];
 }
 
 @end

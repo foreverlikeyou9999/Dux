@@ -24,7 +24,6 @@
 @property (weak) IBOutlet NSTextField *indentWidthTextField;
 @property (weak) IBOutlet NSPopUpButton *tabKeyBehaviourPopUpButton;
 
-- (IBAction)selectEditorFont:(id)sender;
 - (IBAction)setShowLineNumbers:(id)sender;
 - (IBAction)setShowPageGuide:(id)sender;
 - (IBAction)setPageGuidePosition:(id)sender;

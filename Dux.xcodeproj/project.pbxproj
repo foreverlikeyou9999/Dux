@@ -32,6 +32,7 @@
 		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
 		387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */; };
 		387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */; };
+		3883058C14DE845B00409F43 /* DuxFontSelectorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883058B14DE845B00409F43 /* DuxFontSelectorTextField.m */; };
 		388682AD1480409F00C362EE /* DuxLineNumberString.m in Sources */ = {isa = PBXBuildFile; fileRef = 388682AC1480409F00C362EE /* DuxLineNumberString.m */; };
 		3886D4B214790FD700970CAE /* DuxCSSLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B114790FD700970CAE /* DuxCSSLanguage.m */; };
 		3886D4B514790FE700970CAE /* DuxCSSBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B414790FE700970CAE /* DuxCSSBaseElement.m */; };
@@ -138,6 +139,8 @@
 		387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
 		387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
 		387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPBlockCommentElement.m; sourceTree = "<group>"; };
+		3883058A14DE845B00409F43 /* DuxFontSelectorTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxFontSelectorTextField.h; sourceTree = "<group>"; };
+		3883058B14DE845B00409F43 /* DuxFontSelectorTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFontSelectorTextField.m; sourceTree = "<group>"; };
 		388682AB1480409F00C362EE /* DuxLineNumberString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLineNumberString.h; sourceTree = "<group>"; };
 		388682AC1480409F00C362EE /* DuxLineNumberString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLineNumberString.m; sourceTree = "<group>"; };
 		3886D4B014790FD700970CAE /* DuxCSSLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSLanguage.h; sourceTree = "<group>"; };
@@ -385,6 +388,8 @@
 				38BC92221488151700CE73EB /* DuxPreferences.m */,
 				38BC921E1487735500CE73EB /* DuxPreferencesWindowController.h */,
 				38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */,
+				3883058A14DE845B00409F43 /* DuxFontSelectorTextField.h */,
+				3883058B14DE845B00409F43 /* DuxFontSelectorTextField.m */,
 				38BC921C1487733B00CE73EB /* PreferencesWindow.xib */,
 			);
 			name = Preferences;
@@ -701,6 +706,7 @@
 				38BC92201487735500CE73EB /* DuxPreferencesWindowController.m in Sources */,
 				38BC92231488151700CE73EB /* DuxPreferences.m in Sources */,
 				389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */,
+				3883058C14DE845B00409F43 /* DuxFontSelectorTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

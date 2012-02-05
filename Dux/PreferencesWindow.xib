@@ -352,13 +352,13 @@
 							<string key="NSReuseIdentifierKey">_NS:2434</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="90159526">
-								<int key="NSCellFlags">-2080244224</int>
+								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134348800</int>
 								<string key="NSContents">Select...</string>
 								<reference key="NSSupport" ref="26"/>
 								<string key="NSCellIdentifier">_NS:2434</string>
 								<reference key="NSControlView" ref="591124238"/>
-								<int key="NSButtonFlags">-2038152961</int>
+								<int key="NSButtonFlags">-1232846593</int>
 								<int key="NSButtonFlags2">164</int>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -813,14 +813,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">selectEditorFont:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="591124238"/>
-					</object>
-					<int key="connectionID">103</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">setShowLineNumbers:</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="918362089"/>
@@ -884,45 +876,20 @@
 					<int key="connectionID">111</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">displayPatternValue1: values.DuxEditorFontName</string>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">preferencesWindowController</string>
 						<reference key="source" ref="856181471"/>
-						<reference key="destination" ref="282740579"/>
-						<object class="NSNibBindingConnector" key="connector" id="65911956">
-							<reference key="NSSource" ref="856181471"/>
-							<reference key="NSDestination" ref="282740579"/>
-							<string key="NSLabel">displayPatternValue1: values.DuxEditorFontName</string>
-							<string key="NSBinding">displayPatternValue1</string>
-							<string key="NSKeyPath">values.DuxEditorFontName</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSDisplayPattern</string>
-								<string key="NS.object.0">%{value1}@, %{value2}@pt</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
+						<reference key="destination" ref="1001"/>
 					</object>
-					<int key="connectionID">101</int>
+					<int key="connectionID">112</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">displayPatternValue2: values.DuxEditorFontSize</string>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">chooseFontButton</string>
 						<reference key="source" ref="856181471"/>
-						<reference key="destination" ref="282740579"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="856181471"/>
-							<reference key="NSDestination" ref="282740579"/>
-							<string key="NSLabel">displayPatternValue2: values.DuxEditorFontSize</string>
-							<string key="NSBinding">displayPatternValue2</string>
-							<string key="NSKeyPath">values.DuxEditorFontSize</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSDisplayPattern</string>
-								<string key="NS.object.0">%{value1}@, %{value2}@pt</string>
-							</object>
-							<reference key="NSPreviousConnector" ref="65911956"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
+						<reference key="destination" ref="591124238"/>
 					</object>
-					<int key="connectionID">102</int>
+					<int key="connectionID">114</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1336,6 +1303,7 @@
 				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="28.CustomClassName">DuxFontSelectorTextField</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1383,15 +1351,36 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">111</int>
+			<int key="maxID">114</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
+					<string key="className">DuxFontSelectorTextField</string>
+					<string key="superclassName">NSTextField</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="chooseFontButton">NSButton</string>
+						<string key="preferencesWindowController">DuxPreferencesWindowController</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="chooseFontButton">
+							<string key="name">chooseFontButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="preferencesWindowController">
+							<string key="name">preferencesWindowController</string>
+							<string key="candidateClassName">DuxPreferencesWindowController</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DuxFontSelectorTextField.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">DuxPreferencesWindowController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="selectEditorFont:">id</string>
 						<string key="setIndentWidth:">id</string>
 						<string key="setIndentWithSpaces:">id</string>
 						<string key="setPageGuidePosition:">id</string>
@@ -1402,10 +1391,6 @@
 						<string key="setTabWidth:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="selectEditorFont:">
-							<string key="name">selectEditorFont:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="setIndentWidth:">
 							<string key="name">setIndentWidth:</string>
 							<string key="candidateClassName">id</string>
@@ -1443,8 +1428,6 @@
 						<string key="fontTextField">NSTextField</string>
 						<string key="indentStylePopUpButton">NSPopUpButton</string>
 						<string key="indentWidthTextField">NSTextField</string>
-						<string key="lineWrappingButton">NSButton</string>
-						<string key="lineWrappingSizeTextField">NSTextField</string>
 						<string key="pageGuidePositionTextField">NSTextField</string>
 						<string key="showLineNumbersButton">NSButton</string>
 						<string key="showOtherInstancesOfSelectedSymbolButton">NSButton</string>
@@ -1463,14 +1446,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="indentWidthTextField">
 							<string key="name">indentWidthTextField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="lineWrappingButton">
-							<string key="name">lineWrappingButton</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="lineWrappingSizeTextField">
-							<string key="name">lineWrappingSizeTextField</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pageGuidePositionTextField">
