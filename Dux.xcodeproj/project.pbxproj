@@ -47,6 +47,14 @@
 		38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38BC921C1487733B00CE73EB /* PreferencesWindow.xib */; };
 		38BC92201487735500CE73EB /* DuxPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */; };
 		38BC92231488151700CE73EB /* DuxPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC92221488151700CE73EB /* DuxPreferences.m */; };
+		38CC7D8B14E24DC600FE1594 /* DuxRubyLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D8A14E24DC600FE1594 /* DuxRubyLanguage.m */; };
+		38CC7D8E14E24F0500FE1594 /* DuxRubyBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D8D14E24F0500FE1594 /* DuxRubyBaseElement.m */; };
+		38CC7D9114E2500D00FE1594 /* DuxRubySingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D9014E2500D00FE1594 /* DuxRubySingleQuotedStringElement.m */; };
+		38CC7D9414E2655600FE1594 /* DuxRubyDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D9314E2655600FE1594 /* DuxRubyDoubleQuotedStringElement.m */; };
+		38CC7D9714E2658700FE1594 /* DuxRubyNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D9614E2658700FE1594 /* DuxRubyNumberElement.m */; };
+		38CC7D9A14E265AB00FE1594 /* DuxRubyKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D9914E265AB00FE1594 /* DuxRubyKeywordElement.m */; };
+		38CC7D9D14E265DD00FE1594 /* DuxRubySingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D9C14E265DC00FE1594 /* DuxRubySingleLineCommentElement.m */; };
+		38CC7DA014E267AC00FE1594 /* DuxRubyRegularExpressionElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CC7D9F14E267AB00FE1594 /* DuxRubyRegularExpressionElement.m */; };
 		38CD8FA7147F8F0500062D34 /* DuxTextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */; };
 		38CD8FAC147F9CF000062D34 /* DuxCLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAB147F9CF000062D34 /* DuxCLanguage.m */; };
 		38CD8FAF147F9CFB00062D34 /* DuxCBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FAE147F9CFB00062D34 /* DuxCBaseElement.m */; };
@@ -167,6 +175,22 @@
 		38BC921F1487735500CE73EB /* DuxPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxPreferencesWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38BC92211488151700CE73EB /* DuxPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPreferences.h; sourceTree = "<group>"; };
 		38BC92221488151700CE73EB /* DuxPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPreferences.m; sourceTree = "<group>"; };
+		38CC7D8914E24DC600FE1594 /* DuxRubyLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyLanguage.h; sourceTree = "<group>"; };
+		38CC7D8A14E24DC600FE1594 /* DuxRubyLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyLanguage.m; sourceTree = "<group>"; };
+		38CC7D8C14E24F0500FE1594 /* DuxRubyBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyBaseElement.h; sourceTree = "<group>"; };
+		38CC7D8D14E24F0500FE1594 /* DuxRubyBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyBaseElement.m; sourceTree = "<group>"; };
+		38CC7D8F14E2500D00FE1594 /* DuxRubySingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubySingleQuotedStringElement.h; sourceTree = "<group>"; };
+		38CC7D9014E2500D00FE1594 /* DuxRubySingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubySingleQuotedStringElement.m; sourceTree = "<group>"; };
+		38CC7D9214E2655500FE1594 /* DuxRubyDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyDoubleQuotedStringElement.h; sourceTree = "<group>"; };
+		38CC7D9314E2655600FE1594 /* DuxRubyDoubleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyDoubleQuotedStringElement.m; sourceTree = "<group>"; };
+		38CC7D9514E2658700FE1594 /* DuxRubyNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyNumberElement.h; sourceTree = "<group>"; };
+		38CC7D9614E2658700FE1594 /* DuxRubyNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyNumberElement.m; sourceTree = "<group>"; };
+		38CC7D9814E265AB00FE1594 /* DuxRubyKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyKeywordElement.h; sourceTree = "<group>"; };
+		38CC7D9914E265AB00FE1594 /* DuxRubyKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyKeywordElement.m; sourceTree = "<group>"; };
+		38CC7D9B14E265DC00FE1594 /* DuxRubySingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubySingleLineCommentElement.h; sourceTree = "<group>"; };
+		38CC7D9C14E265DC00FE1594 /* DuxRubySingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubySingleLineCommentElement.m; sourceTree = "<group>"; };
+		38CC7D9E14E267AB00FE1594 /* DuxRubyRegularExpressionElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRubyRegularExpressionElement.h; sourceTree = "<group>"; };
+		38CC7D9F14E267AB00FE1594 /* DuxRubyRegularExpressionElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRubyRegularExpressionElement.m; sourceTree = "<group>"; };
 		38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextContainer.h; sourceTree = "<group>"; };
 		38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextContainer.m; sourceTree = "<group>"; };
 		38CD8FAA147F9CF000062D34 /* DuxCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxCLanguage.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -263,6 +287,7 @@
 		3804A8161478DA00005C587A /* Languages */ = {
 			isa = PBXGroup;
 			children = (
+				38CC7D8714E24D9E00FE1594 /* Ruby */,
 				38CD8FC2147FA21600062D34 /* JavaScript */,
 				38CD8FA9147F9CD000062D34 /* C/C++ */,
 				3886D4AE14790FBE00970CAE /* CSS */,
@@ -393,6 +418,29 @@
 				38BC921C1487733B00CE73EB /* PreferencesWindow.xib */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		38CC7D8714E24D9E00FE1594 /* Ruby */ = {
+			isa = PBXGroup;
+			children = (
+				38CC7D8914E24DC600FE1594 /* DuxRubyLanguage.h */,
+				38CC7D8A14E24DC600FE1594 /* DuxRubyLanguage.m */,
+				38CC7D8C14E24F0500FE1594 /* DuxRubyBaseElement.h */,
+				38CC7D8D14E24F0500FE1594 /* DuxRubyBaseElement.m */,
+				38CC7D8F14E2500D00FE1594 /* DuxRubySingleQuotedStringElement.h */,
+				38CC7D9014E2500D00FE1594 /* DuxRubySingleQuotedStringElement.m */,
+				38CC7D9214E2655500FE1594 /* DuxRubyDoubleQuotedStringElement.h */,
+				38CC7D9314E2655600FE1594 /* DuxRubyDoubleQuotedStringElement.m */,
+				38CC7D9514E2658700FE1594 /* DuxRubyNumberElement.h */,
+				38CC7D9614E2658700FE1594 /* DuxRubyNumberElement.m */,
+				38CC7D9814E265AB00FE1594 /* DuxRubyKeywordElement.h */,
+				38CC7D9914E265AB00FE1594 /* DuxRubyKeywordElement.m */,
+				38CC7D9B14E265DC00FE1594 /* DuxRubySingleLineCommentElement.h */,
+				38CC7D9C14E265DC00FE1594 /* DuxRubySingleLineCommentElement.m */,
+				38CC7D9E14E267AB00FE1594 /* DuxRubyRegularExpressionElement.h */,
+				38CC7D9F14E267AB00FE1594 /* DuxRubyRegularExpressionElement.m */,
+			);
+			name = Ruby;
 			sourceTree = "<group>";
 		};
 		38CD8FA9147F9CD000062D34 /* C/C++ */ = {
@@ -707,6 +755,14 @@
 				38BC92231488151700CE73EB /* DuxPreferences.m in Sources */,
 				389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */,
 				3883058C14DE845B00409F43 /* DuxFontSelectorTextField.m in Sources */,
+				38CC7D8B14E24DC600FE1594 /* DuxRubyLanguage.m in Sources */,
+				38CC7D8E14E24F0500FE1594 /* DuxRubyBaseElement.m in Sources */,
+				38CC7D9114E2500D00FE1594 /* DuxRubySingleQuotedStringElement.m in Sources */,
+				38CC7D9414E2655600FE1594 /* DuxRubyDoubleQuotedStringElement.m in Sources */,
+				38CC7D9714E2658700FE1594 /* DuxRubyNumberElement.m in Sources */,
+				38CC7D9A14E265AB00FE1594 /* DuxRubyKeywordElement.m in Sources */,
+				38CC7D9D14E265DD00FE1594 /* DuxRubySingleLineCommentElement.m in Sources */,
+				38CC7DA014E267AC00FE1594 /* DuxRubyRegularExpressionElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
