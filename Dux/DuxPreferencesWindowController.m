@@ -19,6 +19,11 @@
 
 @implementation DuxPreferencesWindowController
 
+@synthesize windowToolbar;
+@synthesize editorSectionView;
+@synthesize colorsSectionView;
+
+// editor section
 @synthesize fontTextField;
 @synthesize showLineNumbersButton;
 @synthesize showPageGuideButton;
@@ -66,11 +71,57 @@
 	[self.tabWidthTextField setIntValue:(int)[DuxPreferences tabWidth]];
 	[self.indentWidthTextField setIntValue:(int)[DuxPreferences indentWidth]];
   [self.tabKeyBehaviourPopUpButton selectItemWithTag:[DuxPreferences tabIndentBehaviour]];
+  
+  NSString *sectionIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"PreferencesSelectedSection"];
+  if (!sectionIdentifier)
+    sectionIdentifier = @"editor";
+  [self showSection:sectionIdentifier animate:NO];
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
 {
   [self.fontTextField setStringValue:[NSString stringWithFormat:@"%@ - %0.1f", [DuxPreferences editorFont].displayName, [DuxPreferences editorFont].pointSize]];
+}
+
+- (void)showSection:(NSString *)sectionIdentifier animate:(BOOL)animate
+{
+  // figure out which view to show
+  NSDictionary *sectionViewsByIdentifier = [NSDictionary dictionaryWithObjectsAndKeys:editorSectionView, @"editor", colorsSectionView, @"colors", nil];
+  NSView *sectionView = [sectionViewsByIdentifier objectForKey:sectionIdentifier];
+  
+  // we need to calculate the height of the window's toolbar
+  float windowHeightWithoutToolbar = [NSWindow frameRectForContentRect:(NSRect){{0,0}, [self.window.contentView frame].size} styleMask:NSTitledWindowMask].size.height;
+  float toolbarHeight = self.window.frame.size.height - windowHeightWithoutToolbar;
+  
+  // hide other views, and show this one
+  for (NSView *subview in [self.window.contentView subviews]) {
+    [subview removeFromSuperview];
+  }
+  [self.window.contentView addSubview:sectionView];
+  
+  // figure out what the new window frame needs to be
+  NSRect newFrame = [NSWindow frameRectForContentRect:(NSRect){{0,0}, sectionView.frame.size} styleMask:NSTitledWindowMask];
+  newFrame.size.height += toolbarHeight;
+  
+  newFrame.origin.x = self.window.frame.origin.x;
+  newFrame.origin.y = self.window.frame.origin.y + (self.window.frame.size.height - newFrame.size.height);
+  
+  // apply the new frame
+  [self.window setFrame:newFrame display:YES animate:animate];
+  
+  // save the new identifier
+  [self.windowToolbar setSelectedItemIdentifier:sectionIdentifier];
+  [[NSUserDefaults standardUserDefaults] setObject:sectionIdentifier forKey:@"PreferencesSelectedSection"];
+}
+
+- (IBAction)showEditorSection:(id)sender
+{
+  [self showSection:@"editor" animate:YES];
+}
+
+- (IBAction)showColorsSection:(id)sender
+{
+  [self showSection:@"colors" animate:YES];
 }
 
 - (IBAction)setShowLineNumbers:(id)sender

@@ -13,7 +13,13 @@
 @interface DuxPreferencesWindowController : NSWindowController
 
 + (void)showPreferencesWindow;
+- (void)showSection:(NSString *)sectionIdentifier animate:(BOOL)animate;
 
+@property (weak) IBOutlet NSToolbar *windowToolbar;
+@property (weak) IBOutlet NSView *editorSectionView;
+@property (weak) IBOutlet NSView *colorsSectionView;
+
+// editor section
 @property (weak) IBOutlet NSTextField *fontTextField;
 @property (weak) IBOutlet NSButton *showLineNumbersButton;
 @property (weak) IBOutlet NSButton *showPageGuideButton;
@@ -24,6 +30,9 @@
 @property (weak) IBOutlet NSTextField *indentWidthTextField;
 @property (weak) IBOutlet NSPopUpButton *tabKeyBehaviourPopUpButton;
 
+- (IBAction)showEditorSection:(id)sender;
+- (IBAction)showColorsSection:(id)sender;
+
 - (IBAction)setShowLineNumbers:(id)sender;
 - (IBAction)setShowPageGuide:(id)sender;
 - (IBAction)setPageGuidePosition:(id)sender;
@@ -32,6 +41,5 @@
 - (IBAction)setTabWidth:(id)sender;
 - (IBAction)setIndentWidth:(id)sender;
 - (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender;
-
 
 @end
