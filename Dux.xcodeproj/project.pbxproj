@@ -88,7 +88,6 @@
 		38D6059B1403859600D70F81 /* MyTextDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D6059A1403859600D70F81 /* MyTextDocument.m */; };
 		38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059C1403859700D70F81 /* MyTextDocument.xib */; };
 		38D605A11403859700D70F81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059F1403859700D70F81 /* MainMenu.xib */; };
-		38D605D51403996C00D70F81 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D41403996C00D70F81 /* WebKit.framework */; };
 		38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D614039A0600D70F81 /* CoreFoundation.framework */; };
 		38E6807815076FDA00ECCC6C /* DuxShellLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6807715076FDA00ECCC6C /* DuxShellLanguage.m */; };
 		38E6807B1507708F00ECCC6C /* DuxShellBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6807A1507708F00ECCC6C /* DuxShellBaseElement.m */; };
@@ -263,7 +262,6 @@
 		38D6059A1403859600D70F81 /* MyTextDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTextDocument.m; sourceTree = "<group>"; };
 		38D6059D1403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyTextDocument.xib; sourceTree = "<group>"; };
 		38D605A01403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		38D605D41403996C00D70F81 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		38D605D614039A0600D70F81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		38DF856B147EFE620004B358 /* Dux.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Dux.entitlements; sourceTree = "<group>"; };
 		38E6807615076FDA00ECCC6C /* DuxShellLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxShellLanguage.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -300,7 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */,
-				38D605D51403996C00D70F81 /* WebKit.framework in Frameworks */,
 				38D605881403859600D70F81 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,7 +569,6 @@
 				38D6058A1403859600D70F81 /* AppKit.framework */,
 				38D6058B1403859600D70F81 /* CoreData.framework */,
 				38D6058C1403859600D70F81 /* Foundation.framework */,
-				38D605D41403996C00D70F81 /* WebKit.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -915,6 +911,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Dux;
 				WRAPPER_EXTENSION = app;
@@ -930,6 +927,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Dux;
 				WRAPPER_EXTENSION = app;
