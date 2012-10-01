@@ -92,6 +92,11 @@
     startingAtts = atts;
   }
   
+  // if highlightIndex is 0 and the starting language is not the base element, then force the base element
+  if (highlightIndex == 0 && [elementStack count] > 1) {
+    elementStack = [NSArray arrayWithObject:[self.baseLanguage baseElement]];
+  }
+  
   // begin highlighting
   DuxLanguage *thisLanguage = nil;
   NSUInteger endlessLoopDetectionRecentHighlightIndexes[10] = { [0 ... 9] = NSNotFound };
