@@ -925,12 +925,15 @@ static NSCharacterSet *newlineCharacterSet;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
   [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
+  float glyphRectExtraX = (self.showLineNumbers) ? 33.5 : 0;
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
     
     glyphRects = [layoutManager rectArrayForGlyphRange:glyphRange withinSelectedGlyphRange:glyphRange inTextContainer:textContainer rectCount:&glyphRectsCount];
     for (glyphRectsIndex = 0; glyphRectsIndex < glyphRectsCount; glyphRectsIndex++) {
-      [NSBezierPath fillRect:glyphRects[glyphRectsIndex]];
+      CGRect glyphRect = glyphRects[glyphRectsIndex];
+      glyphRect.origin.x += glyphRectExtraX;
+      [NSBezierPath fillRect:glyphRect];
     }
   }
 
