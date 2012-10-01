@@ -505,7 +505,9 @@ static NSCharacterSet *newlineCharacterSet;
   NSString *pasteString = [copiedItems objectAtIndex:0];
   pasteString = [pasteString stringByReplacingNewlinesWithNewline:self.textDocument.activeNewlineStyle];
   
+  [self breakUndoCoalescing];
   [self insertText:pasteString];
+  [self breakUndoCoalescing];
 }
 
 - (BOOL)smartInsertDeleteEnabled
