@@ -19,6 +19,7 @@
 - (void)deregisterKQueue;
 
 - (NSString *)hashFromUrl:(NSURL *)url;
+- (NSString *)hashFromData:(NSData *)data;
 
 @end
 
@@ -111,10 +112,14 @@
 
 - (NSString *)hashFromUrl:(NSURL *)url
 {
+  return [self hashFromData:[[NSData alloc] initWithContentsOfURL:self.url]];
+}
+
+- (NSString *)hashFromData:(NSData *)data
+{
   unsigned char outputData[CC_MD5_DIGEST_LENGTH];
   
-  NSData *inputData = [[NSData alloc] initWithContentsOfURL:self.url];
-  CC_MD5([inputData bytes], (CC_LONG)inputData.length, outputData);
+  CC_MD5([data bytes], (CC_LONG)data.length, outputData);
   
   NSMutableString *hash = [[NSMutableString alloc] init];
   for (NSUInteger i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
@@ -122,6 +127,11 @@
   }
   
   return [hash copy];
+}
+
+- (void)ignoreNewFileContents:(NSData *)newContents
+{
+  self.urlContentsHash = [self hashFromData:newContents];
 }
 
 @end

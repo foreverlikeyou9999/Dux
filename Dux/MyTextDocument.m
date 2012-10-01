@@ -88,6 +88,15 @@
   return [self.textStorage.string dataUsingEncoding:self.stringEncoding];
 }
 
+- (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+  if (self.fileContentsWatcher) {
+    [self.fileContentsWatcher ignoreNewFileContents:[self dataOfType:typeName error:NULL]];
+  }
+  
+  return [super writeToURL:absoluteURL ofType:typeName error:outError];
+}
+
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
   NSStringEncoding encoding;
