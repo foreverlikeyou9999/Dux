@@ -12,8 +12,9 @@
 #import "DuxTextView.h"
 #import "DuxSyntaxHighlighter.h"
 #import "DuxLanguageMenuItem.h"
+#import "DuxFileContentsWatcher.h"
 
-@interface MyTextDocument : NSDocument {
+@interface MyTextDocument : NSDocument <DuxFileContentsWatcherDelegate> {
   NSString *textContentToLoad; // text content to be loaded by -loadTextContentIntoStorage
 }
 @property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
@@ -22,6 +23,7 @@
 @property (unsafe_unretained) IBOutlet DuxTextView *textView;
 @property (nonatomic, strong) DuxSyntaxHighlighter *syntaxtHighlighter;
 @property NSStringEncoding stringEncoding;
+@property (nonatomic, strong) DuxFileContentsWatcher *fileContentsWatcher;
 
 // Newline style to be used when inserting new text.
 // The mask returned will only ever contain one of

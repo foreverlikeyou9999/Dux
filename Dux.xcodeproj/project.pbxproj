@@ -102,6 +102,7 @@
 		38EDD5271478E5C30077BAB0 /* DuxXMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5261478E5C30077BAB0 /* DuxXMLTagElement.m */; };
 		38EDD52A1478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */; };
 		38EDD52D1478E5E90077BAB0 /* DuxXMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */; };
+		38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -290,6 +291,8 @@
 		38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLTagAttributeElement.m; sourceTree = "<group>"; };
 		38EDD52B1478E5E90077BAB0 /* DuxXMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLEntityElement.h; sourceTree = "<group>"; };
 		38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLEntityElement.m; sourceTree = "<group>"; };
+		38FBDAD615DF895300B9FE70 /* DuxFileContentsWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxFileContentsWatcher.h; sourceTree = "<group>"; };
+		38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFileContentsWatcher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +386,8 @@
 				389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */,
 				3822EAA9148623970068330B /* DuxScrollViewAnimation.h */,
 				3822EAAA148623970068330B /* DuxScrollViewAnimation.m */,
+				38FBDAD615DF895300B9FE70 /* DuxFileContentsWatcher.h */,
+				38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -815,6 +820,7 @@
 				38E68087150772A600ECCC6C /* DuxShellNumberElement.m in Sources */,
 				38E6808E150772E200ECCC6C /* DuxShellSingleQuotedStringElement.m in Sources */,
 				38E68092150772ED00ECCC6C /* DuxShellDoubleQuotedStringElement.m in Sources */,
+				38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

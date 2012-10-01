@@ -101,6 +101,17 @@
   return YES;
 }
 
+- (void)setFileURL:(NSURL *)url
+{
+  if (self.fileContentsWatcher) {
+    self.fileContentsWatcher.url = url;
+  } else {
+    self.fileContentsWatcher = [[DuxFileContentsWatcher alloc] initWithURL:url delegate:self];
+  }
+  
+  [super setFileURL:url];
+}
+
 - (NSString *)fileNameExtensionForType:(NSString *)typeName saveOperation:(NSSaveOperationType)saveOperation
 {
   if (!self.fileURL)
@@ -344,6 +355,16 @@
     
     menuItem.state = (menuItem.tag == self.stringEncoding) ? NSOnState : NSOffState;
   }
+}
+
+- (void)fileContentsDidChange:(DuxFileContentsWatcher *)watcher
+{
+  if ([self hasUnautosavedChanges]) {
+    NSLog(@"recieved change event, but have unsaved changes");
+    return;
+  }
+  
+  [self revertToContentsOfURL:self.fileURL ofType:self.fileType error:NULL];
 }
 
 @end
