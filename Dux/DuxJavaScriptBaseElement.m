@@ -16,6 +16,7 @@
 #import "DuxJavaScriptKeywordElement.h"
 #import "DuxJavaScriptSingleLineCommentElement.h"
 #import "DuxJavaScriptBlockCommentElement.h"
+#import "DuxJavaScriptRegexElement.h"
 
 @implementation DuxJavaScriptBaseElement
 
@@ -27,6 +28,7 @@ static DuxJavaScriptNumberElement *numberElement;
 static DuxJavaScriptKeywordElement *keywordElement;
 static DuxJavaScriptSingleLineCommentElement *singleLineCommentElement;
 static DuxJavaScriptBlockCommentElement *blockCommentElement;
+static DuxJavaScriptRegexElement *regexElement;
 
 + (void)initialize
 {
@@ -40,6 +42,7 @@ static DuxJavaScriptBlockCommentElement *blockCommentElement;
   keywordElement = [DuxJavaScriptKeywordElement sharedInstance];
   singleLineCommentElement = [DuxJavaScriptSingleLineCommentElement sharedInstance];
   blockCommentElement = [DuxJavaScriptBlockCommentElement sharedInstance];
+  regexElement = [DuxJavaScriptRegexElement sharedInstance];
 }
 
 - (id)init
@@ -54,19 +57,28 @@ static DuxJavaScriptBlockCommentElement *blockCommentElement;
   NSUInteger searchStartLocation = startingAt;
   NSRange foundCharacterSetRange;
   unichar characterFound;
+  BOOL foundSingleLineComment = NO;
+  BOOL foundRegexPattern = NO;
   while (keepLooking) {
     foundCharacterSetRange = [string.string rangeOfCharacterFromSet:nextElementCharacterSet options:NSLiteralSearch range:NSMakeRange(searchStartLocation, string.string.length - searchStartLocation)];
     
     if (foundCharacterSetRange.location == NSNotFound)
       break;
     
-    // did we find a / character? check if it's a comment or not
+    // did we find a / character? check if it's a comment or a regex pattern
     characterFound = [string.string characterAtIndex:foundCharacterSetRange.location];
     if (string.string.length > (foundCharacterSetRange.location + 1) && characterFound == '/') {
       characterFound = [string.string characterAtIndex:foundCharacterSetRange.location + 1];
-      if (characterFound != '/' && characterFound != '*') {
-        searchStartLocation++;
-        continue;
+      if (characterFound == '/') {
+        foundSingleLineComment = YES;
+        foundRegexPattern = NO;
+      } else if (characterFound == '*') {
+        foundSingleLineComment = NO;
+        foundRegexPattern = NO;
+      } else {
+        foundSingleLineComment = NO;
+        foundRegexPattern = YES;
+        characterFound = '/';
       }
     }
     
@@ -128,8 +140,13 @@ static DuxJavaScriptBlockCommentElement *blockCommentElement;
       *nextElement = numberElement;
       return foundCharacterSetRange.location - startingAt;
     case '/':
-      *nextElement = singleLineCommentElement;
-      return foundCharacterSetRange.location - startingAt;
+      if (foundSingleLineComment) {
+        *nextElement = singleLineCommentElement;
+        return foundCharacterSetRange.location - startingAt;
+      } else if (foundRegexPattern) {
+        *nextElement = regexElement;
+        return foundCharacterSetRange.location - startingAt;
+      }
     case '*':
       *nextElement = blockCommentElement;
       return foundCharacterSetRange.location - startingAt;

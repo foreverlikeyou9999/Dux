@@ -27,6 +27,7 @@
 		385A1EA0147917590084F48E /* DuxCSSPseudoSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1E9F147917590084F48E /* DuxCSSPseudoSelectorElement.m */; };
 		385A1EA3147918770084F48E /* DuxCSSDefinitionBlockElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA2147918770084F48E /* DuxCSSDefinitionBlockElement.m */; };
 		385A1EA6147919A80084F48E /* DuxCSSPropertyNameElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA5147919A80084F48E /* DuxCSSPropertyNameElement.m */; };
+		386FE37616194A31002C0755 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */; };
 		38734F521406133200992D33 /* OpenQuickly.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38734F511406133200992D33 /* OpenQuickly.xib */; };
 		38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F551406135A00992D33 /* MyOpenQuicklyController.m */; };
 		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
@@ -146,6 +147,8 @@
 		385A1EA2147918770084F48E /* DuxCSSDefinitionBlockElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSDefinitionBlockElement.m; sourceTree = "<group>"; };
 		385A1EA4147919A70084F48E /* DuxCSSPropertyNameElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPropertyNameElement.h; sourceTree = "<group>"; };
 		385A1EA5147919A80084F48E /* DuxCSSPropertyNameElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSPropertyNameElement.m; sourceTree = "<group>"; };
+		386FE37416194A31002C0755 /* DuxJavaScriptRegexElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptRegexElement.h; sourceTree = "<group>"; };
+		386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJavaScriptRegexElement.m; sourceTree = "<group>"; };
 		38734F511406133200992D33 /* OpenQuickly.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenQuickly.xib; sourceTree = "<group>"; };
 		38734F541406135A00992D33 /* MyOpenQuicklyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOpenQuicklyController.h; sourceTree = "<group>"; };
 		38734F551406135A00992D33 /* MyOpenQuicklyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenQuicklyController.m; sourceTree = "<group>"; };
@@ -512,6 +515,8 @@
 				38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */,
 				38CD8FD8147FA28600062D34 /* DuxJavaScriptBlockCommentElement.h */,
 				38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */,
+				386FE37416194A31002C0755 /* DuxJavaScriptRegexElement.h */,
+				386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */,
 			);
 			name = JavaScript;
 			sourceTree = "<group>";
@@ -824,6 +829,7 @@
 				38E6808E150772E200ECCC6C /* DuxShellSingleQuotedStringElement.m in Sources */,
 				38E68092150772ED00ECCC6C /* DuxShellDoubleQuotedStringElement.m in Sources */,
 				38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */,
+				386FE37616194A31002C0755 /* DuxJavaScriptRegexElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
