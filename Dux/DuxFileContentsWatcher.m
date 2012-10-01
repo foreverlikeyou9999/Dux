@@ -80,7 +80,6 @@
   dispatch_source_set_event_handler(source, ^
   {
     if (isFirst) {
-      NSLog(@"ignoring first callback");
       isFirst = NO;
       return;
     }
@@ -89,10 +88,7 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
       NSString *newHash = [self hashFromUrl:self.url];
       
-      NSLog(@"recieved change event");
-      
       if (![newHash isEqual:self.urlContentsHash]) {
-        NSLog(@"change event has changes");
         [self.delegate fileContentsDidChange:self];
         
         [self deregisterKQueue];
@@ -102,7 +98,6 @@
   });
   
   dispatch_source_set_cancel_handler(source, ^(void) {
-    NSLog(@"closed");
     close(fildes);
   });
   
@@ -111,8 +106,6 @@
 
 - (void)deregisterKQueue
 {
-  NSLog(@"deregister %@", self.url);
-  
   dispatch_source_cancel(source);
 }
 
