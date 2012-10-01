@@ -4,6 +4,8 @@
 //
 //  Created by Abhi Beckert on 2012-8-18.
 //
+//  This is free and unencumbered software released into the public domain.
+//  For more information, please refer to <http://unlicense.org/>
 //
 
 #import "DuxFileContentsWatcher.h"
