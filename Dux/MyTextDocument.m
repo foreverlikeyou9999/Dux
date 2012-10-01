@@ -375,7 +375,14 @@
     return;
   }
   
+  // save old insertion point
+  NSArray *selectedRanges = [self.textView selectedRanges];
+  
+  // revert file
   [self revertToContentsOfURL:self.fileURL ofType:self.fileType error:NULL];
+  
+  // read old insertion point
+  [self.textView setSelectedRanges:selectedRanges];
 }
 
 @end
