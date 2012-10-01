@@ -83,6 +83,8 @@
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
+  [self.textView breakUndoCoalescing];
+  
   return [self.textStorage.string dataUsingEncoding:self.stringEncoding];
 }
 
