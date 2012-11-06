@@ -15,14 +15,13 @@
   NSWindow *openQuicklyWindow;
   NSString *searchPath;
   NSSearchField *__weak searchField;
-  NSTextField *__weak searchPathField;
   NSTableView *__weak resultsTableView;
   NSProgressIndicator *__weak progressIndicator;
   NSOperationQueue *updateResultsQueue;
 }
 
 @property (weak) IBOutlet NSSearchField *searchField;
-@property (weak) IBOutlet NSTextField *searchPathField;
+@property (weak) IBOutlet NSPathControl *searchPathField;
 @property (strong) IBOutlet NSString *searchPath;
 @property (strong) IBOutlet NSWindow *openQuicklyWindow;
 @property (weak) IBOutlet NSTableView *resultsTableView;

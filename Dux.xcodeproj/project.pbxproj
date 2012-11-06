@@ -103,6 +103,8 @@
 		38EDD5271478E5C30077BAB0 /* DuxXMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5261478E5C30077BAB0 /* DuxXMLTagElement.m */; };
 		38EDD52A1478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */; };
 		38EDD52D1478E5E90077BAB0 /* DuxXMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */; };
+		38F1060916490F8A00467839 /* DuxMultiFileSearchWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F1060716490F8A00467839 /* DuxMultiFileSearchWindowController.m */; };
+		38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */; };
 		38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */; };
 /* End PBXBuildFile section */
 
@@ -294,6 +296,9 @@
 		38EDD5291478E5DD0077BAB0 /* DuxXMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLTagAttributeElement.m; sourceTree = "<group>"; };
 		38EDD52B1478E5E90077BAB0 /* DuxXMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxXMLEntityElement.h; sourceTree = "<group>"; };
 		38EDD52C1478E5E90077BAB0 /* DuxXMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxXMLEntityElement.m; sourceTree = "<group>"; };
+		38F1060616490F8A00467839 /* DuxMultiFileSearchWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxMultiFileSearchWindowController.h; sourceTree = "<group>"; };
+		38F1060716490F8A00467839 /* DuxMultiFileSearchWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxMultiFileSearchWindowController.m; sourceTree = "<group>"; };
+		38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DuxMultiFileSearchWindowController.xib; sourceTree = "<group>"; };
 		38FBDAD615DF895300B9FE70 /* DuxFileContentsWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxFileContentsWatcher.h; sourceTree = "<group>"; };
 		38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFileContentsWatcher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -597,6 +602,9 @@
 				38A72CB11409057E008C26C9 /* Open Quickly */,
 				3837FAA81475E009002CC459 /* Misc */,
 				38D6058E1403859600D70F81 /* Supporting Files */,
+				38F1060616490F8A00467839 /* DuxMultiFileSearchWindowController.h */,
+				38F1060716490F8A00467839 /* DuxMultiFileSearchWindowController.m */,
+				38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */,
 			);
 			path = Dux;
 			sourceTree = "<group>";
@@ -718,6 +726,7 @@
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
+				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,6 +839,7 @@
 				38E68092150772ED00ECCC6C /* DuxShellDoubleQuotedStringElement.m in Sources */,
 				38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */,
 				386FE37616194A31002C0755 /* DuxJavaScriptRegexElement.m in Sources */,
+				38F1060916490F8A00467839 /* DuxMultiFileSearchWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,13 @@
 #import "NSStringDuxAdditions.h"
 #import "DuxPreferences.h"
 #import "DuxPreferencesWindowController.h"
+#import "DuxMultiFileSearchWindowController.h"
+
+@interface MyAppDelegate ()
+
+@property (nonatomic, strong) DuxMultiFileSearchWindowController *multiFileSearchWindowController;
+
+@end
 
 @implementation MyAppDelegate
 @synthesize openQuicklyController;
@@ -36,6 +43,15 @@
   }
   
   [self.openQuicklyController showOpenQuicklyPanel];
+}
+
+- (IBAction)findInFiles:(id)sender
+{
+  if (!self.multiFileSearchWindowController) {
+    self.multiFileSearchWindowController = [[DuxMultiFileSearchWindowController alloc] initWithWindowNibName:@"DuxMultiFileSearchWindowController"];
+  }
+  
+  [self.multiFileSearchWindowController showWindow:self];
 }
 
 - (IBAction)showPreferences:(id)sender

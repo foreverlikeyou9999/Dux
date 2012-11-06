@@ -15,9 +15,11 @@
 @interface MyAppDelegate : NSObject {
   MyOpenQuicklyController *openQuicklyController;
 }
+
 @property (nonatomic,strong) IBOutlet MyOpenQuicklyController *openQuicklyController;
 
 - (IBAction)openQuickly:(id)sender;
+- (IBAction)findInFiles:(id)sender;
 - (IBAction)showPreferences:(id)sender;
 
 @end

@@ -1,59 +1,62 @@
 //
-//  MyOpenQuicklyController.m
+//  DuxMultiFileSearchWindowController.m
 //  Dux
 //
-//  Created by Abhi Beckert on 2011-08-25.
-//  
-//  This is free and unencumbered software released into the public domain.
-//  For more information, please refer to <http://unlicense.org/>
+//  Created by Abhi Beckert on 2012-11-6.
+//
 //
 
-#import "MyOpenQuicklyController.h"
+#import "DuxMultiFileSearchWindowController.h"
+#import "DuxPreferences.h"
 
-@implementation MyOpenQuicklyController
+@interface DuxMultiFileSearchWindowController ()
 
-@synthesize searchField;
-@synthesize searchPath;
-@synthesize openQuicklyWindow;
-@synthesize resultsTableView;
-@synthesize progressIndicator;
-@synthesize searchPaths;
-@synthesize searchResultPaths;
-@synthesize directoryNamesToSkip;
+@property (strong) NSArray *searchPaths; // list of every subpath in available in the open quickly panel
+@property (strong) NSArray *searchResultPaths;
+@property (strong) NSOperationQueue *updateResultsQueue;
 
-- (id)initWithWindow:(NSWindow *)window
+@property (strong) NSArray *directoryNamesToSkip; // array of directories to skip when doing a search (eg: @".svn")
+
+@end
+
+@implementation DuxMultiFileSearchWindowController
+
+- (id)initWithWindowNibName:(NSString *)windowNibName
 {
-  self = [super initWithWindow:window];
-  if (self) {
-    self.searchResultPaths = [NSArray array];
-    self.directoryNamesToSkip = [NSArray arrayWithObjects:@".svn", @"tmp", nil];
-    
-    // load search path from user defaults
-    self.searchPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"];
-    self.searchPaths = [NSArray array];
-    
-    updateResultsQueue = [[NSOperationQueue alloc] init];
-    updateResultsQueue.maxConcurrentOperationCount = 1;
-  }
+  if (!(self = [super initWithWindowNibName:windowNibName]))
+    return nil;
+  
+  self.searchResultPaths = [NSArray array];
+  self.directoryNamesToSkip = [NSArray arrayWithObjects:@".svn", @"tmp", nil];
+  
+  // load search path from user defaults
+  
+  self.updateResultsQueue = [[NSOperationQueue alloc] init];
+  self.updateResultsQueue.maxConcurrentOperationCount = 1;
   
   return self;
 }
 
-- (void)showOpenQuicklyPanel
+- (void)windowDidLoad
 {
-//  self.searchPathField.stringValue = self.searchPath;
-  [self.openQuicklyWindow makeKeyAndOrderFront:self];
+  [super windowDidLoad];
+}
+
+- (void)showWindow:(id)sender
+{
+  [super showWindow:sender];
+  
   [self.searchField becomeFirstResponder];
+  self.searchPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"];
+  self.searchPaths = [NSArray array];
   
   [self updateSearchPaths];
 }
-
 - (IBAction)performSearch:(id)sender
 {
   // has the search path field's value changed?
-  
-  if (![self.searchPathField.stringValue isEqualToString:self.searchPath]) {
-    self.searchPath = self.searchPathField.stringValue;
+  if (![self.searchPathControl.stringValue isEqualToString:self.searchPath]) {
+    self.searchPath = self.searchPathControl.stringValue;
     [self updateSearchPaths]; // this will call performSearch as it finds search path
     return;
   }
@@ -68,32 +71,37 @@
   // clear selection
   [self.resultsTableView deselectAll:self];
   
-  // build regex pattern from search string
-  NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
-  NSString *operatorChars = @"*?+[(){}^$|\\./";
-  for (int charPos = 0; charPos < searchString.length; charPos++) {
-    NSString *character = [searchString substringWithRange:NSMakeRange(charPos, 1)];
-    
-    if ([operatorChars rangeOfString:character].location != NSNotFound)
-      character = [NSString stringWithFormat:@"\\%@", character];
-    
-    [searchPattern appendFormat:@"%@[^/]*", character];
-  }
-  [searchPattern appendString:@"$"];
-  
-  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
+//  // build regex pattern from search string
+//  NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
+//  NSString *operatorChars = @"*?+[(){}^$|\\./";
+//  for (int charPos = 0; charPos < searchString.length; charPos++) {
+//    NSString *character = [searchString substringWithRange:NSMakeRange(charPos, 1)];
+//    
+//    if ([operatorChars rangeOfString:character].location != NSNotFound)
+//      character = [NSString stringWithFormat:@"\\%@", character];
+//    
+//    [searchPattern appendFormat:@"%@[^/]*", character];
+//  }
+//  [searchPattern appendString:@"$"];
+//  
+//  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
   
   // cancel the operation queue
-  [updateResultsQueue cancelAllOperations];
-  [updateResultsQueue waitUntilAllOperationsAreFinished];
+  [self.updateResultsQueue cancelAllOperations];
+  [self.updateResultsQueue waitUntilAllOperationsAreFinished];
   
   NSArray *operationSearchPaths = [self.searchPaths copy];
-  MyOpenQuicklyController *blockSelf = self; // avoid retain cycle warnings
+  DuxMultiFileSearchWindowController *blockSelf = self; // avoid retain cycle warnings
   
   __block NSBlockOperation *updateResultsBlock = [NSBlockOperation blockOperationWithBlock:^{
     NSMutableArray *mutableSearchResults = [NSMutableArray array];
     NSDate *lastUIUpdate = [NSDate date]; // when this hits 1/30th of a second ago, we update the GUI
     BOOL haveNewResults = YES;
+    
+    [blockSelf.progressIndicator setIndeterminate:NO];
+    blockSelf.progressIndicator.maxValue = operationSearchPaths.count;
+    blockSelf.progressIndicator.doubleValue = 0;
+    [blockSelf.progressIndicator startAnimation:self];
     
     for (NSURL *url in operationSearchPaths) {
       if (updateResultsBlock.isCancelled)
@@ -109,33 +117,42 @@
           });
           if (updateResultsBlock.isCancelled)
             break;
+          
+          haveNewResults = NO;
         }
         
         lastUIUpdate = [NSDate date];
-        haveNewResults = NO;
       }
       
-      if ([expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
+      NSString *fileContents = [NSString stringWithContentsOfURL:url usedEncoding:NULL error:NULL];
+      if (!fileContents || [fileContents rangeOfString:searchString options:NSCaseInsensitiveSearch].location == NSNotFound) {
+        [blockSelf.progressIndicator incrementBy:1];
         continue;
+      }
       
-      NSUInteger urlIndex = [mutableSearchResults indexOfObject:url inSortedRange:NSMakeRange(0, mutableSearchResults.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(NSURL *leftObj, NSURL *rightObj) {
-        NSString *leftLastPathComponent = leftObj.lastPathComponent;
-        NSUInteger leftLength = leftLastPathComponent.length;
-        
-        NSString *rightLastPathComponent = rightObj.lastPathComponent;
-        NSUInteger rightLength = rightLastPathComponent.length;
-        
-        if (leftLength < rightLength) {
-          return -1;
-        } else if (leftLength > rightLength) {
-          return 1;
-        } else {
-          return [leftLastPathComponent compare:rightLastPathComponent];
-        }
-      }];
-      [mutableSearchResults insertObject:url atIndex:urlIndex];
+//      NSUInteger urlIndex = [mutableSearchResults indexOfObject:url inSortedRange:NSMakeRange(0, mutableSearchResults.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(NSURL *leftObj, NSURL *rightObj) {
+//        NSString *leftLastPathComponent = leftObj.lastPathComponent;
+//        NSUInteger leftLength = leftLastPathComponent.length;
+//        
+//        NSString *rightLastPathComponent = rightObj.lastPathComponent;
+//        NSUInteger rightLength = rightLastPathComponent.length;
+//        
+//        if (leftLength < rightLength) {
+//          return -1;
+//        } else if (leftLength > rightLength) {
+//          return 1;
+//        } else {
+//          return [leftLastPathComponent compare:rightLastPathComponent];
+//        }
+//      }];
+//      [mutableSearchResults insertObject:url atIndex:urlIndex];
+      [mutableSearchResults addObject:url];
       haveNewResults = YES;
+      
+      [blockSelf.progressIndicator incrementBy:1];
     }
+    [blockSelf.progressIndicator setIndeterminate:YES];
+    
     if (updateResultsBlock.isCancelled)
       return;
     
@@ -148,7 +165,7 @@
       });
     }
   }];
-  [updateResultsQueue addOperation:updateResultsBlock];
+  [self.updateResultsQueue addOperation:updateResultsBlock];
 }
 
 - (IBAction)cancel:(id)sender
@@ -193,10 +210,10 @@
   self.searchPaths = [NSArray array];
   
   if (!self.searchPath || self.searchPath.length == 0) {
-//    self.searchPathField.stringValue = nil;
     return;
   }
   
+  [self.progressIndicator setIndeterminate:YES];
   [self.progressIndicator startAnimation:self];
   
   // enumerate all the files in the path
@@ -257,7 +274,7 @@
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
-  if (control == self.searchField || control == self.searchPathField) {
+  if (control == self.searchField || control == self.searchPathControl) {
     if (commandSelector == @selector(insertNewline:)) {
       [self open:control];
       return YES;
