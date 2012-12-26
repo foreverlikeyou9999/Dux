@@ -14,8 +14,10 @@
 #import "DuxLanguageMenuItem.h"
 #import "DuxFileContentsWatcher.h"
 
+@class DuxProjectWindowController;
+
 @interface MyTextDocument : NSDocument <DuxFileContentsWatcherDelegate> {
-  NSString *textContentToLoad; // text content to be loaded by -loadTextContentIntoStorage
+  NSTextStorage *textContentStorage;
 }
 @property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
 
@@ -46,5 +48,7 @@
 - (IBAction)setActiveNewlineStyleFromMenuItem:(NSMenuItem *)sender;
 - (IBAction)convertToNewlineStyleFromMenuItem:(NSMenuItem *)sender;
 - (IBAction)setActiveEncoding:(NSMenuItem *)sender;
+
+- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller;
 
 @end

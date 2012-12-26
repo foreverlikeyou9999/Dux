@@ -10,6 +10,7 @@
 
 #import "MyTextDocument.h"
 #import "DuxPreferences.h"
+#import "DuxProjectWindowController.h"
 
 @implementation MyTextDocument
 
@@ -29,8 +30,12 @@
 {
     self = [super init];
     if (self) {
-      textContentToLoad = @"";
       stringEncoding = NSUTF8StringEncoding;
+      textContentStorage = [[NSTextStorage alloc] initWithString:@"" attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+      self.syntaxtHighlighter = [[DuxSyntaxHighlighter alloc] init];
+      textContentStorage.delegate = self.syntaxtHighlighter;
+      
+      self.activeNewlineStyle = DuxNewlineUnix;
     }
     return self;
 }
@@ -40,24 +45,30 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (NSString *)windowNibName
+- (void)makeWindowControllers
 {
-  // Override returning the nib file name of the document
-  // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-  return @"MyTextDocument";
+  // create/find window controller
+  static DuxProjectWindowController *controller = nil;
+  
+  if (!controller) {
+    controller = [[DuxProjectWindowController alloc] initWithWindowNibName:@"MyTextDocument"];
+  }
+  
+  // link ourself up as the window controller's current document (this will call [self loadIntoProjectWindow:] once the nib is ready)
+  [self addWindowController:controller];
 }
 
-- (void)windowControllerDidLoadNib:(NSWindowController *)aController
+- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller
 {
-  [super windowControllerDidLoadNib:aController];
+  self.editorWindow = controller.editorWindow;
+  self.textView = controller.textView;
+  
+  controller.documentPathLabel.stringValue = self.fileURL ? [self.fileURL.path stringByAbbreviatingWithTildeInPath] : [NSString stringWithFormat:@"(%@)", self.displayName];
   
   // load ourselves into text view
   self.textView.textDocument = self;
   
   // load text into view
-  self.textStorage = self.textView.textStorage;
-  self.syntaxtHighlighter = [[DuxSyntaxHighlighter alloc] init];
-  self.textStorage.delegate = self.syntaxtHighlighter;
   self.textView.highlighter = self.syntaxtHighlighter;
   [self loadTextContentIntoStorage];
   
@@ -85,7 +96,7 @@
 {
   [self.textView breakUndoCoalescing];
   
-  return [self.textStorage.string dataUsingEncoding:self.stringEncoding];
+  return [textContentStorage.string dataUsingEncoding:self.stringEncoding];
 }
 
 - (BOOL)writeToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
@@ -100,12 +111,27 @@
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
   NSStringEncoding encoding;
-  textContentToLoad = [NSString stringWithUnknownData:data usedEncoding:&encoding];
+  NSString *textContentToLoad = [NSString stringWithUnknownData:data usedEncoding:&encoding];
   if (!textContentToLoad) {
     *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:nil];
     return NO;
   }
   self.stringEncoding = encoding;
+  
+  textContentStorage = [[NSTextStorage alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  
+  
+  // figure out what language to use
+  for (Class language in [DuxLanguage registeredLanguages]) {
+    if (![language isDefaultLanguageForURL:self.fileURL textContents:textContentToLoad])
+      continue;
+    
+    [self.syntaxtHighlighter setBaseLanguage:[language sharedInstance] forTextStorage:textContentStorage];
+    break;
+  }
+  
+  // set activeNewlineStyle to the first newline in the document
+  self.activeNewlineStyle = [textContentToLoad newlineStyleForFirstNewline];
   
   [self loadTextContentIntoStorage];
   
@@ -133,36 +159,14 @@
 
 - (void)loadTextContentIntoStorage
 {
-  if (!self.textStorage || !textContentToLoad)
-    return;
-  
-  // figure out what language to use
-  for (Class language in [DuxLanguage registeredLanguages]) {
-    if (![language isDefaultLanguageForURL:self.fileURL textContents:textContentToLoad])
-      continue;
-    
-    [self.syntaxtHighlighter setBaseLanguage:[language sharedInstance] forTextStorage:self.textStorage];
-    break;
-  }
-  
-  // set activeNewlineStyle to the first newline in the document
-  self.activeNewlineStyle = [textContentToLoad newlineStyleForFirstNewline];
-  
   // load contents into storage
-  [self.textStorage beginEditing];
-  [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withString:textContentToLoad];
-  
-  NSDictionary *attributes = [NSDictionary dictionaryWithObject:[DuxPreferences editorFont] forKey:NSFontAttributeName];
-  [self.textStorage setAttributes:attributes range:NSMakeRange(0, self.textStorage.length)];
-  [self.textStorage endEditing];
-  
-  // free up memory
-  textContentToLoad = nil;
+  [self.textView setSelectedRange:NSMakeRange(0, 0)];
+  [self.textView.textContainer.layoutManager replaceTextStorage:textContentStorage];
 }
 
 + (BOOL)autosavesInPlace
 {
-    return YES;
+  return YES;
 }
 
 - (void)documentWindowDidBecomeKey:(NSNotification *)notification
@@ -197,7 +201,7 @@
 {
   Class languageClass = NSClassFromString([sender valueForKey:@"duxLanguageClassName"]);
   
-  [self.syntaxtHighlighter setBaseLanguage:[languageClass sharedInstance] forTextStorage:self.textStorage];
+  [self.syntaxtHighlighter setBaseLanguage:[languageClass sharedInstance] forTextStorage:textContentStorage];
   
   [self updateSyntaxMenuStates];
 }
@@ -270,7 +274,7 @@
 
 - (BOOL)convertContentToEncoding:(NSStringEncoding)newEncoding
 {
-  NSData *data = [self.textStorage.string dataUsingEncoding:newEncoding allowLossyConversion:NO];
+  NSData *data = [textContentStorage.string dataUsingEncoding:newEncoding allowLossyConversion:NO];
   if (!data)
     return NO;
   
@@ -288,7 +292,7 @@
 - (BOOL)reinterprateContentWithEncoding:(NSStringEncoding)newEncoding
 { 
   // convert to NSData with current encoding
-  NSData *data = [self.textStorage.string dataUsingEncoding:self.stringEncoding];
+  NSData *data = [textContentStorage.string dataUsingEncoding:self.stringEncoding];
   
   // try to read with the new encoding
   NSString *newString = [[NSString alloc] initWithData:data encoding:newEncoding];
@@ -327,7 +331,7 @@
   NSMenuItem *menuItem = [[[[NSApplication sharedApplication].mainMenu itemWithTitle:@"Editor"].submenu itemWithTitle:@"Line Endings"].submenu itemAtIndex:0];
   
   menuItem.title = @"In use: Calculating...";
-  NSString *stringForNewlineCalculation = [self.textStorage.string copy];
+  NSString *stringForNewlineCalculation = [textContentStorage.string copy];
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     DuxNewlineOptions newlineStyles = [stringForNewlineCalculation newlineStyles];
     
