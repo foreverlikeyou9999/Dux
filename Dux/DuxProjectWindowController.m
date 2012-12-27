@@ -108,4 +108,9 @@
   [self.openQuicklyController showOpenQuicklyPanel];
 }
 
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+{
+  return [NSString stringWithFormat:@"%@ — %@", [self.rootUrl.path stringByAbbreviatingWithTildeInPath], displayName];
+}
+
 @end
