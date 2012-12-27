@@ -165,7 +165,7 @@
 - (void)updateSearchPaths
 {
   // update window
-  self.window.title = [NSString stringWithFormat:@"%@ — Open Quickly", [self.searchUrl.path stringByAbbreviatingWithTildeInPath]];
+  self.window.title = [NSString stringWithFormat:@"Open Quickly — %@", [self.searchUrl.path stringByAbbreviatingWithTildeInPath]];
   
   // init
   self.searchPaths = [NSArray array];

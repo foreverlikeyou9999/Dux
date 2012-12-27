@@ -63,7 +63,17 @@
   self.editorWindow = controller.editorWindow;
   self.textView = controller.textView;
   
-  controller.documentPathLabel.stringValue = self.fileURL ? [self.fileURL.path stringByAbbreviatingWithTildeInPath] : [NSString stringWithFormat:@"(%@)", self.displayName];
+  if (self.fileURL) {
+    NSString *relativePath = self.fileURL.path;
+    if (relativePath.length > controller.rootUrl.path.length && [controller.rootUrl.path isEqualToString:[relativePath substringToIndex:controller.rootUrl.path.length]]) {
+      relativePath = [relativePath substringFromIndex:controller.rootUrl.path.length + 1];
+    } else {
+      relativePath = [relativePath stringByAbbreviatingWithTildeInPath];
+    }
+    controller.documentPathLabel.stringValue = relativePath;
+  } else {
+    controller.documentPathLabel.stringValue = [NSString stringWithFormat:@"(%@)", self.displayName];
+  }
   
   // load ourselves into text view
   self.textView.textDocument = self;

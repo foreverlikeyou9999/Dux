@@ -110,7 +110,7 @@
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-  return [NSString stringWithFormat:@"%@ — %@", [self.rootUrl.path stringByAbbreviatingWithTildeInPath], displayName];
+  return [NSString stringWithFormat:@"%@ — %@", displayName, [self.rootUrl.path stringByAbbreviatingWithTildeInPath]];
 }
 
 @end
