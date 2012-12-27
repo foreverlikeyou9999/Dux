@@ -13,6 +13,7 @@
 #import "DuxPreferences.h"
 #import "DuxPreferencesWindowController.h"
 #import "DuxMultiFileSearchWindowController.h"
+#import "DuxProjectWindowController.h"
 
 @interface MyAppDelegate ()
 
@@ -55,20 +56,22 @@
   [[NSFileManager defaultManager] fileExistsAtPath:filename isDirectory:&isDirectory];
   
   if (isDirectory) {
-    NSLog(@"not yet implemented");
-//    if (!openQuicklyController) {
-//      [NSBundle loadNibNamed:@"OpenQuickly" owner:self];
-//    }
-//    
-//    self.openQuicklyController.searchPath = filename;
-//    [[NSUserDefaults standardUserDefaults] setValue:filename forKey:@"OpenQuicklySearchPath"];
-//    [self.openQuicklyController showOpenQuicklyPanel];
+    DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:[NSURL fileURLWithPath:filename]];
+    
+    [controller showWindow:self];
     
     return YES;
   }
   
   [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:[NSURL fileURLWithPath:filename] display:YES error:NULL];
   return YES;
+}
+
+- (IBAction)newWindow:(id)sender
+{
+  DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:nil];
+  
+  [controller showWindow:self];
 }
 
 @end

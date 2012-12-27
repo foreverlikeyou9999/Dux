@@ -16,5 +16,6 @@
 
 - (IBAction)findInFiles:(id)sender;
 - (IBAction)showPreferences:(id)sender;
+- (IBAction)newWindow:(id)sender;
 
 @end

@@ -47,11 +47,15 @@
 
 - (void)makeWindowControllers
 {
-  // create/find window controller
-  static DuxProjectWindowController *controller = nil;
+  // find/create window controller
+  DuxProjectWindowController *controller = [NSApp mainWindow].windowController;
+  if (![controller isKindOfClass:[DuxProjectWindowController class]])
+    controller = nil;
   
   if (!controller) {
     controller = [[DuxProjectWindowController alloc] initWithWindowNibName:@"MyTextDocument"];
+    if (self.fileURL)
+      controller.rootUrl = [self.fileURL URLByDeletingLastPathComponent];
   }
   
   // link ourself up as the window controller's current document (this will call [self loadIntoProjectWindow:] once the nib is ready)
