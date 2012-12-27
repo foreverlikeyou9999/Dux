@@ -39,4 +39,6 @@
 
 - (IBAction)newWindow:(id)sender;
 
+- (IBAction)findInFiles:(id)sender;
+
 @end

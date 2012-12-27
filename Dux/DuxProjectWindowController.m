@@ -9,8 +9,11 @@
 #import "DuxProjectWindowController.h"
 #import "MyTextDocument.h"
 #import "MyOpenQuicklyController.h"
+#import "DuxMultiFileSearchWindowController.h"
 
 @interface DuxProjectWindowController ()
+
+@property (nonatomic, strong) DuxMultiFileSearchWindowController *multiFileSearchWindowController;
 
 @end
 
@@ -137,6 +140,8 @@ static NSMutableArray *projects = nil;
   panel.canChooseFiles = NO;
   panel.allowsMultipleSelection = NO;
   panel.directoryURL = self.rootUrl;
+  panel.prompt = @"Set";
+  panel.message = @"Set Current Working Directory:";
   
   [panel beginSheetModalForWindow:self.editorWindow completionHandler:^(NSInteger result) {
     if (result == NSCancelButton)
@@ -166,6 +171,15 @@ static NSMutableArray *projects = nil;
   DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:self.rootUrl];
   
   [controller showWindow:self];
+}
+
+- (IBAction)findInFiles:(id)sender
+{
+  if (!self.multiFileSearchWindowController) {
+    self.multiFileSearchWindowController = [[DuxMultiFileSearchWindowController alloc] initWithWindowNibName:@"DuxMultiFileSearchWindowController"];
+  }
+  
+  [self.multiFileSearchWindowController showWindowWithSearchPath:self.rootUrl.path];
 }
 
 @end

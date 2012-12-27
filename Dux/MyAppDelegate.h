@@ -14,7 +14,6 @@
 
 @interface MyAppDelegate : NSObject
 
-- (IBAction)findInFiles:(id)sender;
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)newWindow:(id)sender;
 

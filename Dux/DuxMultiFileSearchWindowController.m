@@ -48,12 +48,12 @@
   [super windowDidLoad];
 }
 
-- (void)showWindow:(id)sender
+- (void)showWindowWithSearchPath:(NSString *)searchPath
 {
-  [super showWindow:sender];
+  [self showWindow:self];
   
   [self.searchField becomeFirstResponder];
-  self.searchPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"];
+  self.searchPath = searchPath;
   self.searchPaths = [NSArray array];
   
   [self updateSearchPaths];
@@ -66,12 +66,6 @@
 
 - (IBAction)performSearch:(id)sender
 {
-  // has the search path field's value changed?
-  if (![self.searchPathControl.stringValue isEqualToString:self.searchPath]) {
-    self.searchPath = self.searchPathControl.stringValue;
-    [self updateSearchPaths];
-  }
-  
   // do we have any search paths?
   if (self.searchPaths.count == 0) {
     return;
@@ -212,25 +206,10 @@
   [self openResult:resultURL];
 }
 
-- (IBAction)browseForSearchIn:(id)sender
-{
-  NSOpenPanel *panel = [NSOpenPanel openPanel];
-  [panel setCanChooseFiles:NO];
-  [panel setCanChooseDirectories:YES];
-  [panel setAllowsMultipleSelection:NO];
-  
-  [panel beginWithCompletionHandler:^(NSInteger buttonClicked){
-    if (buttonClicked == NSFileHandlingPanelCancelButton)
-      return;
-    
-    self.searchPath = [[panel.URL path] stringByAbbreviatingWithTildeInPath];
-    [[NSUserDefaults standardUserDefaults] setValue:self.searchPath forKey:@"OpenQuicklySearchPath"];
-    [self updateSearchPaths];
-  }];
-}
-
 - (void)updateSearchPaths
 {
+  self.window.title = [NSString stringWithFormat:@"Find in Files — %@", [self.searchPath stringByAbbreviatingWithTildeInPath]];
+  
   // init
   self.searchPaths = [NSArray array];
   
@@ -290,7 +269,7 @@
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
-  if (control == self.searchField || control == self.searchPathControl) {
+  if (control == self.searchField) {
     if (commandSelector == @selector(insertNewline:)) {
       [self open:control];
       return YES;

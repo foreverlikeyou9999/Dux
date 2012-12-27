@@ -12,12 +12,9 @@
 #import "NSStringDuxAdditions.h"
 #import "DuxPreferences.h"
 #import "DuxPreferencesWindowController.h"
-#import "DuxMultiFileSearchWindowController.h"
 #import "DuxProjectWindowController.h"
 
 @interface MyAppDelegate ()
-
-@property (nonatomic, strong) DuxMultiFileSearchWindowController *multiFileSearchWindowController;
 
 @end
 
@@ -34,15 +31,6 @@
     return nil;
   
   return self;
-}
-
-- (IBAction)findInFiles:(id)sender
-{
-  if (!self.multiFileSearchWindowController) {
-    self.multiFileSearchWindowController = [[DuxMultiFileSearchWindowController alloc] initWithWindowNibName:@"DuxMultiFileSearchWindowController"];
-  }
-  
-  [self.multiFileSearchWindowController showWindow:self];
 }
 
 - (IBAction)showPreferences:(id)sender

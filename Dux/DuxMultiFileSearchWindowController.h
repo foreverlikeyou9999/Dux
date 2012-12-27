@@ -11,11 +11,12 @@
 @interface DuxMultiFileSearchWindowController : NSWindowController <NSTextViewDelegate>
 
 @property (weak) IBOutlet NSSearchField *searchField;
-@property (weak) IBOutlet NSPathControl *searchPathControl;
 @property (weak) IBOutlet NSTableView *resultsTableView;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 
 @property (strong) NSString *searchPath;
 @property (readonly, strong) NSArray *searchResultPaths;
+
+- (void)showWindowWithSearchPath:(NSString *)searchPath;
 
 @end
