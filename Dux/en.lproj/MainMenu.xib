@@ -190,7 +190,7 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
-								<object class="NSMenuItem" id="443569906">
+								<object class="NSMenuItem" id="679533677">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">New Tab</string>
 									<string key="NSKeyEquiv">t</string>
@@ -199,7 +199,7 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
-								<object class="NSMenuItem" id="234002907">
+								<object class="NSMenuItem" id="1059119816">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">New Window</string>
 									<string key="NSKeyEquiv">T</string>
@@ -208,7 +208,7 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
-								<object class="NSMenuItem" id="1061839255">
+								<object class="NSMenuItem" id="67208330">
 									<reference key="NSMenu" ref="720053764"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -843,7 +843,7 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
-								<object class="NSMenuItem" id="161136546">
+								<object class="NSMenuItem" id="155339260">
 									<reference key="NSMenu" ref="458270568"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -853,10 +853,11 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
-								<object class="NSMenuItem" id="303312653">
+								<object class="NSMenuItem" id="1053206782">
 									<reference key="NSMenu" ref="458270568"/>
-									<string key="NSTitle">Set Project Root...</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSTitle">Set Current Working Directory...</string>
+									<string key="NSKeyEquiv">g</string>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
@@ -1926,7 +1927,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">newWindow:</string>
 						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="234002907"/>
+						<reference key="destination" ref="1059119816"/>
 					</object>
 					<int key="connectionID">664</int>
 				</object>
@@ -1934,7 +1935,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">setProjectRoot:</string>
 						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="303312653"/>
+						<reference key="destination" ref="1053206782"/>
 					</object>
 					<int key="connectionID">667</int>
 				</object>
@@ -2035,9 +2036,9 @@
 							<reference ref="1010469920"/>
 							<reference ref="221425970"/>
 							<reference ref="705341025"/>
-							<reference ref="234002907"/>
-							<reference ref="1061839255"/>
-							<reference ref="443569906"/>
+							<reference ref="1059119816"/>
+							<reference ref="67208330"/>
+							<reference ref="679533677"/>
 						</array>
 						<reference key="parent" ref="379814623"/>
 					</object>
@@ -2646,8 +2647,8 @@
 						<reference key="object" ref="458270568"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1070452489"/>
-							<reference ref="303312653"/>
-							<reference ref="161136546"/>
+							<reference ref="1053206782"/>
+							<reference ref="155339260"/>
 						</array>
 						<reference key="parent" ref="992673915"/>
 					</object>
@@ -2879,27 +2880,27 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">661</int>
-						<reference key="object" ref="234002907"/>
+						<reference key="object" ref="1059119816"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">662</int>
-						<reference key="object" ref="1061839255"/>
+						<reference key="object" ref="67208330"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">663</int>
-						<reference key="object" ref="443569906"/>
+						<reference key="object" ref="679533677"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">665</int>
-						<reference key="object" ref="303312653"/>
+						<reference key="object" ref="1053206782"/>
 						<reference key="parent" ref="458270568"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">666</int>
-						<reference key="object" ref="161136546"/>
+						<reference key="object" ref="155339260"/>
 						<reference key="parent" ref="458270568"/>
 					</object>
 				</array>
@@ -3209,6 +3210,7 @@
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="loadDocumentFromHistoryPopUp:">NSPopUpButton</string>
+						<string key="newWindow:">id</string>
 						<string key="openQuickly:">id</string>
 						<string key="setProjectRoot:">id</string>
 					</dictionary>
@@ -3216,6 +3218,10 @@
 						<object class="IBActionInfo" key="loadDocumentFromHistoryPopUp:">
 							<string key="name">loadDocumentFromHistoryPopUp:</string>
 							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBActionInfo" key="newWindow:">
+							<string key="name">newWindow:</string>
+							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="openQuickly:">
 							<string key="name">openQuickly:</string>

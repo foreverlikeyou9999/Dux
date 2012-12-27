@@ -33,6 +33,9 @@
     
     updateResultsQueue = [[NSOperationQueue alloc] init];
     updateResultsQueue.maxConcurrentOperationCount = 1;
+    
+    updateSearchPathsQueue = [[NSOperationQueue alloc] init];
+    updateSearchPathsQueue.maxConcurrentOperationCount = 1;
   }
   
   return self;
@@ -50,28 +53,27 @@
 {
   // empty search string?
   NSString *searchString = self.searchField.stringValue;
-  if (searchString.length == 0) {
-    self.searchResultPaths = [NSArray array];
-    return;
-  }
   
   // clear selection
   [self.resultsTableView deselectAll:self];
   
-  // build regex pattern from search string
-  NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
-  NSString *operatorChars = @"*?+[(){}^$|\\./";
-  for (int charPos = 0; charPos < searchString.length; charPos++) {
-    NSString *character = [searchString substringWithRange:NSMakeRange(charPos, 1)];
+  // build regex pattern from search string (if there is a search string)
+  NSRegularExpression *expression = nil;
+  if (searchString.length > 0) {
+    NSMutableString *searchPattern = [NSMutableString stringWithString:@"\\/[^/]*"];
+    NSString *operatorChars = @"*?+[(){}^$|\\./";
+    for (int charPos = 0; charPos < searchString.length; charPos++) {
+      NSString *character = [searchString substringWithRange:NSMakeRange(charPos, 1)];
+      
+      if ([operatorChars rangeOfString:character].location != NSNotFound)
+        character = [NSString stringWithFormat:@"\\%@", character];
+      
+      [searchPattern appendFormat:@"%@[^/]*", character];
+    }
+    [searchPattern appendString:@"$"];
     
-    if ([operatorChars rangeOfString:character].location != NSNotFound)
-      character = [NSString stringWithFormat:@"\\%@", character];
-    
-    [searchPattern appendFormat:@"%@[^/]*", character];
+    expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
   }
-  [searchPattern appendString:@"$"];
-  
-  NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:searchPattern options:NSRegularExpressionCaseInsensitive error:NULL];
   
   // cancel the operation queue
   [updateResultsQueue cancelAllOperations];
@@ -89,7 +91,7 @@
       if (updateResultsBlock.isCancelled)
         break;
       
-      if ([lastUIUpdate timeIntervalSinceNow] < -0.033) { // update GUI after 1/30th of a second
+      if ([lastUIUpdate timeIntervalSinceNow] < -0.066) { // update GUI after 1/15th of a second
         if (haveNewResults) {
           dispatch_async(dispatch_get_main_queue(), ^{
             BOOL wasNoSelection = blockSelf.resultsTableView.selectedRow == -1;
@@ -106,7 +108,7 @@
         haveNewResults = NO;
       }
       
-      if ([expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
+      if (expression && [expression rangeOfFirstMatchInString:url.path options:0 range:NSMakeRange(0, url.path.length)].location == NSNotFound)
         continue;
       
       NSUInteger urlIndex = [mutableSearchResults indexOfObject:url inSortedRange:NSMakeRange(0, mutableSearchResults.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(NSURL *leftObj, NSURL *rightObj) {
@@ -167,6 +169,13 @@
   // update window
   self.window.title = [NSString stringWithFormat:@"Open Quickly — %@", [self.searchUrl.path stringByAbbreviatingWithTildeInPath]];
   
+  // cancel all operation queues
+  [updateSearchPathsQueue cancelAllOperations];
+  [updateSearchPathsQueue waitUntilAllOperationsAreFinished];
+  
+  [updateResultsQueue cancelAllOperations];
+  [updateResultsQueue waitUntilAllOperationsAreFinished];
+  
   // init
   self.searchPaths = [NSArray array];
   
@@ -176,10 +185,14 @@
   [self.progressIndicator startAnimation:self];
   
   // enumerate all the files in the path
-  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchUrl.path.stringByStandardizingPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
+  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.searchUrl includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
   NSSet *excludeFilesWithExtension = [NSSet setWithArray:[DuxPreferences openQuicklyExcludesFilesWithExtension]];
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    NSMutableArray *scratchSearchPaths = [NSMutableArray arrayWithCapacity:200];
+  
+  __block NSBlockOperation *updateSearchPathsBlock = [NSBlockOperation blockOperationWithBlock:^{
+    if (updateSearchPathsBlock.isCancelled)
+      return;
+    
+    NSMutableArray *scratchSearchPaths = [NSMutableArray arrayWithCapacity:1000];
     
     for (NSURL *fileURL in enumerator) {
       // is this a directory?
@@ -204,10 +217,13 @@
       NSURL *relativeUrl = [NSURL URLWithString:[relativePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] relativeToURL:self.searchUrl];
       [scratchSearchPaths addObject:relativeUrl];
       
-      // when the scratch has 200 items, add them to the real seacrh paths and refresh the search results
-      if (scratchSearchPaths.count == 200) {
+      // when the scratch has 1000 items, add them to the real seacrh paths and refresh the search results
+      if (scratchSearchPaths.count == 1000) {
+        if (updateSearchPathsBlock.isCancelled)
+          return;
+        
         self.searchPaths = [self.searchPaths arrayByAddingObjectsFromArray:scratchSearchPaths];
-        scratchSearchPaths = [NSMutableArray arrayWithCapacity:200];
+        scratchSearchPaths = [NSMutableArray arrayWithCapacity:1000];
         
         [self performSearch:self];
       }
@@ -223,7 +239,8 @@
       
       [self.progressIndicator stopAnimation:self];
     });
-  });
+  }];
+  [updateSearchPathsQueue addOperation:updateSearchPathsBlock];
 }
 
 - (void)openResult:(id)url
@@ -272,6 +289,18 @@
   }
   
   return NO;
+}
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+  if (notification.object != self.window)
+    return;
+  
+  [updateSearchPathsQueue cancelAllOperations];
+  [updateSearchPathsQueue waitUntilAllOperationsAreFinished];
+  
+  [updateResultsQueue cancelAllOperations];
+  [updateResultsQueue waitUntilAllOperationsAreFinished];
 }
 
 @end
