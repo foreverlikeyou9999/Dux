@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "DuxTextView.h"
 
+@class MyOpenQuicklyController;
+
 @interface DuxProjectWindowController : NSWindowController
 
+@property (nonatomic, strong) NSURL *rootUrl;
 @property (nonatomic, strong) NSMutableArray *documents;
 
 @property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
@@ -24,8 +27,11 @@
 @property (weak) IBOutlet NSToolbarItem *pathToolbarItem;
 @property (strong) IBOutlet NSView *pathToolbarItemView;
 
+@property (nonatomic,strong) IBOutlet MyOpenQuicklyController *openQuicklyController;
 
 - (void)reloadDocumentHistoryPopUp;
 - (IBAction)loadDocumentFromHistoryPopUp:(NSPopUpButton *)sender;
+
+- (IBAction)openQuickly:(id)sender;
 
 @end

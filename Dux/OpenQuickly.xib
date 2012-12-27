@@ -15,8 +15,6 @@
 			<string>NSButton</string>
 			<string>NSButtonCell</string>
 			<string>NSCustomObject</string>
-			<string>NSPathCell</string>
-			<string>NSPathControl</string>
 			<string>NSProgressIndicator</string>
 			<string>NSScrollView</string>
 			<string>NSScroller</string>
@@ -37,7 +35,7 @@
 		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">MyAppDelegate</string>
+				<string key="NSClassName">DuxProjectWindowController</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -51,7 +49,7 @@
 				<string key="NSWindowRect">{{196, 240}, {480, 332}}</string>
 				<int key="NSWTFlags">1618477056</int>
 				<string key="NSWindowTitle">Open Quickly</string>
-				<string key="NSWindowClass">NSWindow</string>
+				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="1006">
@@ -64,7 +62,7 @@
 							<string key="NSFrame">{{11, 302}, {458, 22}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="1063722873"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:123</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSSearchFieldCell" key="NSCell" id="623871909">
@@ -81,7 +79,7 @@
 								<reference key="NSControlView" ref="17456987"/>
 								<bool key="NSDrawsBackground">YES</bool>
 								<int key="NSTextBezelStyle">1</int>
-								<object class="NSColor" key="NSBackgroundColor" id="183395979">
+								<object class="NSColor" key="NSBackgroundColor">
 									<int key="NSColorSpace">6</int>
 									<string key="NSCatalogName">System</string>
 									<string key="NSColorName">textBackgroundColor</string>
@@ -148,7 +146,7 @@
 										<object class="NSTableView" id="389615265">
 											<reference key="NSNextResponder" ref="773768655"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{480, 219}</string>
+											<string key="NSFrameSize">{480, 247}</string>
 											<reference key="NSSuperview" ref="773768655"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="234408430"/>
@@ -171,7 +169,7 @@
 														<int key="NSCellFlags">75497536</int>
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents"/>
-														<object class="NSFont" key="NSSupport" id="26">
+														<object class="NSFont" key="NSSupport">
 															<string key="NSName">LucidaGrande</string>
 															<double key="NSSize">11</double>
 															<int key="NSfFlags">3100</int>
@@ -233,7 +231,7 @@
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 1}, {480, 219}}</string>
+									<string key="NSFrame">{{1, 1}, {480, 247}}</string>
 									<reference key="NSSuperview" ref="668364133"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="389615265"/>
@@ -270,7 +268,7 @@
 									<double key="NSPercent">0.99772209567198178</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{-1, 45}, {482, 221}}</string>
+							<string key="NSFrame">{{-1, 45}, {482, 249}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="773768655"/>
@@ -284,37 +282,13 @@
 							<double key="NSMaxMagnification">4</double>
 							<double key="NSMagnification">1</double>
 						</object>
-						<object class="NSButton" id="943512075">
-							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">265</int>
-							<string key="NSFrame">{{377, 267}, {98, 32}}</string>
-							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="668364133"/>
-							<string key="NSReuseIdentifierKey">_NS:161</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="633806873">
-								<int key="NSCellFlags">67108864</int>
-								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Browse…</string>
-								<reference key="NSSupport" ref="61597922"/>
-								<string key="NSCellIdentifier">_NS:161</string>
-								<reference key="NSControlView" ref="943512075"/>
-								<int key="NSButtonFlags">-2038284288</int>
-								<int key="NSButtonFlags2">129</int>
-								<string key="NSAlternateContents"/>
-								<string key="NSKeyEquivalent"/>
-								<int key="NSPeriodicDelay">200</int>
-								<int key="NSPeriodicInterval">25</int>
-							</object>
-							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-						</object>
 						<object class="NSButton" id="40064046">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{401, 7}, {74, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:161</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="518820730">
@@ -369,69 +343,13 @@
 							<int key="NSpiFlags">28682</int>
 							<double key="NSMaxValue">100</double>
 						</object>
-						<object class="NSPathControl" id="1063722873">
-							<reference key="NSNextResponder" ref="1006"/>
-							<int key="NSvFlags">266</int>
-							<set class="NSMutableSet" key="NSDragTypes">
-								<string>Apple URL pasteboard type</string>
-								<string>NSFilenamesPboardType</string>
-							</set>
-							<string key="NSFrame">{{10, 273}, {366, 20}}</string>
-							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="943512075"/>
-							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<bool key="NSEnabled">YES</bool>
-							<object class="NSPathCell" key="NSCell" id="888484549">
-								<int key="NSCellFlags">337641473</int>
-								<int key="NSCellFlags2">131072</int>
-								<object class="NSURL" key="NSContents">
-									<nil key="NS.base"/>
-									<string key="NS.relative">file://localhost/Applications/</string>
-								</object>
-								<reference key="NSSupport" ref="26"/>
-								<string key="NSCellIdentifier">_NS:9</string>
-								<reference key="NSControlView" ref="1063722873"/>
-								<array class="NSMutableArray" key="NSPathComponentCells">
-									<object class="NSPathComponentCell">
-										<int key="NSCellFlags">67108928</int>
-										<int key="NSCellFlags2">132096</int>
-										<string key="NSContents">Leopard</string>
-										<reference key="NSSupport" ref="26"/>
-										<reference key="NSControlView" ref="1063722873"/>
-										<reference key="NSBackgroundColor" ref="183395979"/>
-										<reference key="NSTextColor" ref="171639645"/>
-										<object class="NSURL" key="NSURL">
-											<nil key="NS.base"/>
-											<string key="NS.relative">file://localhost//</string>
-										</object>
-									</object>
-									<object class="NSPathComponentCell">
-										<int key="NSCellFlags">67108928</int>
-										<int key="NSCellFlags2">132096</int>
-										<string key="NSContents">Applications</string>
-										<reference key="NSSupport" ref="26"/>
-										<reference key="NSControlView" ref="1063722873"/>
-										<reference key="NSBackgroundColor" ref="183395979"/>
-										<reference key="NSTextColor" ref="171639645"/>
-										<object class="NSURL" key="NSURL">
-											<nil key="NS.base"/>
-											<string key="NS.relative">file://localhost/Applications</string>
-										</object>
-									</object>
-								</array>
-								<int key="NSPathStyle">1</int>
-								<reference key="NSDelegate" ref="1063722873"/>
-							</object>
-							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-						</object>
 					</array>
 					<string key="NSFrameSize">{480, 332}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="17456987"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1578}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">open-quickly</string>
 				<int key="NSWindowAnimationBehavior">5</int>
@@ -459,7 +377,7 @@
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="967362463"/>
 					</object>
-					<int key="connectionID">26</int>
+					<int key="connectionID">79</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -562,14 +480,6 @@
 					<int key="connectionID">58</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">browseForSearchIn:</string>
-						<reference key="source" ref="967362463"/>
-						<reference key="destination" ref="943512075"/>
-					</object>
-					<int key="connectionID">59</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">progressIndicator</string>
 						<reference key="source" ref="967362463"/>
@@ -586,14 +496,6 @@
 					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">searchPathField</string>
-						<reference key="source" ref="967362463"/>
-						<reference key="destination" ref="1063722873"/>
-					</object>
-					<int key="connectionID">77</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentArray: self.searchResultPaths</string>
 						<reference key="source" ref="30529472"/>
@@ -608,22 +510,6 @@
 						</object>
 					</object>
 					<int key="connectionID">63</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: self.searchPath</string>
-						<reference key="source" ref="1063722873"/>
-						<reference key="destination" ref="967362463"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1063722873"/>
-							<reference key="NSDestination" ref="967362463"/>
-							<string key="NSLabel">value: self.searchPath</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">self.searchPath</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">78</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -665,12 +551,10 @@
 						<reference key="object" ref="1006"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="17456987"/>
-							<reference ref="943512075"/>
 							<reference ref="40064046"/>
 							<reference ref="1065276296"/>
 							<reference ref="668364133"/>
 							<reference ref="127090559"/>
-							<reference ref="1063722873"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
@@ -740,19 +624,6 @@
 						<string key="objectName">Results Controller</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">50</int>
-						<reference key="object" ref="943512075"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="633806873"/>
-						</array>
-						<reference key="parent" ref="1006"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">51</int>
-						<reference key="object" ref="633806873"/>
-						<reference key="parent" ref="943512075"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">53</int>
 						<reference key="object" ref="40064046"/>
 						<array class="NSMutableArray" key="children">
@@ -783,19 +654,6 @@
 						<reference key="object" ref="127090559"/>
 						<reference key="parent" ref="1006"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">75</int>
-						<reference key="object" ref="1063722873"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="888484549"/>
-						</array>
-						<reference key="parent" ref="1006"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">76</int>
-						<reference key="object" ref="888484549"/>
-						<reference key="parent" ref="1063722873"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -817,23 +675,19 @@
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="35.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="50.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="51.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="53.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="54.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="55.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="75.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="76.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">78</int>
+			<int key="maxID">79</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -846,57 +700,136 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MyAppDelegate</string>
-					<string key="superclassName">NSObject</string>
+					<string key="className">DuxProjectWindowController</string>
+					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="findInFiles:">id</string>
+						<string key="loadDocumentFromHistoryPopUp:">NSPopUpButton</string>
 						<string key="openQuickly:">id</string>
-						<string key="showPreferences:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="findInFiles:">
-							<string key="name">findInFiles:</string>
-							<string key="candidateClassName">id</string>
+						<object class="IBActionInfo" key="loadDocumentFromHistoryPopUp:">
+							<string key="name">loadDocumentFromHistoryPopUp:</string>
+							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
 						<object class="IBActionInfo" key="openQuickly:">
 							<string key="name">openQuickly:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="showPreferences:">
-							<string key="name">showPreferences:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">openQuicklyController</string>
-						<string key="NS.object.0">MyOpenQuicklyController</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">openQuicklyController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="documentHistoryPopUp">NSPopUpButton</string>
+						<string key="documentPathLabel">NSTextField</string>
+						<string key="editorWindow">NSWindow</string>
+						<string key="historyToolbarItem">NSToolbarItem</string>
+						<string key="historyToolbarItemView">NSView</string>
+						<string key="openQuicklyController">MyOpenQuicklyController</string>
+						<string key="pathToolbarItem">NSToolbarItem</string>
+						<string key="pathToolbarItemView">NSView</string>
+						<string key="textView">DuxTextView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="documentHistoryPopUp">
+							<string key="name">documentHistoryPopUp</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="documentPathLabel">
+							<string key="name">documentPathLabel</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="editorWindow">
+							<string key="name">editorWindow</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="historyToolbarItem">
+							<string key="name">historyToolbarItem</string>
+							<string key="candidateClassName">NSToolbarItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="historyToolbarItemView">
+							<string key="name">historyToolbarItemView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="openQuicklyController">
 							<string key="name">openQuicklyController</string>
 							<string key="candidateClassName">MyOpenQuicklyController</string>
 						</object>
-					</object>
+						<object class="IBToOneOutletInfo" key="pathToolbarItem">
+							<string key="name">pathToolbarItem</string>
+							<string key="candidateClassName">NSToolbarItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pathToolbarItemView">
+							<string key="name">pathToolbarItemView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="textView">
+							<string key="name">textView</string>
+							<string key="candidateClassName">DuxTextView</string>
+						</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MyAppDelegate.h</string>
+						<string key="minorKey">./Classes/DuxProjectWindowController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">DuxTextView</string>
+					<string key="superclassName">NSTextView</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="commentSelection:">id</string>
+						<string key="goToLinePanelButtonClicked:">id</string>
+						<string key="jumpToLine:">id</string>
+						<string key="shiftSelectionLeft:">id</string>
+						<string key="shiftSelectionRight:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="commentSelection:">
+							<string key="name">commentSelection:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="goToLinePanelButtonClicked:">
+							<string key="name">goToLinePanelButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="jumpToLine:">
+							<string key="name">jumpToLine:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shiftSelectionLeft:">
+							<string key="name">shiftSelectionLeft:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shiftSelectionRight:">
+							<string key="name">shiftSelectionRight:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="goToLinePanel">NSPanel</string>
+						<string key="goToLineSearchField">NSSearchField</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="goToLinePanel">
+							<string key="name">goToLinePanel</string>
+							<string key="candidateClassName">NSPanel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="goToLineSearchField">
+							<string key="name">goToLineSearchField</string>
+							<string key="candidateClassName">NSSearchField</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DuxTextView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MyOpenQuicklyController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="browseForSearchIn:">id</string>
 						<string key="cancel:">id</string>
 						<string key="open:">id</string>
 						<string key="performSearch:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="browseForSearchIn:">
-							<string key="name">browseForSearchIn:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="cancel:">
 							<string key="name">cancel:</string>
 							<string key="candidateClassName">id</string>
@@ -916,7 +849,6 @@
 						<string key="resultsTableView">NSTableView</string>
 						<string key="searchField">NSSearchField</string>
 						<string key="searchPath">NSString</string>
-						<string key="searchPathField">NSPathControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="openQuicklyWindow">
@@ -938,10 +870,6 @@
 						<object class="IBToOneOutletInfo" key="searchPath">
 							<string key="name">searchPath</string>
 							<string key="candidateClassName">NSString</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="searchPathField">
-							<string key="name">searchPathField</string>
-							<string key="candidateClassName">NSPathControl</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

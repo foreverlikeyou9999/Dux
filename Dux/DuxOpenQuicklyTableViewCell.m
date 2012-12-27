@@ -40,7 +40,6 @@
   // data to be rendered
   NSURL *url = self.objectValue;
   NSString *filename = url.lastPathComponent;
-  NSString *path = [url.path stringByAbbreviatingWithTildeInPath];
   
   // render filename
   NSRect filenameRect = NSMakeRect(NSMinX(cellFrame) + 5,
@@ -56,7 +55,7 @@
                                NSMinY(cellFrame) + 18,
                                NSMaxX(cellFrame) - 10,
                                17);
-  [textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:path attributes:pathAttributes]];
+  [textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:url.relativePath attributes:pathAttributes]];
   textContainer.containerSize = pathRect.size;
   [layoutManager drawGlyphsForGlyphRange:[layoutManager glyphRangeForTextContainer:textContainer] atPoint:pathRect.origin];
 }

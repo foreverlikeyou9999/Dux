@@ -21,7 +21,6 @@
 @end
 
 @implementation MyAppDelegate
-@synthesize openQuicklyController;
 
 + (void)initialize
 {
@@ -34,15 +33,6 @@
     return nil;
   
   return self;
-}
-
-- (IBAction)openQuickly:(id)sender
-{
-  if (!openQuicklyController) {
-    [NSBundle loadNibNamed:@"OpenQuickly" owner:self];
-  }
-  
-  [self.openQuicklyController showOpenQuicklyPanel];
 }
 
 - (IBAction)findInFiles:(id)sender
@@ -65,13 +55,14 @@
   [[NSFileManager defaultManager] fileExistsAtPath:filename isDirectory:&isDirectory];
   
   if (isDirectory) {
-    if (!openQuicklyController) {
-      [NSBundle loadNibNamed:@"OpenQuickly" owner:self];
-    }
-    
-    self.openQuicklyController.searchPath = filename;
-    [[NSUserDefaults standardUserDefaults] setValue:filename forKey:@"OpenQuicklySearchPath"];
-    [self.openQuicklyController showOpenQuicklyPanel];
+    NSLog(@"not yet implemented");
+//    if (!openQuicklyController) {
+//      [NSBundle loadNibNamed:@"OpenQuickly" owner:self];
+//    }
+//    
+//    self.openQuicklyController.searchPath = filename;
+//    [[NSUserDefaults standardUserDefaults] setValue:filename forKey:@"OpenQuicklySearchPath"];
+//    [self.openQuicklyController showOpenQuicklyPanel];
     
     return YES;
   }

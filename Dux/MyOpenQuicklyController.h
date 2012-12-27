@@ -21,8 +21,7 @@
 }
 
 @property (weak) IBOutlet NSSearchField *searchField;
-@property (weak) IBOutlet NSPathControl *searchPathField;
-@property (strong) IBOutlet NSString *searchPath;
+@property (strong) NSURL *searchUrl;
 @property (strong) IBOutlet NSWindow *openQuicklyWindow;
 @property (weak) IBOutlet NSTableView *resultsTableView;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
@@ -36,7 +35,6 @@
 - (IBAction)performSearch:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)open:(id)sender;
-- (IBAction)browseForSearchIn:(id)sender;
 
 - (void)openResult:(id)result;
 

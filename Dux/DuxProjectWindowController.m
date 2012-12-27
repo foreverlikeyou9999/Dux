@@ -8,6 +8,7 @@
 
 #import "DuxProjectWindowController.h"
 #import "MyTextDocument.h"
+#import "MyOpenQuicklyController.h"
 
 @interface DuxProjectWindowController ()
 
@@ -19,6 +20,11 @@
 {
   if (!(self = [super initWithWindow:window]))
     return nil;
+  
+  self.rootUrl = [NSURL fileURLWithPath:[[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"] isDirectory:YES];
+  if (!self.rootUrl) {
+    self.rootUrl = [NSURL fileURLWithPath:[@"~" stringByExpandingTildeInPath] isDirectory:YES];
+  }
   
   self.documents = [NSMutableArray array];
   
@@ -90,6 +96,16 @@
   MyTextDocument *document = [self.documents objectAtIndex:index];
   
   [self setDocument:document];
+}
+
+- (IBAction)openQuickly:(id)sender
+{
+  if (!self.openQuicklyController) {
+    [NSBundle loadNibNamed:@"OpenQuickly" owner:self];
+  }
+  self.openQuicklyController.searchUrl = self.rootUrl;
+  
+  [self.openQuicklyController showOpenQuicklyPanel];
 }
 
 @end

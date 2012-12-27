@@ -12,13 +12,8 @@
 
 #import "MyOpenQuicklyController.h"
 
-@interface MyAppDelegate : NSObject {
-  MyOpenQuicklyController *openQuicklyController;
-}
+@interface MyAppDelegate : NSObject
 
-@property (nonatomic,strong) IBOutlet MyOpenQuicklyController *openQuicklyController;
-
-- (IBAction)openQuickly:(id)sender;
 - (IBAction)findInFiles:(id)sender;
 - (IBAction)showPreferences:(id)sender;
 

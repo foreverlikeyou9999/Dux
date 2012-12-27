@@ -13,7 +13,6 @@
 @implementation MyOpenQuicklyController
 
 @synthesize searchField;
-@synthesize searchPath;
 @synthesize openQuicklyWindow;
 @synthesize resultsTableView;
 @synthesize progressIndicator;
@@ -29,7 +28,7 @@
     self.directoryNamesToSkip = [NSArray arrayWithObjects:@".svn", @"tmp", nil];
     
     // load search path from user defaults
-    self.searchPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"OpenQuicklySearchPath"];
+    self.searchUrl = nil;
     self.searchPaths = [NSArray array];
     
     updateResultsQueue = [[NSOperationQueue alloc] init];
@@ -41,7 +40,6 @@
 
 - (void)showOpenQuicklyPanel
 {
-//  self.searchPathField.stringValue = self.searchPath;
   [self.openQuicklyWindow makeKeyAndOrderFront:self];
   [self.searchField becomeFirstResponder];
   
@@ -50,14 +48,6 @@
 
 - (IBAction)performSearch:(id)sender
 {
-  // has the search path field's value changed?
-  
-  if (![self.searchPathField.stringValue isEqualToString:self.searchPath]) {
-    self.searchPath = self.searchPathField.stringValue;
-    [self updateSearchPaths]; // this will call performSearch as it finds search path
-    return;
-  }
-  
   // empty search string?
   NSString *searchString = self.searchField.stringValue;
   if (searchString.length == 0) {
@@ -172,37 +162,21 @@
   [self openResult:resultURL];
 }
 
-- (IBAction)browseForSearchIn:(id)sender
-{
-  NSOpenPanel *panel = [NSOpenPanel openPanel];
-  [panel setCanChooseFiles:NO];
-  [panel setCanChooseDirectories:YES];
-  [panel setAllowsMultipleSelection:NO];
-  
-  [panel beginWithCompletionHandler:^(NSInteger buttonClicked){
-    if (buttonClicked == NSFileHandlingPanelCancelButton)
-      return;
-    
-    self.searchPath = [[panel.URL path] stringByAbbreviatingWithTildeInPath];
-    [[NSUserDefaults standardUserDefaults] setValue:self.searchPath forKey:@"OpenQuicklySearchPath"];
-    [self updateSearchPaths];
-  }];
-}
-
 - (void)updateSearchPaths
 {
+  // update window
+  self.window.title = [NSString stringWithFormat:@"Open Quickly — %@", [self.searchUrl.path stringByAbbreviatingWithTildeInPath]];
+  
   // init
   self.searchPaths = [NSArray array];
   
-  if (!self.searchPath || self.searchPath.length == 0) {
-//    self.searchPathField.stringValue = nil;
+  if (!self.searchUrl)
     return;
-  }
   
   [self.progressIndicator startAnimation:self];
   
   // enumerate all the files in the path
-  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchPath.stringByStandardizingPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
+  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchUrl.path.stringByStandardizingPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
   NSSet *excludeFilesWithExtension = [NSSet setWithArray:[DuxPreferences openQuicklyExcludesFilesWithExtension]];
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSMutableArray *scratchSearchPaths = [NSMutableArray arrayWithCapacity:200];
@@ -226,7 +200,9 @@
         continue;
       
       // add this to a scratch list of search paths
-      [scratchSearchPaths addObject:fileURL];
+      NSString *relativePath = [fileURL.path substringFromIndex:self.searchUrl.path.length + 1];
+      NSURL *relativeUrl = [NSURL URLWithString:[relativePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] relativeToURL:self.searchUrl];
+      [scratchSearchPaths addObject:relativeUrl];
       
       // when the scratch has 200 items, add them to the real seacrh paths and refresh the search results
       if (scratchSearchPaths.count == 200) {
@@ -259,7 +235,7 @@
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
-  if (control == self.searchField || control == self.searchPathField) {
+  if (control == self.searchField) {
     if (commandSelector == @selector(insertNewline:)) {
       [self open:control];
       return YES;
