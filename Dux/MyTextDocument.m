@@ -90,6 +90,9 @@
   // make sure scroll bars are good
   [self.textView.layoutManager ensureLayoutForTextContainer:self.textView.textContainer];
   
+  // make text view the first responder
+  [self.textView.window makeFirstResponder:self.textView];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWindowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.textView.window];
   
   // show encoding alert

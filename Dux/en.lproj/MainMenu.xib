@@ -3193,7 +3193,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">667</int>
+			<int key="maxID">668</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3209,12 +3209,17 @@
 					<string key="className">DuxProjectWindowController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="findInFiles:">id</string>
 						<string key="loadDocumentFromHistoryPopUp:">NSPopUpButton</string>
 						<string key="newWindow:">id</string>
 						<string key="openQuickly:">id</string>
 						<string key="setProjectRoot:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="findInFiles:">
+							<string key="name">findInFiles:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="loadDocumentFromHistoryPopUp:">
 							<string key="name">loadDocumentFromHistoryPopUp:</string>
 							<string key="candidateClassName">NSPopUpButton</string>
@@ -3359,15 +3364,10 @@
 					<string key="className">MyAppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="findInFiles:">id</string>
 						<string key="newWindow:">id</string>
 						<string key="showPreferences:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="findInFiles:">
-							<string key="name">findInFiles:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="newWindow:">
 							<string key="name">newWindow:</string>
 							<string key="candidateClassName">id</string>
