@@ -161,4 +161,11 @@ static NSMutableArray *projects = nil;
   return [NSString stringWithFormat:@"%@ — %@", displayName, [self.rootUrl.path stringByAbbreviatingWithTildeInPath]];
 }
 
+- (IBAction)newWindow:(id)sender
+{
+  DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:self.rootUrl];
+  
+  [controller showWindow:self];
+}
+
 @end

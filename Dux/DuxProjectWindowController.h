@@ -37,4 +37,6 @@
 - (IBAction)openQuickly:(id)sender;
 - (IBAction)setProjectRoot:(id)sender;
 
+- (IBAction)newWindow:(id)sender;
+
 @end
