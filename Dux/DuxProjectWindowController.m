@@ -187,8 +187,8 @@ static NSMutableArray *projects = nil;
   [self.multiFileSearchWindowController showWindowWithSearchPath:self.rootUrl.path];
 }
 
-// as far as I am aware, this is only called by the document architecture when quitting the app. in that case, if there is more than one document
-// open we want to close the document and show the next one.
+// as far as I am aware, this is only called by the document architecture when quitting the app. in that case, if there is more than one
+// document open we want to close the document and show the next one.
 - (void)close
 {
   if (self.documents.count > 1) {
@@ -206,6 +206,39 @@ static NSMutableArray *projects = nil;
   }
   
   [super close];
+}
+
+// as far as I am aware, this is only called when the user clicks the close button with the mouse — and *after* the user has dealt with the
+// first "dirty" document. so we close that document (assuming it is saved or the user has chosen not to save it) and then abort the close,
+// but send performClose: to self.window.
+- (BOOL)windowShouldClose:(id)sender
+{
+  if (sender != self.window)
+    return YES;
+  
+  if (self.documents.count > 1) {
+    MyTextDocument *document = self.document;
+    DuxProjectWindowController *selfRef = self; // create strong reference to self, to avoid being deallocated
+    
+    [self.documents removeObject:document];
+    
+    [document removeWindowController:self];
+    [document close];
+    
+    [[self.documents objectAtIndex:self.documents.count - 1] addWindowController:self];
+    
+    selfRef = nil;
+    
+    int64_t delayInSeconds = 0.001;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+      [self.window performClose:self];
+    });
+    
+    return NO;
+  }
+  
+  return YES;
 }
 
 @end
