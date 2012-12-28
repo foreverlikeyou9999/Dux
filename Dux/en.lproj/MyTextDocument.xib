@@ -50,7 +50,7 @@
 				<string key="NSWindowRect">{{59, 110}, {1020, 700}}</string>
 				<int key="NSWTFlags">1882718208</int>
 				<string key="NSWindowTitle">Window</string>
-				<string key="NSWindowClass">NSWindow</string>
+				<string key="NSWindowClass">DuxProjectWindow</string>
 				<object class="NSToolbar" key="NSViewClass" id="524907903">
 					<object class="NSMutableString" key="NSToolbarIdentifier">
 						<characters key="NS.bytes">7565BB92-FF15-4A59-A88E-AB2EB752BE9C</characters>
@@ -86,8 +86,6 @@
 									</object>
 									<string key="NSFrame">{{12, 14}, {22, 16}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
 								</object>
@@ -114,8 +112,6 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrame">{{0, 14}, {70, 15}}</string>
 									<reference key="NSSuperview"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="561642939">
@@ -941,6 +937,14 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">DuxProjectWindow</string>
+					<string key="superclassName">NSWindow</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DuxProjectWindow.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">DuxProjectWindowController</string>
 					<string key="superclassName">NSWindowController</string>

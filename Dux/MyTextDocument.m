@@ -59,6 +59,9 @@
   }
   
   // link ourself up as the window controller's current document (this will call [self loadIntoProjectWindow:] once the nib is ready)
+  if (controller.document) {
+    [controller.document removeWindowController:controller.document];
+  }
   [self addWindowController:controller];
 }
 

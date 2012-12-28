@@ -28,6 +28,7 @@
 		385A1EA0147917590084F48E /* DuxCSSPseudoSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1E9F147917590084F48E /* DuxCSSPseudoSelectorElement.m */; };
 		385A1EA3147918770084F48E /* DuxCSSDefinitionBlockElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA2147918770084F48E /* DuxCSSDefinitionBlockElement.m */; };
 		385A1EA6147919A80084F48E /* DuxCSSPropertyNameElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA5147919A80084F48E /* DuxCSSPropertyNameElement.m */; };
+		386ADEF7168DA6F800C961DA /* DuxProjectWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 386ADEF6168DA6F800C961DA /* DuxProjectWindow.m */; };
 		386FE37616194A31002C0755 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */; };
 		38734F521406133200992D33 /* OpenQuickly.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38734F511406133200992D33 /* OpenQuickly.xib */; };
 		38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F551406135A00992D33 /* MyOpenQuicklyController.m */; };
@@ -152,6 +153,8 @@
 		385A1EA2147918770084F48E /* DuxCSSDefinitionBlockElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxCSSDefinitionBlockElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		385A1EA4147919A70084F48E /* DuxCSSPropertyNameElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPropertyNameElement.h; sourceTree = "<group>"; };
 		385A1EA5147919A80084F48E /* DuxCSSPropertyNameElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSPropertyNameElement.m; sourceTree = "<group>"; };
+		386ADEF5168DA6F800C961DA /* DuxProjectWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxProjectWindow.h; sourceTree = "<group>"; };
+		386ADEF6168DA6F800C961DA /* DuxProjectWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxProjectWindow.m; sourceTree = "<group>"; };
 		386FE37416194A31002C0755 /* DuxJavaScriptRegexElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJavaScriptRegexElement.h; sourceTree = "<group>"; };
 		386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxJavaScriptRegexElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38734F511406133200992D33 /* OpenQuickly.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenQuickly.xib; sourceTree = "<group>"; };
@@ -601,6 +604,8 @@
 				38D6059C1403859700D70F81 /* MyTextDocument.xib */,
 				3829B270168A74BB0034C0A1 /* DuxProjectWindowController.h */,
 				3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */,
+				386ADEF5168DA6F800C961DA /* DuxProjectWindow.h */,
+				386ADEF6168DA6F800C961DA /* DuxProjectWindow.m */,
 				38D6059F1403859700D70F81 /* MainMenu.xib */,
 				380AED3914500340005770D7 /* Text View */,
 				38BC921B1487731E00CE73EB /* Preferences */,
@@ -846,6 +851,7 @@
 				386FE37616194A31002C0755 /* DuxJavaScriptRegexElement.m in Sources */,
 				38F1060916490F8A00467839 /* DuxMultiFileSearchWindowController.m in Sources */,
 				3829B272168A74BB0034C0A1 /* DuxProjectWindowController.m in Sources */,
+				386ADEF7168DA6F800C961DA /* DuxProjectWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
