@@ -29,6 +29,7 @@
 
 @property (nonatomic,strong) IBOutlet MyOpenQuicklyController *openQuicklyController;
 
++ (NSArray *)projectWindowControllers;
 + (DuxProjectWindowController *)newProjectWindowControllerWithRoot:(NSURL *)rootUrl;
 
 - (void)reloadDocumentHistoryPopUp;

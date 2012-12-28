@@ -409,4 +409,22 @@
   [self.textView setSelectedRanges:selectedRanges];
 }
 
+- (void)canCloseDocumentWithDelegate:(id)delegate shouldCloseSelector:(SEL)shouldCloseSelector contextInfo:(void *)contextInfo
+{
+  // if we have no window controller, find it and add ourselves
+  if (self.windowControllers.count == 0) {
+    for (DuxProjectWindowController *controller in [DuxProjectWindowController projectWindowControllers]) {
+      if ([controller.documents containsObject:self]) {
+        if (controller.document) {
+          [controller.document removeWindowController:controller];
+        }
+        [self addWindowController:controller];
+        break;
+      }
+    }
+  }
+  
+  [super canCloseDocumentWithDelegate:delegate shouldCloseSelector:shouldCloseSelector contextInfo:contextInfo];
+}
+
 @end

@@ -26,6 +26,11 @@ static NSMutableArray *projects = nil;
   projects = [NSMutableArray array];
 }
 
++ (NSArray *)projectWindowControllers
+{
+  return [projects copy];
+}
+
 + (DuxProjectWindowController *)newProjectWindowControllerWithRoot:(NSURL *)rootUrl
 {
   DuxProjectWindowController *controller = [[DuxProjectWindowController alloc] initWithWindowNibName:@"MyTextDocument"];
@@ -166,44 +171,6 @@ static NSMutableArray *projects = nil;
   return [NSString stringWithFormat:@"%@ — %@", displayName, [self.rootUrl.path stringByAbbreviatingWithTildeInPath]];
 }
 
-// commented these out because canCloseDocument:withDelegate: seems to be called before any of these
-//- (BOOL)windowShouldClose:(id)sender
-//{
-//  if (sender != self.window)
-//    return YES;
-//  
-//  // close all documents
-//  NSArray *documentsToClose = [self.documents copy];
-//  for (MyTextDocument *document in [documentsToClose reverseObjectEnumerator]) {
-//    
-//    if (document != self.document) {
-//      [self setDocument:document];
-//    }
-//    
-//    [document canCloseDocumentWithDelegate:self shouldCloseSelector:@selector(document:shouldClose:contextInfo:) contextInfo:NULL];
-//    
-//    if (self.document == document) // document was dirty/unsaved. we must abort the window close
-//      break;
-//  }
-//  
-//  return (self.documents.count == 0);
-//}
-//
-//- (void)document:(NSDocument *)document shouldClose:(BOOL)shouldClose  contextInfo:(void  *)contextInfo
-//{
-//  if (shouldClose) {
-//    [document removeWindowController:self];
-//    [document close];
-//    
-//    [self.documents removeObject:document];
-//    [self reloadDocumentHistoryPopUp];
-//  }
-//  
-//  if (self.documents.count == 0) {
-//    [self close];
-//  }
-//}
-
 - (IBAction)newWindow:(id)sender
 {
   DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:self.rootUrl];
@@ -218,6 +185,27 @@ static NSMutableArray *projects = nil;
   }
   
   [self.multiFileSearchWindowController showWindowWithSearchPath:self.rootUrl.path];
+}
+
+// as far as I am aware, this is only called by the document architecture when quitting the app. in that case, if there is more than one document
+// open we want to close the document and show the next one.
+- (void)close
+{
+  if (self.documents.count > 1) {
+    MyTextDocument *document = self.document;
+    DuxProjectWindowController *selfRef = self; // create strong reference to self, to avoid being deallocated
+    
+    [self.documents removeObject:document];
+    
+    [document removeWindowController:self];
+    
+    [[self.documents objectAtIndex:self.documents.count - 1] addWindowController:self];
+    
+    selfRef = nil;
+    return;
+  }
+  
+  [super close];
 }
 
 @end

@@ -18,11 +18,6 @@
   
   NSArray *documentsToClose = [controller.documents copy];
   for (MyTextDocument *document in [documentsToClose reverseObjectEnumerator]) {
-
-    if (document != controller.document) {
-      [controller setDocument:document];
-    }
-
     [document canCloseDocumentWithDelegate:self shouldCloseSelector:@selector(document:shouldClose:contextInfo:) contextInfo:NULL];
 
     if (controller.document == document) // document was dirty/unsaved. we must wait until the canClose delegate callback before continuing
