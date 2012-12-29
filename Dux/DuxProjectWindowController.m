@@ -224,12 +224,18 @@ static NSMutableArray *projects = nil;
   if (!self.document && self.documents.count > 0)
     [[self.documents objectAtIndex:self.documents.count - 1] addWindowController:self];
   
+  // we need a reference to self to prevent ARC from deallocating us too early
+  id selfRef = self;
+  
   // close the current document, and then recursively move on to the next document
   if (self.document)
     [self document:self.document shouldClose:YES contextInfo:NULL];
   
   // if all documents were closed, allow the window to close
-  return (self.documents.count == 0);
+  BOOL shouldClose = (self.documents.count == 0);
+  
+  selfRef = nil;
+  return shouldClose;
 }
 
 
