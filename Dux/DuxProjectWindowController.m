@@ -64,10 +64,7 @@ static NSMutableArray *projects = nil;
   [super windowDidLoad];
   
   if (self.document) {
-    [(MyTextDocument *)self.document loadIntoProjectWindowController:self];
-    [self.textView.enclosingScrollView setHidden:NO];
-  } else {
-    [self.textView.enclosingScrollView setHidden:YES];
+    [(MyTextDocument *)self.document loadIntoProjectWindowController:self documentView:self.documentView];
   }
   
    // seems to be a bug in IB that prevents custom views from being properly connected to their toolbar item
@@ -83,10 +80,11 @@ static NSMutableArray *projects = nil;
   
   // if we are clearing the document, do nothing else
   if (!document) {
-    [self.textView.enclosingScrollView setHidden:YES];
+    for (NSView *subview in self.documentView.subviews) {
+      [subview removeFromSuperview];
+    }
     return;
   }
-  [self.textView.enclosingScrollView setHidden:NO];
   
   
   // add to the end of documents (or move it to the end if it's already there)
@@ -105,7 +103,10 @@ static NSMutableArray *projects = nil;
   [self reloadDocumentHistoryPopUp];
   
   // load the document
-  [document loadIntoProjectWindowController:self];
+  for (NSView *subview in self.documentView.subviews) {
+    [subview removeFromSuperview];
+  }
+  [document loadIntoProjectWindowController:self documentView:self.documentView];
 }
 
 - (void)reloadDocumentHistoryPopUp

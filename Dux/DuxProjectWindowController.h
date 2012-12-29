@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "DuxTextView.h"
 
 @class MyOpenQuicklyController;
 
@@ -18,7 +17,8 @@
 
 @property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
 
-@property (unsafe_unretained) IBOutlet DuxTextView *textView;
+
+@property (weak) IBOutlet NSView *documentView;
 @property (weak) IBOutlet NSTextField *documentPathLabel;
 @property (weak) IBOutlet NSPopUpButton *documentHistoryPopUp;
 

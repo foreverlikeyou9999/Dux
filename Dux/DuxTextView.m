@@ -1248,4 +1248,9 @@ static NSCharacterSet *newlineCharacterSet;
   [self setNeedsDisplay:YES];
 }
 
+- (NSUndoManager *)undoManager
+{
+  return self.window.undoManager;
+}
+
 @end

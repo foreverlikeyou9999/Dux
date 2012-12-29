@@ -14,13 +14,6 @@
 
 @implementation MyTextDocument
 
-@synthesize editorWindow;
-@synthesize textStorage;
-@synthesize textView;
-@synthesize syntaxtHighlighter;
-@synthesize activeNewlineStyle;
-@synthesize stringEncoding;
-
 + (void)initialize
 {
   [super initialize];
@@ -30,11 +23,36 @@
 {
     self = [super init];
     if (self) {
-      stringEncoding = NSUTF8StringEncoding;
+      self.stringEncoding = NSUTF8StringEncoding;
       textContentStorage = [[NSTextStorage alloc] initWithString:@"" attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
       self.syntaxtHighlighter = [[DuxSyntaxHighlighter alloc] init];
       textContentStorage.delegate = self.syntaxtHighlighter;
       
+      NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+      NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(100, FLT_MAX)];
+      textContainer.widthTracksTextView = YES;
+      
+      [textContentStorage addLayoutManager:layoutManager];
+      [layoutManager addTextContainer:textContainer];
+      
+      self.textView = [[DuxTextView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100) textContainer:textContainer];
+      self.textView.minSize = NSMakeSize(0, 100);
+      self.textView.maxSize = NSMakeSize(FLT_MAX, FLT_MAX);
+      [self.textView setVerticallyResizable:YES];
+      [self.textView setHorizontallyResizable:NO];
+      [self.textView setAutoresizingMask:NSViewWidthSizable];
+      self.textView.textDocument = self;
+      self.textView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
+      
+      self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
+      self.scrollView.borderType = NSNoBorder;
+      self.scrollView.hasVerticalScroller = YES;
+      self.scrollView.hasHorizontalScroller = NO;
+      self.scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+      self.scrollView.documentView = self.textView;
+      
+      // load text into view
+      self.textView.highlighter = self.syntaxtHighlighter;
       self.activeNewlineStyle = DuxNewlineUnix;
     }
     return self;
@@ -67,10 +85,9 @@
   [self addWindowController:controller];
 }
 
-- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller
+- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller documentView:(NSView *)documentView
 {
   self.editorWindow = controller.editorWindow;
-  self.textView = controller.textView;
   
   if (self.fileURL) {
     NSString *relativePath = self.fileURL.path;
@@ -84,12 +101,8 @@
     controller.documentPathLabel.stringValue = [NSString stringWithFormat:@"(%@)", self.displayName];
   }
   
-  // load ourselves into text view
-  self.textView.textDocument = self;
-  
-  // load text into view
-  self.textView.highlighter = self.syntaxtHighlighter;
-  [self loadTextContentIntoStorage];
+  [self.scrollView setFrame:NSMakeRect(0, 0, documentView.frame.size.width, documentView.frame.size.height)];
+  [documentView addSubview:self.scrollView];
   
   
   // make sure scroll bars are good
@@ -140,7 +153,7 @@
   }
   self.stringEncoding = encoding;
   
-  textContentStorage = [[NSTextStorage alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}];
+  [textContentStorage replaceCharactersInRange:NSMakeRange(0, textContentStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:textContentToLoad attributes:@{NSFontAttributeName:[DuxPreferences editorFont]}]];
   
   
   // figure out what language to use
@@ -154,8 +167,6 @@
   
   // set activeNewlineStyle to the first newline in the document
   self.activeNewlineStyle = [textContentToLoad newlineStyleForFirstNewline];
-  
-  [self loadTextContentIntoStorage];
   
   return YES;
 }
@@ -177,13 +188,6 @@
     return @"txt";
   
   return self.fileURL.pathExtension;
-}
-
-- (void)loadTextContentIntoStorage
-{
-  // load contents into storage
-  [self.textView setSelectedRange:NSMakeRange(0, 0)];
-  [self.textView.textContainer.layoutManager replaceTextStorage:textContentStorage];
 }
 
 + (BOOL)autosavesInPlace
