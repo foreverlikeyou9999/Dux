@@ -42,6 +42,11 @@ static NSMutableArray *projects = nil;
   return controller;
 }
 
++ (void)closeProjectWindowController:(DuxProjectWindowController *)controller
+{
+  [projects removeObject:controller];
+}
+
 - (id)initWithWindow:(NSWindow *)window
 {
   if (!(self = [super initWithWindow:window]))
@@ -122,10 +127,13 @@ static NSMutableArray *projects = nil;
 {
   NSUInteger index = sender.indexOfSelectedItem;
   index = self.documents.count - index;
-
-  MyTextDocument *document = [self.documents objectAtIndex:index];
   
-  [self setDocument:document];
+  MyTextDocument *document = [self.documents objectAtIndex:index];
+  if (self.document == document)
+    return;
+  
+  [self.document removeWindowController:self];
+  [document addWindowController:self];
 }
 
 - (IBAction)openQuickly:(id)sender
@@ -188,57 +196,70 @@ static NSMutableArray *projects = nil;
 }
 
 // as far as I am aware, this is only called by the document architecture when quitting the app. in that case, if there is more than one
-// document open we want to close the document and show the next one.
+// document open we want to close the document.
 - (void)close
 {
   if (self.documents.count > 1) {
     MyTextDocument *document = self.document;
-    DuxProjectWindowController *selfRef = self; // create strong reference to self, to avoid being deallocated
-    
+
     [self.documents removeObject:document];
-    
     [document removeWindowController:self];
-    
-    [[self.documents objectAtIndex:self.documents.count - 1] addWindowController:self];
-    
-    selfRef = nil;
     return;
   }
+  
+  [DuxProjectWindowController closeProjectWindowController:self];
   
   [super close];
 }
 
-// as far as I am aware, this is only called when the user clicks the close button with the mouse — and *after* the user has dealt with the
-// first "dirty" document. so we close that document (assuming it is saved or the user has chosen not to save it) and then abort the close,
-// but send performClose: to self.window.
+// as far as I am aware, this is only called when the user clicks the close button or presses Cmd-W — and *after* the user has dealt with the
+// first "dirty" document. so we close that document (assuming it is saved or the user has chosen not to save it) and then go through the rest
+// of the documents checking if they are dirty and asking the user what to do. If none of them are dirty, we close the window.
 - (BOOL)windowShouldClose:(id)sender
 {
   if (sender != self.window)
     return YES;
   
-  if (self.documents.count > 1) {
-    MyTextDocument *document = self.document;
-    DuxProjectWindowController *selfRef = self; // create strong reference to self, to avoid being deallocated
-    
-    [self.documents removeObject:document];
-    
-    [document removeWindowController:self];
-    [document close];
-    
+  // if we have no document visible but there is at least one not visible, present that document now (should never happen but do it just to be safe)
+  if (!self.document && self.documents.count > 0)
     [[self.documents objectAtIndex:self.documents.count - 1] addWindowController:self];
-    
-    selfRef = nil;
-    
-    int64_t delayInSeconds = 0.001;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-      [self.window performClose:self];
-    });
-    
-    return NO;
+  
+  // close the current document, and then recursively move on to the next document
+  if (self.document)
+    [self document:self.document shouldClose:YES contextInfo:NULL];
+  
+  // if all documents were closed, allow the window to close
+  return (self.documents.count == 0);
+}
+
+
+- (void)document:(NSDocument *)document shouldClose:(BOOL)shouldClose  contextInfo:(void  *)contextInfo
+{
+  // user cancelled the operation
+  if (!shouldClose) {
+    return;
   }
   
-  return YES;
+  // user dealt with the dirty document. close it now.
+  [self.documents removeObject:document];
+  [document removeWindowController:self];
+  [document close];
+  
+  [self reloadDocumentHistoryPopUp];
+  
+  // start the process again with the next document (we recursively go through all documents)
+  if (self.documents.count > 0) {
+    MyTextDocument *document = [self.documents objectAtIndex:self.documents.count - 1];
+    [document addWindowController:self];
+    
+    [document canCloseDocumentWithDelegate:self shouldCloseSelector:@selector(document:shouldClose:contextInfo:) contextInfo:NULL];
+    return;
+  }
+  
+  // we got to the last document. close ourself now
+  [self.window close];
+  [DuxProjectWindowController closeProjectWindowController:self];
 }
+
 
 @end

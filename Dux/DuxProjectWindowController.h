@@ -31,6 +31,7 @@
 
 + (NSArray *)projectWindowControllers;
 + (DuxProjectWindowController *)newProjectWindowControllerWithRoot:(NSURL *)rootUrl;
++ (void)closeProjectWindowController:(DuxProjectWindowController *)controller;
 
 - (void)reloadDocumentHistoryPopUp;
 - (IBAction)loadDocumentFromHistoryPopUp:(NSPopUpButton *)sender;

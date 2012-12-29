@@ -53,10 +53,7 @@
     controller = nil;
   
   if (!controller) {
-    NSLog(@"%s [Line %d] Creating a new controller that is not in [DuxProjectWindowController projectWindowControllers]! this will cause all kinds of weird issues and I think is the reason why handling various methods of closing a document required strange workarounds. This needs to be rewritten to add the controller to [DuxProjectWindowController projectWindowControllers], and all code for closing documents tested and probably re-writen to be simpler", __PRETTY_FUNCTION__, __LINE__);
-    controller = [[DuxProjectWindowController alloc] initWithWindowNibName:@"MyTextDocument"];
-    if (self.fileURL)
-      controller.rootUrl = [self.fileURL URLByDeletingLastPathComponent];
+    controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:[self.fileURL URLByDeletingLastPathComponent]];
   }
   
   // link ourself up as the window controller's current document (this will call [self loadIntoProjectWindow:] once the nib is ready)
