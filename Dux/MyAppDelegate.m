@@ -62,4 +62,13 @@
   [controller showWindow:self];
 }
 
+- (IBAction)setProjectRoot:(id)sender
+{
+  DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:nil];
+  
+  [controller showWindow:self];
+  
+  [controller setProjectRoot:sender];
+}
+
 @end
