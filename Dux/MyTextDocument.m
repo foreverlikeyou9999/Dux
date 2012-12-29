@@ -52,6 +52,10 @@
   if (![controller isKindOfClass:[DuxProjectWindowController class]])
     controller = nil;
   
+  if (!controller && [DuxProjectWindowController projectWindowControllers].count > 0) {
+    controller = [[DuxProjectWindowController projectWindowControllers] objectAtIndex:0];
+  }
+  
   if (!controller) {
     controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:[self.fileURL URLByDeletingLastPathComponent]];
   }
