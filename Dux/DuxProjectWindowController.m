@@ -230,7 +230,7 @@ static NSMutableArray *projects = nil;
   
   // close the current document, and then recursively move on to the next document
   if (self.document)
-    [self document:self.document shouldClose:YES contextInfo:NULL];
+    [self closeAllDocumentsWithDocument:self.document shouldClose:YES contextInfo:NULL];
   
   // if all documents were closed, allow the window to close
   BOOL shouldClose = (self.documents.count == 0);
@@ -240,14 +240,14 @@ static NSMutableArray *projects = nil;
 }
 
 
-- (void)document:(NSDocument *)document shouldClose:(BOOL)shouldClose  contextInfo:(void  *)contextInfo
+- (void)closeAllDocumentsWithDocument:(NSDocument *)document shouldClose:(BOOL)shouldClose  contextInfo:(void  *)contextInfo
 {
   // user cancelled the operation
   if (!shouldClose) {
     return;
   }
   
-  // user dealt with the dirty document. close it now.
+  // user dealt with the dirty document (or it wasn't dirty). close it now.
   [self.documents removeObject:document];
   [document removeWindowController:self];
   [document close];
@@ -259,7 +259,7 @@ static NSMutableArray *projects = nil;
     MyTextDocument *document = [self.documents objectAtIndex:self.documents.count - 1];
     [document addWindowController:self];
     
-    [document canCloseDocumentWithDelegate:self shouldCloseSelector:@selector(document:shouldClose:contextInfo:) contextInfo:NULL];
+    [document canCloseDocumentWithDelegate:self shouldCloseSelector:@selector(closeAllDocumentsWithDocument:shouldClose:contextInfo:) contextInfo:NULL];
     return;
   }
   
@@ -268,5 +268,45 @@ static NSMutableArray *projects = nil;
   [DuxProjectWindowController closeProjectWindowController:self];
 }
 
+- (void)closeOneDocument:(NSDocument *)document shouldClose:(BOOL)shouldClose  contextInfo:(void  *)contextInfo
+{
+  // user cancelled the operation
+  if (!shouldClose) {
+    return;
+  }
+  
+  // user dealt with the dirty document (or it wasn't dirty). close it now.
+  [self.documents removeObject:document];
+  [document removeWindowController:self];
+  [document close];
+  
+  [self reloadDocumentHistoryPopUp];
+  
+  // open the next document in the list
+  if (self.documents.count > 0) {
+    MyTextDocument *document = [self.documents objectAtIndex:self.documents.count - 1];
+    [document addWindowController:self];
+  }
+}
+
+- (IBAction)closeDocument:(id)sender
+{
+  [self.document canCloseDocumentWithDelegate:self shouldCloseSelector:@selector(closeOneDocument:shouldClose:contextInfo:) contextInfo:NULL];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+  if (item.action == @selector(closeDocument:)) {
+    if (self.document) {
+      item.title = [NSString stringWithFormat:@"Close “%@”", [self.document displayName]];
+      return YES;
+    }
+    
+    item.title = @"Close Document";
+    return NO;
+  }
+  
+  return YES;
+}
 
 @end

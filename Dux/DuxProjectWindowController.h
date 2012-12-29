@@ -43,4 +43,6 @@
 
 - (IBAction)findInFiles:(id)sender;
 
+- (IBAction)closeDocument:(id)sender; // close the current document without closing the window
+
 @end
