@@ -102,6 +102,9 @@ static NSMutableArray *projects = nil;
     for (NSView *subview in self.documentView.subviews) {
       [subview removeFromSuperview];
     }
+    
+    [self reloadDocumentHistoryPopUp];
+    self.documentPathLabel.stringValue = @"";
     return;
   }
   
@@ -119,6 +122,19 @@ static NSMutableArray *projects = nil;
   
   // reload history pull down
   [self reloadDocumentHistoryPopUp];
+  
+  // update file path (or document name if no path)
+  if (document && document.fileURL) {
+    NSString *relativePath = document.fileURL.path;
+    if (relativePath.length > self.rootUrl.path.length && [self.rootUrl.path isEqualToString:[relativePath substringToIndex:self.rootUrl.path.length]]) {
+      relativePath = [relativePath substringFromIndex:self.rootUrl.path.length + 1];
+    } else {
+      relativePath = [relativePath stringByAbbreviatingWithTildeInPath];
+    }
+    self.documentPathLabel.stringValue = relativePath;
+  } else {
+    self.documentPathLabel.stringValue = [NSString stringWithFormat:@"(%@)", document.displayName];
+  }
   
   // load the document
   for (NSView *subview in self.documentView.subviews) {

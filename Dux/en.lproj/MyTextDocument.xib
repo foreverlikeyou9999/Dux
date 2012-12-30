@@ -76,13 +76,12 @@
 								<string key="NSToolbarItemPaletteLabel">History</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSCustomView" key="NSToolbarItemView" id="288573374">
-									<reference key="NSNextResponder"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
 									</object>
 									<string key="NSFrame">{{0, 14}, {70, 16}}</string>
-									<reference key="NSSuperview"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
 								</object>
@@ -105,10 +104,9 @@
 								<string key="NSToolbarItemPaletteLabel">Path</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSTextField" key="NSToolbarItemView" id="171934680">
-									<reference key="NSNextResponder"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">266</int>
 									<string key="NSFrame">{{0, 14}, {70, 15}}</string>
-									<reference key="NSSuperview"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="561642939">
@@ -178,13 +176,25 @@
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSCustomView" id="466582971">
+							<reference key="NSNextResponder" ref="568628114"/>
+							<int key="NSvFlags">274</int>
+							<object class="NSMutableArray" key="NSSubviews">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+							</object>
+							<string key="NSFrameSize">{1020, 700}</string>
+							<reference key="NSSuperview" ref="568628114"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="543135290"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<string key="NSClassName">NSView</string>
+						</object>
 						<object class="NSTextField" id="543135290">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">301</int>
 							<string key="NSFrame">{{461, 335}, {100, 23}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="678367218">
@@ -211,16 +221,6 @@
 								</object>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-						</object>
-						<object class="NSCustomView" id="466582971">
-							<reference key="NSNextResponder" ref="568628114"/>
-							<int key="NSvFlags">274</int>
-							<string key="NSFrameSize">{1020, 700}</string>
-							<reference key="NSSuperview" ref="568628114"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="543135290"/>
-							<string key="NSReuseIdentifierKey">_NS:9</string>
-							<string key="NSClassName">NSView</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{1020, 700}</string>
@@ -249,7 +249,6 @@
 						<string key="NSFrame">{{42, 4}, {22, 16}}</string>
 						<reference key="NSSuperview" ref="286523559"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="494957746">
@@ -331,7 +330,7 @@
 					<object class="NSPopUpButton" id="827290270">
 						<reference key="NSNextResponder" ref="286523559"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 4}, {22, 16}}</string>
+						<string key="NSFrame">{{18, 4}, {22, 16}}</string>
 						<reference key="NSSuperview" ref="286523559"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="311990644"/>
@@ -679,8 +678,8 @@
 						<reference key="object" ref="568628114"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="466582971"/>
 							<reference ref="543135290"/>
+							<reference ref="466582971"/>
 						</object>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -823,21 +822,10 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">100195</int>
 						<reference key="object" ref="466582971"/>
-						<reference key="parent" ref="568628114"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100199</int>
-						<reference key="object" ref="543135290"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="678367218"/>
 						</object>
 						<reference key="parent" ref="568628114"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">100200</int>
-						<reference key="object" ref="678367218"/>
-						<reference key="parent" ref="543135290"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100201</int>
@@ -926,6 +914,20 @@
 						<int key="objectID">100213</int>
 						<reference key="object" ref="989859554"/>
 						<reference key="parent" ref="996129003"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100199</int>
+						<reference key="object" ref="543135290"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="678367218"/>
+						</object>
+						<reference key="parent" ref="568628114"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100200</int>
+						<reference key="object" ref="678367218"/>
+						<reference key="parent" ref="543135290"/>
 					</object>
 				</object>
 			</object>
@@ -1061,7 +1063,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100218</int>
+			<int key="maxID">100222</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1092,6 +1094,7 @@
 							<string>closeDocument:</string>
 							<string>findInFiles:</string>
 							<string>goBack:</string>
+							<string>goForward:</string>
 							<string>loadDocumentFromHistoryPopUp:</string>
 							<string>newWindow:</string>
 							<string>openQuickly:</string>
@@ -1099,6 +1102,7 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1115,6 +1119,7 @@
 							<string>closeDocument:</string>
 							<string>findInFiles:</string>
 							<string>goBack:</string>
+							<string>goForward:</string>
 							<string>loadDocumentFromHistoryPopUp:</string>
 							<string>newWindow:</string>
 							<string>openQuickly:</string>
@@ -1132,6 +1137,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">goBack:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">goForward:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

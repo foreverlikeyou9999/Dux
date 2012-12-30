@@ -89,18 +89,6 @@
 {
   self.editorWindow = controller.editorWindow;
   
-  if (self.fileURL) {
-    NSString *relativePath = self.fileURL.path;
-    if (relativePath.length > controller.rootUrl.path.length && [controller.rootUrl.path isEqualToString:[relativePath substringToIndex:controller.rootUrl.path.length]]) {
-      relativePath = [relativePath substringFromIndex:controller.rootUrl.path.length + 1];
-    } else {
-      relativePath = [relativePath stringByAbbreviatingWithTildeInPath];
-    }
-    controller.documentPathLabel.stringValue = relativePath;
-  } else {
-    controller.documentPathLabel.stringValue = [NSString stringWithFormat:@"(%@)", self.displayName];
-  }
-  
   [self.scrollView setFrame:NSMakeRect(0, 0, documentView.frame.size.width, documentView.frame.size.height)];
   [documentView addSubview:self.scrollView];
   
