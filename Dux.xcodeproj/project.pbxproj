@@ -21,6 +21,7 @@
 		3824F0851452E75700F00B96 /* DuxHTMLBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F0841452E75700F00B96 /* DuxHTMLBaseElement.m */; };
 		3829B272168A74BB0034C0A1 /* DuxProjectWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */; };
 		3829D938145A9F7D00188ECF /* DuxHTMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */; };
+		38313276168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */; };
 		3837FAB21475E058002CC459 /* NSStringDuxAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */; };
 		38383A06146FB25C008CD049 /* DuxHTMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */; };
 		384FDFE014710EFC00BD0D8D /* DuxHTMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */; };
@@ -140,6 +141,8 @@
 		3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxProjectWindowController.m; sourceTree = "<group>"; };
 		3829D936145A9F7D00188ECF /* DuxHTMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagElement.h; sourceTree = "<group>"; };
 		3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagElement.m; sourceTree = "<group>"; };
+		38313274168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxClickAndHoldPopUpButton.h; sourceTree = "<group>"; };
+		38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxClickAndHoldPopUpButton.m; sourceTree = "<group>"; };
 		3837FAB01475E058002CC459 /* NSStringDuxAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringDuxAdditions.h; sourceTree = "<group>"; };
 		3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringDuxAdditions.m; sourceTree = "<group>"; };
 		38383A04146FB25C008CD049 /* DuxHTMLTagAttributeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagAttributeElement.h; sourceTree = "<group>"; };
@@ -612,6 +615,8 @@
 				38D6059F1403859700D70F81 /* MainMenu.xib */,
 				386ADEF9168E316D00C961DA /* DuxDocumentController.h */,
 				386ADEFA168E316D00C961DA /* DuxDocumentController.m */,
+				38313274168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.h */,
+				38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */,
 				380AED3914500340005770D7 /* Text View */,
 				38BC921B1487731E00CE73EB /* Preferences */,
 				38A72CB11409057E008C26C9 /* Open Quickly */,
@@ -858,6 +863,7 @@
 				3829B272168A74BB0034C0A1 /* DuxProjectWindowController.m in Sources */,
 				386ADEF7168DA6F800C961DA /* DuxProjectWindow.m in Sources */,
 				386ADEFB168E316D00C961DA /* DuxDocumentController.m in Sources */,
+				38313276168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

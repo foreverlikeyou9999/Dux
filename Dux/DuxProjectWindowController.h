@@ -8,19 +8,23 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class MyOpenQuicklyController;
+@class MyOpenQuicklyController, DuxClickAndHoldPopUpButton;
 
 @interface DuxProjectWindowController : NSWindowController
 
 @property (nonatomic, strong) NSURL *rootUrl;
 @property (nonatomic, strong) NSMutableArray *documents;
 
-@property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
+@property (nonatomic, strong) NSMutableArray *goBackDocuments;
+@property (nonatomic, strong) NSMutableArray *goForwardDocuments;
 
+@property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
 
 @property (weak) IBOutlet NSView *documentView;
 @property (weak) IBOutlet NSTextField *documentPathLabel;
 @property (weak) IBOutlet NSPopUpButton *documentHistoryPopUp;
+@property (weak) IBOutlet DuxClickAndHoldPopUpButton *goBackPopUp;
+@property (weak) IBOutlet DuxClickAndHoldPopUpButton *goForwardPopUp;
 
 @property (weak) IBOutlet NSToolbarItem *historyToolbarItem;
 @property (strong) IBOutlet NSView *historyToolbarItemView;
@@ -35,6 +39,8 @@
 
 - (void)reloadDocumentHistoryPopUp;
 - (IBAction)loadDocumentFromHistoryPopUp:(NSPopUpButton *)sender;
+- (IBAction)goBack:(id)sender;
+- (IBAction)goForward:(id)sender;
 
 - (IBAction)openQuickly:(id)sender;
 - (IBAction)setProjectRoot:(id)sender;

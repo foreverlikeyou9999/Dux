@@ -10,10 +10,14 @@
 #import "MyTextDocument.h"
 #import "MyOpenQuicklyController.h"
 #import "DuxMultiFileSearchWindowController.h"
+#import "DuxClickAndHoldPopUpButton.h"
 
 @interface DuxProjectWindowController ()
 
 @property (nonatomic, strong) DuxMultiFileSearchWindowController *multiFileSearchWindowController;
+
+@property BOOL areGoingBack;
+@property BOOL areGoingForward;
 
 @end
 
@@ -55,6 +59,10 @@ static NSMutableArray *projects = nil;
   self.rootUrl = [NSURL fileURLWithPath:[@"~" stringByExpandingTildeInPath] isDirectory:YES];
   
   self.documents = [NSMutableArray array];
+  self.goBackDocuments = [NSMutableArray array];
+  self.goForwardDocuments = [NSMutableArray array];
+  self.areGoingBack = NO;
+  self.areGoingForward = NO;
   
   return self;
 }
@@ -76,6 +84,17 @@ static NSMutableArray *projects = nil;
 
 - (void)setDocument:(MyTextDocument *)document
 {
+  if (self.document == document)
+    return;
+  
+  // add previous document to "go back" list and clear "go forward" list
+  if (!self.areGoingBack && !self.areGoingForward) {
+    if (self.document) {
+      [self.goBackDocuments insertObject:self.document atIndex:0];
+    }
+    [self.goForwardDocuments removeAllObjects];
+  }
+  
   [super setDocument:document];
   
   // if we are clearing the document, do nothing else
@@ -94,7 +113,6 @@ static NSMutableArray *projects = nil;
   [self.documents addObject:document];
   
   
-  
   // if window isn't lodaed yet, the rest must wait until after windowDidLoad
   if (!self.window)
     return;
@@ -111,7 +129,7 @@ static NSMutableArray *projects = nil;
 
 - (void)reloadDocumentHistoryPopUp
 {
-  // remove all items but the first
+  // all open files (sorted by most recently open)
   NSMenuItem *firstItem = [self.documentHistoryPopUp.menu itemAtIndex:0];
   [self.documentHistoryPopUp.menu removeAllItems];
   [self.documentHistoryPopUp.menu addItem:firstItem];
@@ -122,19 +140,122 @@ static NSMutableArray *projects = nil;
     [self.documentHistoryPopUp.menu addItem:menuItem];
   }
   
+  // go back button
+  firstItem = [self.goBackPopUp.menu itemAtIndex:0];
+  [self.goBackPopUp.menu removeAllItems];
+  [self.goBackPopUp.menu addItem:firstItem];
+  
+  for (MyTextDocument *document in self.goBackDocuments) {
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:document.displayName action:NULL keyEquivalent:@""];
+    
+    [self.goBackPopUp.menu addItem:menuItem];
+  }
+  [self.goBackPopUp setEnabled:self.goBackDocuments.count > 0];
+  
+  // go forward button
+  firstItem = [self.goForwardPopUp.menu itemAtIndex:0];
+  [self.goForwardPopUp.menu removeAllItems];
+  [self.goForwardPopUp.menu addItem:firstItem];
+  
+  for (MyTextDocument *document in self.goForwardDocuments) {
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:document.displayName action:NULL keyEquivalent:@""];
+    
+    [self.goForwardPopUp.menu addItem:menuItem];
+  }
+  [self.goForwardPopUp setEnabled:self.goForwardDocuments.count > 0];
 }
 
-- (IBAction)loadDocumentFromHistoryPopUp:(NSPopUpButton *)sender
+- (IBAction)loadDocumentFromHistoryPopUp:(id)sender
 {
-  NSUInteger index = sender.indexOfSelectedItem;
-  index = self.documents.count - index;
-  
-  MyTextDocument *document = [self.documents objectAtIndex:index];
+  // figure out which document to navigate to
+  MyTextDocument *document;
+  if (self.documentHistoryPopUp.indexOfSelectedItem == -1) { // no selected menu item
+    return;
+  } else {
+    document = [self.documents objectAtIndex:self.documents.count - self.documentHistoryPopUp.indexOfSelectedItem];
+  }
   if (self.document == document)
     return;
   
+  // show the document
   [self.document removeWindowController:self];
   [document addWindowController:self];
+}
+
+- (IBAction)goBack:(id)sender
+{
+  if (self.goBackDocuments.count == 0)
+    return;
+  
+  // figure out which document to navigate to, and update the back/forward lists
+  MyTextDocument *document;
+  if (self.goBackPopUp.indexOfSelectedItem == -1) { // no selected menu item. go back one
+    document = [self.goBackDocuments objectAtIndex:0];
+    
+    if (self.document) {
+      [self.goForwardDocuments insertObject:self.document atIndex:0];
+    }
+    [self.goBackDocuments removeObjectAtIndex:0];
+  } else {
+    NSUInteger newDocumentIndex = self.goBackPopUp.indexOfSelectedItem - 1;
+    document = [self.goBackDocuments objectAtIndex:newDocumentIndex];
+    
+    if (self.document) {
+      [self.goForwardDocuments insertObject:self.document atIndex:0];
+    }
+    NSUInteger goBackCounter = 0;
+    while (goBackCounter < newDocumentIndex) {
+      [self.goForwardDocuments insertObject:[self.goBackDocuments objectAtIndex:0] atIndex:0];
+      [self.goBackDocuments removeObjectAtIndex:0];
+      
+      goBackCounter++;
+    }
+    [self.goBackDocuments removeObjectAtIndex:0];
+  }
+  
+  // show the document
+  self.areGoingBack = YES;
+  [self.document removeWindowController:self];
+  [document addWindowController:self];
+  self.areGoingBack = NO;
+}
+
+- (IBAction)goForward:(id)sender
+{
+  if (self.goForwardDocuments.count == 0)
+    return;
+  
+  // figure out which document to navigate to, and update the back/forward lists
+  MyTextDocument *document;
+  if (self.goForwardPopUp.indexOfSelectedItem == -1) { // no selected menu item. go forward one
+    document = [self.goForwardDocuments objectAtIndex:0];
+    
+    if (self.document) {
+      [self.goBackDocuments insertObject:self.document atIndex:0];
+    }
+    [self.goForwardDocuments removeObjectAtIndex:0];
+  } else {
+    NSUInteger newDocumentIndex = self.goForwardPopUp.indexOfSelectedItem - 1;
+    document = [self.goForwardDocuments objectAtIndex:newDocumentIndex];
+    
+    if (self.document) {
+      [self.goBackDocuments insertObject:self.document atIndex:0];
+    }
+    NSUInteger goForwardCounter = 0;
+    while (goForwardCounter < newDocumentIndex) {
+      [self.goBackDocuments insertObject:[self.goForwardDocuments objectAtIndex:0] atIndex:0];
+      [self.goForwardDocuments removeObjectAtIndex:0];
+      
+      goForwardCounter++;
+    }
+    [self.goForwardDocuments removeObjectAtIndex:0];
+  }
+  
+  // show the document
+  self.areGoingForward = YES;
+  [self.document removeWindowController:self];
+  [document addWindowController:self];
+  self.areGoingForward = NO;
 }
 
 - (IBAction)openQuickly:(id)sender
@@ -204,6 +325,8 @@ static NSMutableArray *projects = nil;
     MyTextDocument *document = self.document;
 
     [self.documents removeObject:document];
+    [self.goBackDocuments removeObject:document];
+    [self.goForwardDocuments removeObject:document];
     [document removeWindowController:self];
     return;
   }
@@ -249,6 +372,8 @@ static NSMutableArray *projects = nil;
   
   // user dealt with the dirty document (or it wasn't dirty). close it now.
   [self.documents removeObject:document];
+  [self.goBackDocuments removeObject:document];
+  [self.goForwardDocuments removeObject:document];
   [document removeWindowController:self];
   [document close];
   
@@ -276,10 +401,12 @@ static NSMutableArray *projects = nil;
   }
   
   // user dealt with the dirty document (or it wasn't dirty). close it now.
-  [self.documents removeObject:document];
   [document removeWindowController:self];
   [document close];
   
+  [self.documents removeObject:document];
+  [self.goBackDocuments removeObject:document];
+  [self.goForwardDocuments removeObject:document];
   [self reloadDocumentHistoryPopUp];
   
   // open the next document in the list
