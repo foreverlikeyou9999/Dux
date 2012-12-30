@@ -276,7 +276,7 @@ static NSMutableArray *projects = nil;
   panel.allowsMultipleSelection = NO;
   panel.directoryURL = self.rootUrl;
   panel.prompt = @"Set";
-  panel.message = @"Set Current Working Directory:";
+  panel.message = @"Set Working Directory:";
   
   [panel beginSheetModalForWindow:self.editorWindow completionHandler:^(NSInteger result) {
     if (result == NSCancelButton)
