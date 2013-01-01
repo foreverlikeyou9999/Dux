@@ -13,6 +13,7 @@
 #import "DuxPreferences.h"
 #import "DuxPreferencesWindowController.h"
 #import "DuxProjectWindowController.h"
+#import "DuxBundle.h"
 
 @interface MyAppDelegate ()
 
@@ -31,6 +32,11 @@
     return nil;
   
   return self;
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+  [DuxBundle loadBundles];
 }
 
 - (IBAction)showPreferences:(id)sender
@@ -62,6 +68,11 @@
   [controller showWindow:self];
 }
 
+- (IBAction)openBundlesFolder:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[DuxBundle bundlesURL]];
+}
+
 - (IBAction)setProjectRoot:(id)sender
 {
   DuxProjectWindowController *controller = [DuxProjectWindowController newProjectWindowControllerWithRoot:nil];
@@ -69,6 +80,30 @@
   [controller showWindow:self];
   
   [controller setProjectRoot:sender];
+}
+
+- (void)performDuxBundle:(id)sender
+{
+  DuxBundle *bundle = [DuxBundle bundleForSender:sender];
+  
+  [bundle runWithWorkingDirectory:[NSURL fileURLWithPath:[@"~" stringByExpandingTildeInPath]]];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+  if (item.action == @selector(performDuxBundle:)) {
+    DuxBundle *bundle = [DuxBundle bundleForSender:item];
+    
+    if (![@[DuxBundleInputTypeNone] containsObject:bundle.inputType])
+      return NO;
+    
+    if (![@[DuxBundleOutputTypeNone, DuxBundleOutputTypeAlert] containsObject:bundle.outputType])
+      return NO;
+    
+    return YES;
+  }
+  
+  return YES;
 }
 
 @end

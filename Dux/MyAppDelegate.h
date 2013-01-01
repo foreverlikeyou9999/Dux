@@ -14,7 +14,10 @@
 
 @interface MyAppDelegate : NSObject
 
+@property (weak) IBOutlet NSMenu *bundlesMenu;
+
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)newWindow:(id)sender;
+- (IBAction)openBundlesFolder:(id)sender;
 
 @end

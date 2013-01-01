@@ -11,6 +11,7 @@
 #import "MyOpenQuicklyController.h"
 #import "DuxMultiFileSearchWindowController.h"
 #import "DuxClickAndHoldPopUpButton.h"
+#import "DuxBundle.h"
 
 @interface DuxProjectWindowController ()
 
@@ -449,7 +450,26 @@ static NSMutableArray *projects = nil;
     return NO;
   }
   
+  if (item.action == @selector(performDuxBundle:)) {
+    DuxBundle *bundle = [DuxBundle bundleForSender:item];
+    
+    if (![@[DuxBundleInputTypeNone] containsObject:bundle.inputType])
+      return NO;
+    
+    if (![@[DuxBundleOutputTypeNone, DuxBundleOutputTypeAlert] containsObject:bundle.outputType])
+      return NO;
+    
+    return YES;
+  }
+  
   return YES;
+}
+
+- (void)performDuxBundle:(id)sender
+{
+  DuxBundle *bundle = [DuxBundle bundleForSender:sender];
+  
+  [bundle runWithWorkingDirectory:self.rootUrl];
 }
 
 @end
