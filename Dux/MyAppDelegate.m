@@ -96,7 +96,7 @@
 {
   DuxBundle *bundle = [DuxBundle bundleForSender:sender];
   
-  [bundle runWithWorkingDirectory:[NSURL fileURLWithPath:[@"~" stringByExpandingTildeInPath]]];
+  [bundle runWithWorkingDirectory:[NSURL fileURLWithPath:[@"~" stringByExpandingTildeInPath]] currentFile:nil];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item

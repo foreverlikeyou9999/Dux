@@ -469,7 +469,7 @@ static NSMutableArray *projects = nil;
 {
   DuxBundle *bundle = [DuxBundle bundleForSender:sender];
   
-  [bundle runWithWorkingDirectory:self.rootUrl];
+  [bundle runWithWorkingDirectory:self.rootUrl currentFile:[self.document fileURL]];
 }
 
 @end

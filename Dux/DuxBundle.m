@@ -294,13 +294,13 @@ static NSArray *loadedBundles;
   [menu insertItem:self.menuItem atIndex:index];
 }
 
-- (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL
+- (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL currentFile:(NSURL *)currentFile
 {
   NSTask *task = [[NSTask alloc] init];
   task.launchPath = self.scriptURL.path;
   task.standardOutput = [NSPipe pipe];
   task.currentDirectoryPath = workingDirectoryURL.path;
-  task.environment = @{@"foo": @"bar"};
+  task.environment = @{@"DuxCurrentFile": currentFile ? currentFile.path : @""};
 
   [task launch];
   [task waitUntilExit];

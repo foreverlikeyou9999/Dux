@@ -22,7 +22,7 @@
 + (void)loadBundles; // begins a background thread to find and load new or updated bundles
 + (NSURL *)bundlesURL;
 
-- (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL;
+- (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL currentFile:(NSURL *)currentFile;
 
 @end
 
