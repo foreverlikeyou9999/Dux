@@ -14,6 +14,7 @@
 #import "DuxPreferencesWindowController.h"
 #import "DuxProjectWindowController.h"
 #import "DuxBundle.h"
+#import "DuxRunBundleQuicklyWindowController.h"
 
 @interface MyAppDelegate ()
 
@@ -71,6 +72,15 @@
 - (IBAction)openBundlesFolder:(id)sender
 {
   [[NSWorkspace sharedWorkspace] openURL:[DuxBundle bundlesURL]];
+}
+
+- (IBAction)runBundleQuickly:(id)sender
+{
+  if (!self.runBundleQuicklyController) {
+    self.runBundleQuicklyController = [[DuxRunBundleQuicklyWindowController alloc] initWithWindowNibName:@"DuxRunBundleQuicklyWindowController"];
+  }
+  
+  [self.runBundleQuicklyController showWindow:self];
 }
 
 - (IBAction)setProjectRoot:(id)sender

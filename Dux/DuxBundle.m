@@ -14,7 +14,7 @@ const NSString *DuxBundleInputTypeNone = @"None";
 const NSString *DuxBundleOutputTypeNone = @"None";
 const NSString *DuxBundleOutputTypeAlert = @"Alert";
 
-static NSMutableArray *loadedBundles;
+static NSArray *loadedBundles;
 
 @interface DuxBundle ()
 
@@ -45,7 +45,10 @@ static NSMutableArray *loadedBundles;
 
 + (void)initialize
 {
-  loadedBundles = [NSMutableArray array];
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    loadedBundles = [NSArray array];
+  });
 }
 
 + (DuxBundle *)bundleForSender:(id)sender
@@ -75,6 +78,11 @@ static NSMutableArray *loadedBundles;
   }
   
   return bundlesURL;
+}
+
++ (NSArray *)allBundles
+{
+  return [loadedBundles copy];
 }
 
 + (void)loadBundles
@@ -111,7 +119,7 @@ static NSMutableArray *loadedBundles;
         bundle.URL = bundleURL;
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-          [loadedBundles addObject:bundle];
+          loadedBundles = [loadedBundles arrayByAddingObject:bundle];
         });
       }
       
@@ -127,7 +135,10 @@ static NSMutableArray *loadedBundles;
     for (DuxBundle *bundle in previouslyLoadedBundles) {
       dispatch_sync(dispatch_get_main_queue(), ^{
         [bundle unload];
-        [loadedBundles removeObject:bundle];
+        
+        NSMutableArray *mutableBundles = [loadedBundles mutableCopy];
+        [mutableBundles removeObject:bundle];
+        loadedBundles = [mutableBundles copy];
       });
     }
   });

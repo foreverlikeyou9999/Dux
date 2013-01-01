@@ -26,6 +26,8 @@
 		38383A06146FB25C008CD049 /* DuxHTMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */; };
 		38487A131692A8040055EDAA /* DuxBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 38487A121692A8040055EDAA /* DuxBundle.m */; };
 		384FDFE014710EFC00BD0D8D /* DuxHTMLEntityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */; };
+		385115071692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 385115051692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m */; };
+		385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 385115061692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib */; };
 		385A1E9C147916760084F48E /* DuxCSSIDSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1E9B147916760084F48E /* DuxCSSIDSelectorElement.m */; };
 		385A1EA0147917590084F48E /* DuxCSSPseudoSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1E9F147917590084F48E /* DuxCSSPseudoSelectorElement.m */; };
 		385A1EA3147918770084F48E /* DuxCSSDefinitionBlockElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA2147918770084F48E /* DuxCSSDefinitionBlockElement.m */; };
@@ -152,6 +154,9 @@
 		38487A121692A8040055EDAA /* DuxBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxBundle.m; sourceTree = "<group>"; };
 		384FDFDE14710EFC00BD0D8D /* DuxHTMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLEntityElement.h; sourceTree = "<group>"; };
 		384FDFDF14710EFC00BD0D8D /* DuxHTMLEntityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLEntityElement.m; sourceTree = "<group>"; };
+		385115041692FADE0066B876 /* DuxRunBundleQuicklyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxRunBundleQuicklyWindowController.h; sourceTree = "<group>"; };
+		385115051692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxRunBundleQuicklyWindowController.m; sourceTree = "<group>"; };
+		385115061692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DuxRunBundleQuicklyWindowController.xib; sourceTree = "<group>"; };
 		385A1E9A147916760084F48E /* DuxCSSIDSelectorElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSIDSelectorElement.h; sourceTree = "<group>"; };
 		385A1E9B147916760084F48E /* DuxCSSIDSelectorElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSIDSelectorElement.m; sourceTree = "<group>"; };
 		385A1E9E147917590084F48E /* DuxCSSPseudoSelectorElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPseudoSelectorElement.h; sourceTree = "<group>"; };
@@ -415,6 +420,16 @@
 			name = Misc;
 			sourceTree = "<group>";
 		};
+		385115021692FA8E0066B876 /* Run Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				385115041692FADE0066B876 /* DuxRunBundleQuicklyWindowController.h */,
+				385115051692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m */,
+				385115061692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib */,
+			);
+			name = "Run Bundle";
+			sourceTree = "<group>";
+		};
 		3886D4AE14790FBE00970CAE /* CSS */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,6 +639,7 @@
 				38487A121692A8040055EDAA /* DuxBundle.m */,
 				380AED3914500340005770D7 /* Text View */,
 				38BC921B1487731E00CE73EB /* Preferences */,
+				385115021692FA8E0066B876 /* Run Bundle */,
 				38A72CB11409057E008C26C9 /* Open Quickly */,
 				3837FAA81475E009002CC459 /* Misc */,
 				38D6058E1403859600D70F81 /* Supporting Files */,
@@ -752,6 +768,7 @@
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
 				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
+				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +887,7 @@
 				386ADEFB168E316D00C961DA /* DuxDocumentController.m in Sources */,
 				38313276168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m in Sources */,
 				38487A131692A8040055EDAA /* DuxBundle.m in Sources */,
+				385115071692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

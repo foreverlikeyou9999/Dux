@@ -12,14 +12,14 @@
 
 @property (readonly) NSString *displayName;
 @property (readonly) NSURL *URL;
-@property (readonly) NSDictionary *infoDictionary;
+@property (readonly) NSMenuItem *menuItem;
 @property (readonly) NSString *inputType;
 @property (readonly) NSString *outputType;
 
 + (DuxBundle *)bundleForSender:(id)sender;
++ (NSArray *)allBundles;
 
 + (void)loadBundles; // begins a background thread to find and load new or updated bundles
-
 + (NSURL *)bundlesURL;
 
 - (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL;

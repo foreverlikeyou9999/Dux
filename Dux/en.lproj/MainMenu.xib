@@ -1269,6 +1269,15 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
+								<object class="NSMenuItem" id="957135953">
+									<reference key="NSMenu" ref="625141375"/>
+									<string key="NSTitle">Run Bundle...</string>
+									<string key="NSKeyEquiv">t</string>
+									<int key="NSKeyEquivModMask">1310720</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
 								<object class="NSMenuItem" id="898581964">
 									<reference key="NSMenu" ref="625141375"/>
 									<string key="NSTitle">Open Bundles Folder</string>
@@ -2068,6 +2077,14 @@
 						<reference key="destination" ref="625141375"/>
 					</object>
 					<int key="connectionID">692</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">runBundleQuickly:</string>
+						<reference key="source" ref="638577645"/>
+						<reference key="destination" ref="957135953"/>
+					</object>
+					<int key="connectionID">694</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3075,6 +3092,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="898581964"/>
 							<reference ref="649547605"/>
+							<reference ref="957135953"/>
 						</array>
 						<reference key="parent" ref="958291172"/>
 					</object>
@@ -3086,6 +3104,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">689</int>
 						<reference key="object" ref="649547605"/>
+						<reference key="parent" ref="625141375"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">693</int>
+						<reference key="object" ref="957135953"/>
 						<reference key="parent" ref="625141375"/>
 					</object>
 				</array>
@@ -3372,6 +3395,7 @@
 				<string key="684.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="688.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="689.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="693.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3388,7 +3412,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">692</int>
+			<int key="maxID">694</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3602,6 +3626,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="newWindow:">id</string>
 						<string key="openBundlesFolder:">id</string>
+						<string key="runBundleQuickly:">id</string>
 						<string key="setProjectRoot:">id</string>
 						<string key="showPreferences:">id</string>
 					</dictionary>
@@ -3612,6 +3637,10 @@
 						</object>
 						<object class="IBActionInfo" key="openBundlesFolder:">
 							<string key="name">openBundlesFolder:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="runBundleQuickly:">
+							<string key="name">runBundleQuickly:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="setProjectRoot:">

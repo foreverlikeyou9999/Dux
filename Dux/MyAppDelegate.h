@@ -12,12 +12,17 @@
 
 #import "MyOpenQuicklyController.h"
 
+@class DuxRunBundleQuicklyWindowController;
+
 @interface MyAppDelegate : NSObject
 
 @property (weak) IBOutlet NSMenu *bundlesMenu;
 
+@property DuxRunBundleQuicklyWindowController *runBundleQuicklyController;
+
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)newWindow:(id)sender;
 - (IBAction)openBundlesFolder:(id)sender;
+- (IBAction)runBundleQuickly:(id)sender;
 
 @end
