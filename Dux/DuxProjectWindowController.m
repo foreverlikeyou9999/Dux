@@ -72,7 +72,11 @@ static NSMutableArray *projects = nil;
 {
   [super windowDidLoad];
   
+  self.noEditorLogoView.alphaValue = 0.20;
+  self.noEditorTextView.alphaValue = 0.65;
+  
   if (self.document) {
+    [self.noEditorView setHidden:YES];
     [(MyTextDocument *)self.document loadIntoProjectWindowController:self documentView:self.documentView];
   }
   
@@ -106,6 +110,7 @@ static NSMutableArray *projects = nil;
     
     [self reloadDocumentHistoryPopUp];
     self.documentPathLabel.stringValue = @"";
+    [self.noEditorView setHidden:NO];
     return;
   }
   
@@ -142,6 +147,7 @@ static NSMutableArray *projects = nil;
     [subview removeFromSuperview];
   }
   [document loadIntoProjectWindowController:self documentView:self.documentView];
+  [self.noEditorView setHidden:YES];
 }
 
 - (void)reloadDocumentHistoryPopUp

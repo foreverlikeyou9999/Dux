@@ -20,6 +20,10 @@
 
 @property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
 
+@property (weak) IBOutlet NSView *noEditorView;
+@property (weak) IBOutlet NSImageView *noEditorLogoView;
+@property (weak) IBOutlet NSTextField *noEditorTextView;
+
 @property (weak) IBOutlet NSView *documentView;
 @property (weak) IBOutlet NSTextField *documentPathLabel;
 @property (weak) IBOutlet NSPopUpButton *documentHistoryPopUp;
