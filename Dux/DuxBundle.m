@@ -12,6 +12,7 @@
 const NSString *DuxBundleTypeScript = @"Script";
 const NSString *DuxBundleTypeSnippet = @"Snippet";
 const NSString *DuxBundleInputTypeNone = @"None";
+const NSString *DuxBundleInputTypeAlert = @"Alert";
 const NSString *DuxBundleOutputTypeNone = @"None";
 const NSString *DuxBundleOutputTypeInsertText = @"InsertText";
 const NSString *DuxBundleOutputTypeInsertSnippet = @"InsertSnippet";
@@ -32,6 +33,7 @@ static NSArray *loadedBundles;
 @property NSURL *scriptURL;
 @property NSURL *snippetURL;
 @property NSArray *tabTriggers;
+@property NSString *inputPrompt;
 
 + (void)unloadAllBundles;
 
@@ -212,6 +214,8 @@ static NSArray *loadedBundles;
   self.inputType = [infoDictionary valueForKey:@"Input"];
   self.outputType = [infoDictionary valueForKey:@"Output"];
   
+  self.inputPrompt = [infoDictionary valueForKey:@"InputPrompt"];
+  
   self.menuItem = [[NSMenuItem alloc] init];
   self.menuItem.title = [[self.URL lastPathComponent] stringByDeletingPathExtension];
   self.menuItem.action = @selector(performDuxBundle:);
@@ -337,9 +341,25 @@ static NSArray *loadedBundles;
 
 - (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL currentFile:(NSURL *)currentFile
 {
+  NSString *input = nil;
+  if ([self.inputType isEqual:DuxBundleInputTypeAlert]) {
+    NSAlert *alert = [NSAlert alertWithMessageText:self.displayName defaultButton:@"Continue" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:@"%@", self.inputPrompt ? self.inputPrompt : @""];
+    
+    NSTextField *accessory = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,290,22)];
+    [alert setAccessoryView:accessory];
+    
+    NSUInteger buttonPressed = [alert runModal];
+    if (buttonPressed != NSAlertDefaultReturn)
+      return nil;
+    
+    input = accessory.stringValue;
+  }
+  
   NSString *output;
   if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
     NSTask *task = [[NSTask alloc] init];
+    if (input)
+      task.arguments = @[input];
     task.launchPath = self.scriptURL.path;
     task.standardOutput = [NSPipe pipe];
     task.currentDirectoryPath = workingDirectoryURL.path;
@@ -357,7 +377,7 @@ static NSArray *loadedBundles;
   }
   
   
-  if ([self.outputType isEqualToString:(NSString *)DuxBundleOutputTypeAlert]) {
+  if (output.length > 0 && [self.outputType isEqualToString:(NSString *)DuxBundleOutputTypeAlert]) {
     NSAlert *alert = [NSAlert alertWithMessageText:self.displayName defaultButton:@"Dismiss" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", output];
     [alert runModal];
     return nil;

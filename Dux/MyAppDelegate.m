@@ -104,7 +104,7 @@
   if (item.action == @selector(performDuxBundle:)) {
     DuxBundle *bundle = [DuxBundle bundleForSender:item];
     
-    if (![@[DuxBundleInputTypeNone] containsObject:bundle.inputType])
+    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert] containsObject:bundle.inputType])
       return NO;
     
     if (![@[DuxBundleOutputTypeNone, DuxBundleOutputTypeAlert] containsObject:bundle.outputType])
