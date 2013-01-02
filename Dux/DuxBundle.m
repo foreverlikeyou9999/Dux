@@ -58,12 +58,7 @@ static NSArray *loadedBundles;
 
 + (DuxBundle *)bundleForSender:(id)sender
 {
-  for (DuxBundle *bundle in loadedBundles) {
-    if (bundle.menuItem == sender)
-      return bundle;
-  }
-  
-  return nil;
+  return ((NSMenuItem *)sender).representedObject;
 }
 
 + (NSURL *)bundlesURL
@@ -220,6 +215,7 @@ static NSArray *loadedBundles;
   self.menuItem = [[NSMenuItem alloc] init];
   self.menuItem.title = [[self.URL lastPathComponent] stringByDeletingPathExtension];
   self.menuItem.action = @selector(performDuxBundle:);
+  self.menuItem.representedObject = self;
   
   NSMutableArray *tabTriggers = [NSMutableArray array];
   for (NSDictionary *trigger in [infoDictionary valueForKey:@"Triggers"]) {
@@ -238,6 +234,7 @@ static NSArray *loadedBundles;
       }
     } else if ([[trigger valueForKey:@"Type"] isEqualToString:@"Tab"]) {
       [tabTriggers addObject:[trigger valueForKey:@"Word"]];
+      self.menuItem.title = [NSString stringWithFormat:@"%@ (%@⇥)", self.menuItem.title, [trigger valueForKey:@"Word"]];
     }
   }
   self.tabTriggers = [tabTriggers copy];
@@ -250,6 +247,7 @@ static NSArray *loadedBundles;
 - (void)unload
 {
   [self.menuItem.menu removeItem:self.menuItem];
+  self.menuItem = nil; // incase of circular reference
   
   self.lastLoadHash = 0;
 }
