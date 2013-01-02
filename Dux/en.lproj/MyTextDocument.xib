@@ -199,10 +199,9 @@
 								<object class="NSTextField" id="543135290">
 									<reference key="NSNextResponder" ref="611566153"/>
 									<int key="NSvFlags">301</int>
-									<string key="NSFrame">{{461, 335}, {100, 23}}</string>
+									<string key="NSFrame">{{467, 341}, {86, 19}}</string>
 									<reference key="NSSuperview" ref="611566153"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="678367218">
@@ -217,7 +216,10 @@
 										<string key="NSCellIdentifier">_NS:1535</string>
 										<reference key="NSControlView" ref="543135290"/>
 										<bool key="NSDrawsBackground">YES</bool>
-										<reference key="NSBackgroundColor" ref="17968639"/>
+										<object class="NSColor" key="NSBackgroundColor">
+											<int key="NSColorSpace">2</int>
+											<bytes key="NSRGB">MC45Mjk0MTE4Mjg1IDAuOTI5NDExODI4NSAwLjkyOTQxMTgyODUgMC43MwA</bytes>
+										</object>
 										<object class="NSColor" key="NSTextColor">
 											<int key="NSColorSpace">6</int>
 											<string key="NSCatalogName">System</string>
@@ -242,7 +244,7 @@
 											<string>NeXT TIFF v4.0 pasteboard type</string>
 										</object>
 									</object>
-									<string key="NSFrame">{{100, 100}, {820, 494}}</string>
+									<string key="NSFrame">{{50, 50}, {920, 600}}</string>
 									<reference key="NSSuperview" ref="611566153"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="543135290"/>
@@ -299,7 +301,6 @@
 						<string key="NSFrame">{{42, 0}, {22, 16}}</string>
 						<reference key="NSSuperview" ref="286523559"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="494957746">
@@ -547,7 +548,6 @@
 						<string key="NSFrame">{{-2, 0}, {759, 15}}</string>
 						<reference key="NSSuperview" ref="839298779"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="354496467">
