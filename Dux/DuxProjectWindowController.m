@@ -456,6 +456,9 @@ static NSMutableArray *projects = nil;
     if (![@[DuxBundleInputTypeNone] containsObject:bundle.inputType])
       return NO;
     
+    if (self.document && [@[DuxBundleOutputTypeInsertSnippet, DuxBundleOutputTypeInsertText] containsObject:bundle.outputType])
+      return YES;
+    
     if (![@[DuxBundleOutputTypeNone, DuxBundleOutputTypeAlert] containsObject:bundle.outputType])
       return NO;
     
@@ -469,7 +472,14 @@ static NSMutableArray *projects = nil;
 {
   DuxBundle *bundle = [DuxBundle bundleForSender:sender];
   
-  [bundle runWithWorkingDirectory:self.rootUrl currentFile:[self.document fileURL]];
+  NSString *output = [bundle runWithWorkingDirectory:self.rootUrl currentFile:[self.document fileURL]];
+  
+  if ([DuxBundleOutputTypeInsertSnippet isEqualToString:bundle.outputType]) {
+    [[(MyTextDocument *)self.document textView] insertSnippet:output];
+  }
+  if ([DuxBundleOutputTypeInsertText isEqualToString:bundle.outputType]) {
+    [[(MyTextDocument *)self.document textView] insertText:output];
+  }
 }
 
 @end

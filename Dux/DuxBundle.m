@@ -10,8 +10,11 @@
 #import "MyAppDelegate.h"
 
 const NSString *DuxBundleTypeScript = @"Script";
+const NSString *DuxBundleTypeSnippet = @"Snippet";
 const NSString *DuxBundleInputTypeNone = @"None";
 const NSString *DuxBundleOutputTypeNone = @"None";
+const NSString *DuxBundleOutputTypeInsertText = @"InsertText";
+const NSString *DuxBundleOutputTypeInsertSnippet = @"InsertSnippet";
 const NSString *DuxBundleOutputTypeAlert = @"Alert";
 
 static NSArray *loadedBundles;
@@ -27,6 +30,8 @@ static NSArray *loadedBundles;
 @property NSString *outputType;
 @property NSString *type;
 @property NSURL *scriptURL;
+@property NSURL *snippetURL;
+@property NSArray *tabTriggers;
 
 + (void)unloadAllBundles;
 
@@ -83,6 +88,37 @@ static NSArray *loadedBundles;
 + (NSArray *)allBundles
 {
   return [loadedBundles copy];
+}
+
++ (NSArray *)tabTriggerBundlesSortedByTriggerLength
+{
+  NSMutableArray *result = [NSMutableArray array];
+  
+  for (DuxBundle *bundle in [[self class] allBundles]) {
+    if (bundle.tabTriggers.count == 0)
+      continue;
+    
+    for (NSString *trigger in bundle.tabTriggers) {
+      NSUInteger insertIndex = [result indexOfObject:@{@"trigger": trigger} inSortedRange:NSMakeRange(0, result.count) options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(NSURL *leftObj, NSURL *rightObj) {
+        NSString *leftTrigger = [leftObj valueForKey:@"trigger"];
+        NSUInteger leftLength = leftTrigger.length;
+        
+        NSString *rightTrigger = [rightObj valueForKey:@"trigger"];
+        NSUInteger rightLength = rightTrigger.length;
+        
+        if (leftLength < rightLength) {
+          return -1;
+        } else if (leftLength > rightLength) {
+          return 1;
+        } else {
+          return [leftTrigger compare:rightTrigger];
+        }
+      }];
+      [result insertObject:@{@"trigger": trigger, @"bundle": bundle} atIndex:insertIndex];
+    }
+  }
+  
+  return [result copy];
 }
 
 + (void)loadBundles
@@ -170,8 +206,12 @@ static NSArray *loadedBundles;
   
   if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
     self.scriptURL = [self.URL URLByAppendingPathComponent:[NSString stringWithFormat:@"Contents/%@", [infoDictionary valueForKey:@"Script"]]];
+    self.snippetURL = nil;
+  } else if ([self.type isEqualToString:(NSString *)DuxBundleTypeSnippet]) {
+    self.snippetURL = [self.URL URLByAppendingPathComponent:[NSString stringWithFormat:@"Contents/%@", [infoDictionary valueForKey:@"Snippet"]]];
   } else {
     self.scriptURL = nil;
+    self.snippetURL = nil;
   }
   
   self.inputType = [infoDictionary valueForKey:@"Input"];
@@ -181,23 +221,26 @@ static NSArray *loadedBundles;
   self.menuItem.title = [[self.URL lastPathComponent] stringByDeletingPathExtension];
   self.menuItem.action = @selector(performDuxBundle:);
   
+  NSMutableArray *tabTriggers = [NSMutableArray array];
   for (NSDictionary *trigger in [infoDictionary valueForKey:@"Triggers"]) {
-    if (![[trigger valueForKey:@"Type"] isEqualToString:@"Key"])
-      continue;
-    
-    self.menuItem.keyEquivalentModifierMask = 0;
-    for (NSString *keyComponent in [[trigger valueForKey:@"Key"] componentsSeparatedByString:@"+"]) {
-      if ([keyComponent isEqualToString:@"Control"]) {
-        self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSControlKeyMask;
-      } else if ([keyComponent isEqualToString:@"Option"]) {
-        self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSAlternateKeyMask;
-      } else if ([keyComponent isEqualToString:@"Command"]) {
-        self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSCommandKeyMask;
-      } else {
-        self.menuItem.keyEquivalent = keyComponent;
+    if ([[trigger valueForKey:@"Type"] isEqualToString:@"Key"]) {
+      self.menuItem.keyEquivalentModifierMask = 0;
+      for (NSString *keyComponent in [[trigger valueForKey:@"Key"] componentsSeparatedByString:@"+"]) {
+        if ([keyComponent isEqualToString:@"Control"]) {
+          self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSControlKeyMask;
+        } else if ([keyComponent isEqualToString:@"Option"]) {
+          self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSAlternateKeyMask;
+        } else if ([keyComponent isEqualToString:@"Command"]) {
+          self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSCommandKeyMask;
+        } else {
+          self.menuItem.keyEquivalent = keyComponent;
+        }
       }
+    } else if ([[trigger valueForKey:@"Type"] isEqualToString:@"Tab"]) {
+      [tabTriggers addObject:[trigger valueForKey:@"Word"]];
     }
   }
+  self.tabTriggers = [tabTriggers copy];
   
   [self insertBundleMenuItem]; // inserts the menu item into the correct (alphabetically sorted) location
   
@@ -296,17 +339,24 @@ static NSArray *loadedBundles;
 
 - (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL currentFile:(NSURL *)currentFile
 {
-  NSTask *task = [[NSTask alloc] init];
-  task.launchPath = self.scriptURL.path;
-  task.standardOutput = [NSPipe pipe];
-  task.currentDirectoryPath = workingDirectoryURL.path;
-  task.environment = @{@"DuxCurrentFile": currentFile ? currentFile.path : @""};
-
-  [task launch];
-  [task waitUntilExit];
-
-  NSData *standardOutput = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
-  NSString *output = [[NSString alloc] initWithData:standardOutput encoding:NSUTF8StringEncoding];
+  NSString *output;
+  if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
+    NSTask *task = [[NSTask alloc] init];
+    task.launchPath = self.scriptURL.path;
+    task.standardOutput = [NSPipe pipe];
+    task.currentDirectoryPath = workingDirectoryURL.path;
+    task.environment = @{@"DuxCurrentFile": currentFile ? currentFile.path : @""};
+    
+    [task launch];
+    [task waitUntilExit];
+    
+    NSData *standardOutput = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
+    output = [[NSString alloc] initWithData:standardOutput encoding:NSUTF8StringEncoding];
+  } else if ([self.type isEqualToString:(NSString *)DuxBundleTypeSnippet]) {
+    output = [NSString stringWithContentsOfURL:self.snippetURL usedEncoding:NULL error:NULL];
+  } else {
+    return @"";
+  }
   
   
   if ([self.outputType isEqualToString:(NSString *)DuxBundleOutputTypeAlert]) {

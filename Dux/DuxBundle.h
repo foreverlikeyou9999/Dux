@@ -15,9 +15,11 @@
 @property (readonly) NSMenuItem *menuItem;
 @property (readonly) NSString *inputType;
 @property (readonly) NSString *outputType;
+@property (readonly) NSArray *tabTriggers;
 
 + (DuxBundle *)bundleForSender:(id)sender;
 + (NSArray *)allBundles;
++ (NSArray *)tabTriggerBundlesSortedByTriggerLength; // each item is a dictionary with values for @"trigger" and @"bundle"
 
 + (void)loadBundles; // begins a background thread to find and load new or updated bundles
 + (NSURL *)bundlesURL;
@@ -27,6 +29,9 @@
 @end
 
 extern const NSString *DuxBundleTypeScript;
+extern const NSString *DuxBundleTypeSnippet;
 extern const NSString *DuxBundleInputTypeNone;
 extern const NSString *DuxBundleOutputTypeNone;
+extern const NSString *DuxBundleOutputTypeInsertText;
+extern const NSString *DuxBundleOutputTypeInsertSnippet;
 extern const NSString *DuxBundleOutputTypeAlert;

@@ -42,6 +42,8 @@
 - (IBAction)shiftSelectionLeft:(id)sender;
 - (IBAction)shiftSelectionRight:(id)sender;
 
+- (void)insertSnippet:(NSString *)snippet;
+
 - (void)moveSubwordBackward:(id)sender;
 - (void)moveSubwordBackwardAndModifySelection:(id)sender;
 - (void)moveSubwordForward:(id)sender;

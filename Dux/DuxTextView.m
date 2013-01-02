@@ -14,6 +14,7 @@
 #import "DuxLineNumberString.h"
 #import "DuxScrollViewAnimation.h"
 #import "DuxPreferences.h"
+#import "DuxBundle.h"
 
 @implementation DuxTextView
 
@@ -510,6 +511,21 @@ static NSCharacterSet *newlineCharacterSet;
   [self breakUndoCoalescing];
 }
 
+- (void)insertSnippet:(NSString *)snippet
+{
+  if (snippet.length == 0)
+    return;
+  
+  NSRange snippetSelectedRange = [snippet rangeOfString:@"$0"];
+  if (snippetSelectedRange.location != NSNotFound) {
+    snippet = [snippet stringByReplacingCharactersInRange:snippetSelectedRange withString:@""];
+  }
+  
+  NSRange selectedRangeAfterInsert = NSMakeRange(self.selectedRange.location + snippetSelectedRange.location, 0);
+  [self insertText:snippet];
+  self.selectedRange = selectedRangeAfterInsert;
+}
+
 - (BOOL)smartInsertDeleteEnabled
 {
   return NO;
@@ -547,6 +563,34 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)keyDown:(NSEvent *)theEvent
 {
+  // handle tab completion?
+  if (([[theEvent charactersIgnoringModifiers] characterAtIndex:0] == NSTabCharacter) && self.selectedRange.length == 0 && !([theEvent modifierFlags] & NSShiftKeyMask)) {
+  
+    id target = [NSApp targetForAction:@selector(performDuxBundle:)];
+    if (target) {
+      for (NSDictionary *triggerAndBundle in [DuxBundle tabTriggerBundlesSortedByTriggerLength]) {
+        NSString *trigger = [triggerAndBundle valueForKey:@"trigger"];
+        DuxBundle *bundle = [triggerAndBundle valueForKey:@"bundle"];
+        
+        if (self.selectedRange.location < trigger.length)
+          continue;
+        
+        if ([self.textStorage.string rangeOfString:trigger options:NSLiteralSearch range:NSMakeRange(self.selectedRange.location - trigger.length, trigger.length)].location == NSNotFound)
+          continue;
+        
+        if ([target respondsToSelector:@selector(validateMenuItem:)] && ![target validateMenuItem:bundle.menuItem]) {
+          continue;
+        }
+        
+        self.selectedRange = NSMakeRange(self.selectedRange.location - trigger.length, trigger.length);
+        [NSApp sendAction:@selector(performDuxBundle:) to:nil from:bundle.menuItem];
+        return;
+      }
+    }
+  }
+  
+  
+  // handle other key
   switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
     case NSLeftArrowFunctionKey:
       if (!([theEvent modifierFlags] & NSControlKeyMask))
