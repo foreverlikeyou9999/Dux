@@ -118,6 +118,9 @@
   // make text view the first responder
   [self.textView.window makeFirstResponder:self.textView];
   
+  // update menus/etc
+  [self didBecomeKey];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWindowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.textView.window];
   
   // show encoding alert
@@ -207,11 +210,16 @@
   // sometimes when this is called, the window hasn't *really* become key yet, and since we are only updating menu states it doesn't matter if it happens after a short delay
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC);
   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    [self updateSyntaxMenuStates];
-    [self updateNewlineStyleMenuStates];
-    [self updateLineEndingsInUseMenuItem];
-    [self updateEncodingMenuItems];
+    [self didBecomeKey];
   });
+}
+
+- (void)didBecomeKey
+{
+  [self updateSyntaxMenuStates];
+  [self updateNewlineStyleMenuStates];
+  [self updateLineEndingsInUseMenuItem];
+  [self updateEncodingMenuItems];
 }
 
 - (void)updateSyntaxMenuStates
