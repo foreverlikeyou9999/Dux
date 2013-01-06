@@ -592,6 +592,8 @@ static NSCharacterSet *newlineCharacterSet;
         }
         
         self.selectedRange = NSMakeRange(self.selectedRange.location - trigger.length, trigger.length);
+        [self deleteBackward:self];
+        
         [NSApp sendAction:@selector(performDuxBundle:) to:nil from:bundle.menuItem];
         return;
       }
