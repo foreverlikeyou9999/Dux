@@ -86,6 +86,24 @@
   [self addWindowController:controller];
 }
 
+- (void)showWindows
+{
+  // if we have no window controller, find it
+  if (self.windowControllers.count == 0) {
+    for (DuxProjectWindowController *windowController in [DuxProjectWindowController projectWindowControllers]) {
+      if (![windowController.documents containsObject:self])
+        continue;
+      
+      [windowController.document removeWindowController:windowController];
+      [self addWindowController:windowController];
+      
+      break;
+    }
+  }
+  
+  [super showWindows];
+}
+
 - (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller documentView:(NSView *)documentView
 {
   self.editorWindow = controller.editorWindow;
