@@ -516,12 +516,21 @@ static NSCharacterSet *newlineCharacterSet;
   if (snippet.length == 0)
     return;
   
+  NSRange selectedRangeAfterInsert = NSMakeRange(self.selectedRange.location + snippet.length, 0);
+  
   NSRange snippetSelectedRange = [snippet rangeOfString:@"$0"];
   if (snippetSelectedRange.location != NSNotFound) {
-    snippet = [snippet stringByReplacingCharactersInRange:snippetSelectedRange withString:@""];
+    NSString *selectedString = @"";
+    if (self.selectedRange.length > 0) {
+      selectedString = [self.textStorage.string substringWithRange:self.selectedRange];
+    }
+    
+    snippet = [snippet stringByReplacingCharactersInRange:snippetSelectedRange withString:selectedString];
+    
+    selectedRangeAfterInsert = NSMakeRange(self.selectedRange.location + snippetSelectedRange.location, selectedString.length);
   }
   
-  NSRange selectedRangeAfterInsert = NSMakeRange(self.selectedRange.location + snippetSelectedRange.location, 0);
+  
   [self insertText:snippet];
   self.selectedRange = selectedRangeAfterInsert;
 }
