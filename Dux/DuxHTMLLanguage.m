@@ -48,7 +48,7 @@
 {
   static NSArray *extensions = nil;
   if (!extensions) {
-    extensions = [NSArray arrayWithObjects:@"html", @"htm", @"tpl", nil];
+    extensions = [NSArray arrayWithObjects:@"html", @"htm", @"tpl", @"phtml", nil];
   }
   
   if (URL && [extensions containsObject:[URL pathExtension]])
