@@ -52,6 +52,12 @@
 {
   [self showWindow:self];
   
+  NSPasteboard *findPasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
+  NSString *findString = [findPasteboard stringForType:NSPasteboardTypeString];
+  if (findString) {
+    self.searchField.stringValue = findString;
+  }
+  
   [self.searchField becomeFirstResponder];
   self.searchPath = searchPath;
   self.searchPaths = [NSArray array];
@@ -76,6 +82,12 @@
   if (searchString.length == 0) {
     self.searchResultPaths = [NSArray array];
     return;
+  }
+  
+  // save search string
+  NSPasteboard *findPasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
+  if ([findPasteboard stringForType:NSPasteboardTypeString] != searchString) {
+    [findPasteboard setString:searchString forType:NSStringPboardType];
   }
   
   // clear selection
