@@ -9,6 +9,7 @@
 //
 
 #import "DuxOpenQuicklyTableViewCell.h"
+#import "MyOpenQuicklyController.h"
 
 @implementation DuxOpenQuicklyTableViewCell
 
@@ -24,7 +25,9 @@
     NSMutableParagraphStyle *pathParagrpahStyle = [[[NSParagraphStyle alloc] init] mutableCopy];
     [pathParagrpahStyle setLineBreakMode:NSLineBreakByTruncatingHead];
     
-    filenameAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:13], NSFontAttributeName, nil];
+    filenameAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:13], NSFontAttributeName,
+                          [NSColor colorWithCalibratedRed:0.15 green:0.15 blue:0.15 alpha:1.0], NSForegroundColorAttributeName,
+                          nil];
     pathAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:11], NSFontAttributeName,
     [NSColor grayColor], NSForegroundColorAttributeName,
     [pathParagrpahStyle copy], NSParagraphStyleAttributeName, nil];
@@ -46,7 +49,15 @@
                                    NSMinY(cellFrame) + 2,
                                    NSMaxX(cellFrame) - 10,
                                    17);
-  [textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:filename attributes:filenameAttributes]];
+
+  NSString *searchString = [[(MyOpenQuicklyController *)controlView.window.windowController searchField] stringValue];
+
+  NSMutableAttributedString *filenameAttributedString = [[NSMutableAttributedString alloc] initWithString:filename attributes:filenameAttributes];
+  NSRange searchWordRange = [filename rangeOfString:searchString options:NSCaseInsensitiveSearch];
+  [filenameAttributedString addAttribute:NSFontAttributeName value:[NSFont boldSystemFontOfSize:13] range:searchWordRange];
+  [filenameAttributedString addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:searchWordRange];
+
+  [textStorage replaceCharactersInRange:NSMakeRange(0, textStorage.length) withAttributedString:filenameAttributedString];
   textContainer.containerSize = filenameRect.size;
   [layoutManager drawGlyphsForGlyphRange:[layoutManager glyphRangeForTextContainer:textContainer] atPoint:filenameRect.origin];
   
