@@ -459,10 +459,10 @@ static NSMutableArray *projects = nil;
   if (item.action == @selector(performDuxBundle:)) {
     DuxBundle *bundle = [DuxBundle bundleForSender:item];
     
-    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert] containsObject:bundle.inputType])
+    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert, DuxBundleInputTypeDocumentContents] containsObject:bundle.inputType])
       return NO;
     
-    if (self.document && [@[DuxBundleOutputTypeInsertSnippet, DuxBundleOutputTypeInsertText] containsObject:bundle.outputType])
+    if (self.document && [@[DuxBundleOutputTypeInsertSnippet, DuxBundleOutputTypeReplaceDocument, DuxBundleOutputTypeInsertText, DuxBundleInputTypeDocumentContents] containsObject:bundle.outputType])
       return YES;
     
     if (![@[DuxBundleOutputTypeNone, DuxBundleOutputTypeAlert] containsObject:bundle.outputType])
@@ -478,12 +478,16 @@ static NSMutableArray *projects = nil;
 {
   DuxBundle *bundle = [DuxBundle bundleForSender:sender];
   
-  NSString *output = [bundle runWithWorkingDirectory:self.rootUrl currentFile:[self.document fileURL]];
+  NSString *output = [bundle runWithWorkingDirectory:self.rootUrl currentFile:[self.document fileURL] editorView:[(MyTextDocument *)self.document textView]];
   
   if ([DuxBundleOutputTypeInsertSnippet isEqualToString:bundle.outputType]) {
     [[(MyTextDocument *)self.document textView] insertSnippet:output];
   }
   if ([DuxBundleOutputTypeInsertText isEqualToString:bundle.outputType]) {
+    [[(MyTextDocument *)self.document textView] insertText:output];
+  }
+  if ([DuxBundleOutputTypeReplaceDocument isEqualToString:bundle.outputType]) {
+    [[(MyTextDocument *)self.document textView] selectAll:self];
     [[(MyTextDocument *)self.document textView] insertText:output];
   }
 }

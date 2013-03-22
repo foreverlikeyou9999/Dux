@@ -8,14 +8,17 @@
 
 #import "DuxBundle.h"
 #import "MyAppDelegate.h"
+#import "DuxTextView.h"
 
 const NSString *DuxBundleTypeScript = @"Script";
 const NSString *DuxBundleTypeSnippet = @"Snippet";
 const NSString *DuxBundleInputTypeNone = @"None";
 const NSString *DuxBundleInputTypeAlert = @"Alert";
+const NSString *DuxBundleInputTypeDocumentContents = @"DocumentContents";
 const NSString *DuxBundleOutputTypeNone = @"None";
 const NSString *DuxBundleOutputTypeInsertText = @"InsertText";
 const NSString *DuxBundleOutputTypeInsertSnippet = @"InsertSnippet";
+const NSString *DuxBundleOutputTypeReplaceDocument = @"ReplaceDocument";
 const NSString *DuxBundleOutputTypeAlert = @"Alert";
 
 static NSArray *loadedBundles;
@@ -232,6 +235,24 @@ static NSArray *loadedBundles;
           self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSAlternateKeyMask;
         } else if ([keyComponent isEqualToString:@"Command"]) {
           self.menuItem.keyEquivalentModifierMask = self.menuItem.keyEquivalentModifierMask | NSCommandKeyMask;
+        } else if ([keyComponent isEqualToString:@"Up"]) {
+          unichar key = NSUpArrowFunctionKey;
+          self.menuItem.keyEquivalent = [NSString stringWithCharacters:&key length:1];
+        } else if ([keyComponent isEqualToString:@"Down"]) {
+          unichar key = NSDownArrowFunctionKey;
+          self.menuItem.keyEquivalent = [NSString stringWithCharacters:&key length:1];
+        } else if ([keyComponent isEqualToString:@"Left"]) {
+          unichar key = NSLeftArrowFunctionKey;
+          self.menuItem.keyEquivalent = [NSString stringWithCharacters:&key length:1];
+        } else if ([keyComponent isEqualToString:@"Right"]) {
+          unichar key = NSRightArrowFunctionKey;
+          self.menuItem.keyEquivalent = [NSString stringWithCharacters:&key length:1];
+        } else if ([keyComponent isEqualToString:@"Space"]) {
+          self.menuItem.keyEquivalent = @" ";
+        } else if ([keyComponent isEqualToString:@"Tab"]) {
+          self.menuItem.keyEquivalent = @"\t";
+        } else if ([keyComponent isEqualToString:@"Return"]) {
+          self.menuItem.keyEquivalent = @"\n";
         } else {
           self.menuItem.keyEquivalent = keyComponent;
         }
@@ -339,7 +360,7 @@ static NSArray *loadedBundles;
   [menu insertItem:self.menuItem atIndex:index];
 }
 
-- (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL currentFile:(NSURL *)currentFile
+- (NSString *)runWithWorkingDirectory:(NSURL *)workingDirectoryURL currentFile:(NSURL *)currentFile editorView:(DuxTextView *)editorView
 {
   NSString *input = nil;
   if ([self.inputType isEqual:DuxBundleInputTypeAlert]) {
@@ -353,6 +374,8 @@ static NSArray *loadedBundles;
       return nil;
     
     input = accessory.stringValue;
+  } else if ([self.inputType isEqual:DuxBundleInputTypeDocumentContents]) {
+    input = editorView.textStorage.string;
   }
   
   NSString *output;
