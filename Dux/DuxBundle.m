@@ -386,7 +386,11 @@ static NSArray *loadedBundles;
     task.launchPath = self.scriptURL.path;
     task.standardOutput = [NSPipe pipe];
     task.currentDirectoryPath = workingDirectoryURL.path;
-    task.environment = @{@"DuxCurrentFile": currentFile ? currentFile.path : @""};
+    
+    
+    NSMutableDictionary *env = [NSProcessInfo processInfo].environment.mutableCopy;
+    [env setObject:currentFile ? currentFile.path : @"" forKey:currentFile ? currentFile.path : @""];
+    task.environment = env.copy;
     
     [task launch];
     [task waitUntilExit];

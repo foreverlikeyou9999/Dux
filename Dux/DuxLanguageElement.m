@@ -58,8 +58,13 @@ static NSColor *color = nil;
 
 - (NSColor *)color
 {
+#ifdef DUX_DARK_MODE
+  if (!color)
+    color = [NSColor colorWithCalibratedWhite:0.8 alpha:1];
+#else
   if (!color)
     color = [NSColor blackColor];
+#endif
   
   return color;
 }

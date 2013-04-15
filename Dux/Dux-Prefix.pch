@@ -3,6 +3,7 @@
 //
 
 #define SP_REFACTOR 1
+#define DUX_DARK_MODE 1
 
 #ifdef __OBJC__
   #import <Cocoa/Cocoa.h>

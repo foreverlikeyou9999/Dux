@@ -22,7 +22,7 @@ static NSColor *color;
   
   nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"\\/"];
   
-  color = [NSColor colorWithCalibratedRed:0.255 green:0.008 blue:0.847 alpha:1];
+  color = [NSColor colorWithDeviceRed:0.71 green:0.84 blue:1.00 alpha:1.0];
 }
 
 - (id)init

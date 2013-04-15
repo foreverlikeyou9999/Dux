@@ -75,6 +75,15 @@ static NSMutableArray *projects = nil;
   self.noEditorLogoView.alphaValue = 0.20;
   self.noEditorTextView.alphaValue = 0.65;
   
+  [self.window setMovableByWindowBackground:YES];
+#ifdef DUX_DARK_MODE
+  self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+  [self.window setOpaque:YES];
+  self.noEditorTextView.textColor = [NSColor whiteColor];
+  self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
+  self.documentPathLabel.textColor = [NSColor lightGrayColor];
+#endif
+  
   if (self.document) {
     [self.noEditorView setHidden:YES];
     [(MyTextDocument *)self.document loadIntoProjectWindowController:self documentView:self.documentView];
@@ -491,5 +500,52 @@ static NSMutableArray *projects = nil;
     [[(MyTextDocument *)self.document textView] insertText:output];
   }
 }
+
+
+- (void)windowDidBecomeMain:(NSNotification *)notification
+{
+  if (notification.object != self.window)
+    return;
+  
+#if DUX_DARK_MODE
+  self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+#endif
+}
+
+- (void)windowDidResignMain:(NSNotification *)notification
+{
+  if (notification.object != self.window)
+    return;
+  
+#if DUX_DARK_MODE
+  self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0.07 alpha:1];
+#endif
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+  if (notification.object != self.window)
+    return;
+  
+#if DUX_DARK_MODE
+  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+  }
+#endif
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+  if (notification.object != self.window)
+    return;
+  
+#if DUX_DARK_MODE
+  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0.07 alpha:1];
+  }
+#endif
+}
+
+
 
 @end

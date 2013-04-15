@@ -301,7 +301,7 @@
 		38E68082150770B400ECCC6C /* DuxShellCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellCommentElement.h; sourceTree = "<group>"; };
 		38E68083150770B400ECCC6C /* DuxShellCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellCommentElement.m; sourceTree = "<group>"; };
 		38E68085150772A600ECCC6C /* DuxShellNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellNumberElement.h; sourceTree = "<group>"; };
-		38E68086150772A600ECCC6C /* DuxShellNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellNumberElement.m; sourceTree = "<group>"; };
+		38E68086150772A600ECCC6C /* DuxShellNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxShellNumberElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38E6808C150772E200ECCC6C /* DuxShellSingleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellSingleQuotedStringElement.h; sourceTree = "<group>"; };
 		38E6808D150772E200ECCC6C /* DuxShellSingleQuotedStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellSingleQuotedStringElement.m; sourceTree = "<group>"; };
 		38E68090150772ED00ECCC6C /* DuxShellDoubleQuotedStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellDoubleQuotedStringElement.h; sourceTree = "<group>"; };
