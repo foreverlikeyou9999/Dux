@@ -121,7 +121,7 @@
 		3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
 		3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextBaseElement.m; sourceTree = "<group>"; };
 		380AED3B14500377005770D7 /* DuxTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextView.h; sourceTree = "<group>"; };
-		380AED3C14500377005770D7 /* DuxTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTextView.m; sourceTree = "<group>"; };
+		380AED3C14500377005770D7 /* DuxTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxTextView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38110AE614791AF50028B786 /* DuxCSSPropertyValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSPropertyValueElement.h; sourceTree = "<group>"; };
 		38110AE714791AF50028B786 /* DuxCSSPropertyValueElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxCSSPropertyValueElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38110AEA14791C3C0028B786 /* DuxCSSNumberValueElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSNumberValueElement.h; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		3822EAA9148623970068330B /* DuxScrollViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollViewAnimation.h; sourceTree = "<group>"; };
 		3822EAAA148623970068330B /* DuxScrollViewAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollViewAnimation.m; sourceTree = "<group>"; };
 		3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxSyntaxHighlighter.h; sourceTree = "<group>"; };
-		3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxSyntaxHighlighter.m; sourceTree = "<group>"; };
+		3824F07414522FAB00F00B96 /* DuxSyntaxHighlighter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxSyntaxHighlighter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3824F0791452304D00F00B96 /* DuxLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguage.h; sourceTree = "<group>"; };
 		3824F07A1452304D00F00B96 /* DuxLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguage.m; sourceTree = "<group>"; };
 		3824F07C1452305700F00B96 /* DuxLanguageElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageElement.h; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		3824F0831452E75700F00B96 /* DuxHTMLBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLBaseElement.h; sourceTree = "<group>"; };
 		3824F0841452E75700F00B96 /* DuxHTMLBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLBaseElement.m; sourceTree = "<group>"; };
 		3829B270168A74BB0034C0A1 /* DuxProjectWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxProjectWindowController.h; sourceTree = "<group>"; };
-		3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxProjectWindowController.m; sourceTree = "<group>"; };
+		3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxProjectWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3829D936145A9F7D00188ECF /* DuxHTMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagElement.h; sourceTree = "<group>"; };
 		3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagElement.m; sourceTree = "<group>"; };
 		38313274168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxClickAndHoldPopUpButton.h; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 		3883058A14DE845B00409F43 /* DuxFontSelectorTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxFontSelectorTextField.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3883058B14DE845B00409F43 /* DuxFontSelectorTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxFontSelectorTextField.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		388682AB1480409F00C362EE /* DuxLineNumberString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLineNumberString.h; sourceTree = "<group>"; };
-		388682AC1480409F00C362EE /* DuxLineNumberString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLineNumberString.m; sourceTree = "<group>"; };
+		388682AC1480409F00C362EE /* DuxLineNumberString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxLineNumberString.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3886D4B014790FD700970CAE /* DuxCSSLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSLanguage.h; sourceTree = "<group>"; };
 		3886D4B114790FD700970CAE /* DuxCSSLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSLanguage.m; sourceTree = "<group>"; };
 		3886D4B314790FE700970CAE /* DuxCSSBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSBaseElement.h; sourceTree = "<group>"; };
@@ -282,10 +282,10 @@
 		38D6058F1403859600D70F81 /* Dux-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Dux-Info.plist"; sourceTree = "<group>"; };
 		38D605911403859600D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		38D605931403859600D70F81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		38D605951403859600D70F81 /* Dux-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dux-Prefix.pch"; sourceTree = "<group>"; };
+		38D605951403859600D70F81 /* Dux-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "Dux-Prefix.pch"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38D605971403859600D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		38D605991403859600D70F81 /* MyTextDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTextDocument.h; sourceTree = "<group>"; };
-		38D6059A1403859600D70F81 /* MyTextDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTextDocument.m; sourceTree = "<group>"; };
+		38D6059A1403859600D70F81 /* MyTextDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MyTextDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38D6059D1403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyTextDocument.xib; sourceTree = "<group>"; };
 		38D605A01403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		38D605D614039A0600D70F81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };

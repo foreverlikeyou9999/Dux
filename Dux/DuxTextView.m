@@ -62,7 +62,7 @@ static NSCharacterSet *newlineCharacterSet;
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
   
-#ifdef DUX_DARK_MODE
+#if DUX_DARK_MODE
   self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
   self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.2 alpha:1], NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1 alpha:1]};
 #endif
@@ -969,17 +969,12 @@ static NSCharacterSet *newlineCharacterSet;
 	NSTextContainer *textContainer = self.textContainer;
   
   // background
-#ifdef DUX_DARK_MODE
-//  [[NSColor colorWithCalibratedWhite:0 alpha:1.0] set];
   [self.backgroundColor set];
-#else
-  [[NSColor whiteColor] set];
-#endif
   NSRectFill(dirtyRect);
   
   // page guide
   if (self.showPageGuide) {
-#ifdef DUX_DARK_MODE
+#if DUX_DARK_MODE
     [[NSColor colorWithDeviceWhite:1 alpha:0.1] set];
 #else
     [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
@@ -996,7 +991,7 @@ static NSCharacterSet *newlineCharacterSet;
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-#ifdef DUX_DARK_MODE
+#if DUX_DARK_MODE
   [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
 #else
   [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
@@ -1017,18 +1012,18 @@ static NSCharacterSet *newlineCharacterSet;
   // line numbers
   if (self.showLineNumbers) {
 		// background
-#ifdef DUX_DARK_MODE
-    [[NSColor colorWithDeviceWhite:0.2 alpha:0] set];
-#else
-    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
-#endif
-    [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
-#ifdef DUX_DARK_MODE
-    [[NSColor colorWithDeviceWhite:0.1 alpha:0] set];
-#else
-    [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
-#endif
-    [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
+//#if DUX_DARK_MODE
+//    [[NSColor colorWithDeviceWhite:0.2 alpha:0] set];
+//#else
+//    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
+//#endif
+//    [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
+//#if DUX_DARK_MODE
+//    [[NSColor colorWithDeviceWhite:0.1 alpha:0] set];
+//#else
+//    [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];
+//#endif
+//    [NSBezierPath fillRect:NSMakeRect(0, NSMinY(documentVisibleRect), 33.5, NSMaxY(documentVisibleRect))];
     
     // line numbers
     [self drawLineNumbersInRect:dirtyRect];
@@ -1339,12 +1334,13 @@ static NSCharacterSet *newlineCharacterSet;
 {
   BOOL accept = [super becomeFirstResponder];
 
-#if DUX_DARK_MODE
   if (accept) {
-    self.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-  }
+#if DUX_DARK_MODE
+  self.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+#else
+  self.backgroundColor = [NSColor colorWithDeviceRed:0.94 green:0.96 blue:1 alpha:1.0];
 #endif
-  
+}
   return accept;
 }
 
@@ -1352,11 +1348,13 @@ static NSCharacterSet *newlineCharacterSet;
 {
   BOOL accept = [super resignFirstResponder];
   
-#if DUX_DARK_MODE
   if (accept) {
+#if DUX_DARK_MODE
     self.backgroundColor = [NSColor colorWithCalibratedWhite:0.07 alpha:1];
-  }
+#else
+    self.backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
 #endif
+  }
   
   return accept;
 }
