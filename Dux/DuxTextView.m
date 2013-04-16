@@ -1338,7 +1338,7 @@ static NSCharacterSet *newlineCharacterSet;
 #if DUX_DARK_MODE
   self.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
 #else
-  self.backgroundColor = [NSColor colorWithDeviceRed:0.94 green:0.96 blue:1 alpha:1.0];
+  self.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
 }
   return accept;

@@ -82,7 +82,7 @@ static NSMutableArray *projects = nil;
   self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
   self.documentPathLabel.textColor = [NSColor lightGrayColor];
 #else
-  self.window.backgroundColor = [NSColor colorWithDeviceRed:0.95 green:0.96 blue:1 alpha:1.0];
+  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
   
   if (self.document) {
@@ -511,7 +511,7 @@ static NSMutableArray *projects = nil;
 #if DUX_DARK_MODE
   self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
 #else
-  self.window.backgroundColor = [NSColor colorWithDeviceRed:0.95 green:0.96 blue:1 alpha:1.0];
+  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
 }
 
@@ -536,7 +536,7 @@ static NSMutableArray *projects = nil;
 #if DUX_DARK_MODE
     ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
 #else
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithDeviceRed:0.95 green:0.96 blue:1 alpha:1.0];
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
   }
 }
