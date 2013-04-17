@@ -264,7 +264,7 @@
 														<string key="NSFrameSize">{177, 571}</string>
 														<reference key="NSSuperview" ref="475728870"/>
 														<reference key="NSWindow"/>
-														<reference key="NSNextKeyView"/>
+														<reference key="NSNextKeyView" ref="590281457"/>
 														<string key="NSReuseIdentifierKey">_NS:11</string>
 													</object>
 													<string key="NSLabel">Tab</string>
@@ -690,6 +690,7 @@
 						<string key="NSFrame">{{-2, 0}, {759, 15}}</string>
 						<reference key="NSSuperview" ref="839298779"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="354496467">
