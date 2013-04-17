@@ -513,6 +513,14 @@ static NSMutableArray *projects = nil;
 #else
   self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
+  
+  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
+#if DUX_DARK_MODE
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+#else
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
+#endif
+  }
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification
@@ -525,26 +533,6 @@ static NSMutableArray *projects = nil;
 #else
   self.window.backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
 #endif
-}
-
-- (void)windowDidBecomeKey:(NSNotification *)notification
-{
-  if (notification.object != self.window)
-    return;
-  
-  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
-#if DUX_DARK_MODE
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-#else
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
-#endif
-  }
-}
-
-- (void)windowDidResignKey:(NSNotification *)notification
-{
-  if (notification.object != self.window)
-    return;
   
   if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
 #if DUX_DARK_MODE
@@ -554,7 +542,5 @@ static NSMutableArray *projects = nil;
 #endif
   }
 }
-
-
 
 @end
