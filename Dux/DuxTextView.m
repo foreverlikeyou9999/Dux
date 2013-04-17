@@ -1335,12 +1335,9 @@ static NSCharacterSet *newlineCharacterSet;
   BOOL accept = [super becomeFirstResponder];
 
   if (accept) {
-#if DUX_DARK_MODE
-  self.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-#else
-  self.backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
-#endif
-}
+    self.backgroundColor = [NSColor duxEditorColor];
+  }
+  
   return accept;
 }
 
@@ -1349,11 +1346,7 @@ static NSCharacterSet *newlineCharacterSet;
   BOOL accept = [super resignFirstResponder];
   
   if (accept) {
-#if DUX_DARK_MODE
-    self.backgroundColor = [NSColor colorWithCalibratedWhite:0.07 alpha:1];
-#else
-    self.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
-#endif
+    self.backgroundColor = [NSColor duxBackgroundEditorColor];
   }
   
   return accept;
