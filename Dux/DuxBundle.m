@@ -389,7 +389,7 @@ static NSArray *loadedBundles;
     
     
     NSMutableDictionary *env = [NSProcessInfo processInfo].environment.mutableCopy;
-    [env setObject:currentFile ? currentFile.path : @"" forKey:currentFile ? currentFile.path : @""];
+    [env setObject:currentFile ? currentFile.path : @"" forKey:@"DuxCurrentFile"];
     task.environment = env.copy;
     
     [task launch];
