@@ -130,7 +130,11 @@
   
   // draw a light horizontal line near the top of the window (3D bevel)
   CGContextSetBlendMode(context, kCGBlendModeNormal);
+#if DUX_DARK_MODE
+  CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.24].CGColor);
+#else
   CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.34].CGColor);
+#endif
   CGContextSetLineWidth(context, 1.0);
   
   CGContextMoveToPoint(context, 0, windowRect.size.height - 1.5);
@@ -142,9 +146,12 @@
   
   // draw title (we wiped it out earlier)
 #if DUX_DARK_MODE
-  NSDictionary *attrs = @{NSFontAttributeName: [NSFont systemFontOfSize:[NSFont systemFontSize]], NSForegroundColorAttributeName: [NSColor lightGrayColor]};
   NSRect titleRect = [self _titlebarTitleRect];
-  titleRect.origin.y--;
+  
+  NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [NSColor blackColor]};
+  [self.title drawInRect:NSMakeRect(titleRect.origin.x, titleRect.origin.y + 1, titleRect.size.width, titleRect.size.height) withAttributes:attrs];
+  
+  attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [NSColor lightGrayColor]};
   [self.title drawInRect:titleRect withAttributes:attrs];
 #endif
 }
