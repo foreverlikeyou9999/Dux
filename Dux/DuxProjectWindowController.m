@@ -511,14 +511,14 @@ static NSMutableArray *projects = nil;
 #if DUX_DARK_MODE
   self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
 #else
-  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
+  self.window.backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
 #endif
   
   if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
 #if DUX_DARK_MODE
     ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
 #else
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
 #endif
   }
 }
@@ -531,14 +531,14 @@ static NSMutableArray *projects = nil;
 #if DUX_DARK_MODE
   self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0.07 alpha:1];
 #else
-  self.window.backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
+  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
   
   if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
 #if DUX_DARK_MODE
     ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:0.07 alpha:1];
 #else
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
+    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
 #endif
   }
 }
