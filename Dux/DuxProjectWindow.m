@@ -11,6 +11,7 @@
 #import "DuxProjectWindow.h"
 #import "MyTextDocument.h"
 #import "DuxProjectWindowController.h"
+#import "DuxPreferences.h"
 
 #import <objc/runtime.h>
 
@@ -101,7 +102,7 @@
   
   
   
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   // white-out the window title
   CGContextMoveToPoint(context, 1, windowRect.size.height - 3);
   CGContextAddLineToPoint(context, windowRect.size.width - 1, windowRect.size.height - 3);
@@ -109,7 +110,7 @@
   CGContextAddLineToPoint(context, 1, windowRect.size.height - 20);
   CGContextSetFillColorWithColor(context, self.window.backgroundColor.CGColor);
   CGContextFillPath(context);
-#endif
+}
   
   
   
@@ -117,11 +118,11 @@
   CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), self.frame.size.height - 40);
   CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), self.frame.size.height);
   
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   CGContextSetBlendMode(context, kCGBlendModeScreen);
-#else
+} else {
   CGContextSetBlendMode(context, kCGBlendModeMultiply);
-#endif
+}
   CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
   
   // release gradient
@@ -132,11 +133,11 @@
   
   // draw a light horizontal line near the top of the window (3D bevel)
   CGContextSetBlendMode(context, kCGBlendModeNormal);
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.24].CGColor);
-#else
+} else {
   CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.34].CGColor);
-#endif
+}
   CGContextSetLineWidth(context, 1.0);
   
   CGContextMoveToPoint(context, 0, windowRect.size.height - 1.5);
@@ -147,7 +148,7 @@
   
   
   // draw title (we wiped it out earlier)
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   NSRect titleRect = [self _titlebarTitleRect];
   
   NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [NSColor blackColor]};
@@ -155,7 +156,7 @@
   
   attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [NSColor lightGrayColor]};
   [self.title drawInRect:titleRect withAttributes:attrs];
-#endif
+}
 }
 
 @end

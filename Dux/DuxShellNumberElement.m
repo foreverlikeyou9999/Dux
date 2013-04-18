@@ -10,6 +10,7 @@
 
 #import "DuxShellNumberElement.h"
 #import "DuxShellLanguage.h"
+#import "DuxPreferences.h"
 
 @implementation DuxShellNumberElement
 
@@ -22,11 +23,11 @@ static NSColor *color;
   
   nextElementCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
   
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   color = [NSColor colorWithDeviceRed:0.71 green:0.84 blue:1.00 alpha:1.0];
-#else
+} else {
   color = [NSColor colorWithDeviceRed:0.11 green:0.36 blue:0.87 alpha:1.0];
-#endif
+}
 }
 
 - (id)init

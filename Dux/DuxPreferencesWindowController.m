@@ -76,6 +76,8 @@
   if (!sectionIdentifier)
     sectionIdentifier = @"editor";
   [self showSection:sectionIdentifier animate:NO];
+  
+  [self.darkModeRadioMatrix selectCellWithTag:(NSInteger)[DuxPreferences editorDarkMode]];
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
@@ -162,6 +164,11 @@
 - (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender
 {
 	[DuxPreferences setShowOtherInstancesOfSelectedSymbol:self.showOtherInstancesOfSelectedSymbolButton.state == NSOnState];
+}
+
+- (IBAction)setDarkMode:(id)sender
+{
+  [DuxPreferences setEditorDarkMode:[NSNumber numberWithInteger:self.darkModeRadioMatrix.selectedTag].boolValue];
 }
 
 @end

@@ -46,6 +46,9 @@ typedef NSUInteger DuxTabIndentBehaviour;
 
 + (NSArray *)openQuicklyExcludesFilesWithExtension;
 
++ (BOOL)editorDarkMode;
++ (void)setEditorDarkMode:(BOOL)darkMode;
+
 @end
 
 extern NSString *DuxPreferencesEditorFontDidChangeNotification;

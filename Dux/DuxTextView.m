@@ -62,14 +62,14 @@ static NSCharacterSet *newlineCharacterSet;
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
   
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
   
 // cannot do the following, because it is ignored when we are not the first responder, and then the text attributes lead to unreadable text
 //  self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor colorWithCalibratedRed:0.504 green:0.710 blue:1.000 alpha:0.3]};
 // instead we do this:
   self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor selectedTextBackgroundColor], NSForegroundColorAttributeName: [NSColor blackColor]};
-#endif
+}
   
   
   self.showLineNumbers = [DuxPreferences showLineNumbers];
@@ -978,11 +978,11 @@ static NSCharacterSet *newlineCharacterSet;
   
   // page guide
   if (self.showPageGuide) {
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
     [[NSColor colorWithDeviceWhite:1 alpha:0.1] set];
-#else
+} else {
     [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
-#endif
+}
     float position = self.pageGuidePosition;
     if (self.showLineNumbers)
       position += 34;
@@ -995,11 +995,11 @@ static NSCharacterSet *newlineCharacterSet;
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
-#else
+} else {
   [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
-#endif
+}
   float glyphRectExtraX = (self.showLineNumbers) ? 33.5 : 0;
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
@@ -1016,13 +1016,13 @@ static NSCharacterSet *newlineCharacterSet;
   // line numbers
   if (self.showLineNumbers) {
 		// background
-//#if DUX_DARK_MODE
+//if ([DuxPreferences editorDarkMode]) {
 //    [[NSColor colorWithDeviceWhite:0.2 alpha:0] set];
 //#else
 //    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
 //#endif
 //    [NSBezierPath strokeLineFromPoint:NSMakePoint(33.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(33.5, NSMaxY(documentVisibleRect))];
-//#if DUX_DARK_MODE
+//if ([DuxPreferences editorDarkMode]) {
 //    [[NSColor colorWithDeviceWhite:0.1 alpha:0] set];
 //#else
 //    [[NSColor colorWithDeviceWhite:0.95 alpha:1] set];

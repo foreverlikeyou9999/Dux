@@ -9,6 +9,7 @@
 //
 
 #import "DuxLineNumberString.h"
+#import "DuxPreferences.h"
 
 static NSDictionary *marginAttributes = nil;
 static NSMutableArray *lineNumberStrings = nil;
@@ -27,17 +28,17 @@ static NSTextStorage *textStorage = nil;
   NSMutableParagraphStyle *paragraphStyle = [[[NSParagraphStyle alloc] init] mutableCopy];
   [paragraphStyle setAlignment:NSRightTextAlignment];
   [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingHead];
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
                       [NSColor colorWithCalibratedWhite:0.3 alpha:1], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
-#else
+} else {
   marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
                       [NSColor darkGrayColor], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
-#endif
+}
   lineNumberStrings = [[NSMutableArray alloc] initWithCapacity:10000];
   
   layoutManager = [[NSLayoutManager alloc] init];

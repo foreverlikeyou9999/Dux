@@ -38,16 +38,16 @@
   if (baseAttributes)
     return baseAttributes;
   
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
   baseAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
                     [DuxPreferences editorFont], NSFontAttributeName,
                     [NSColor colorWithCalibratedWhite:0.8 alpha:1], NSForegroundColorAttributeName,
                     nil];
-#else
+} else {
   baseAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
     [DuxPreferences editorFont], NSFontAttributeName,
   nil];
-#endif
+}
 
   return baseAttributes;
 }

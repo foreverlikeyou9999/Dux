@@ -7,6 +7,7 @@
 //
 
 #import "NSColor+DuxColors.h"
+#import "DuxPreferences.h"
 
 @implementation NSColor (DuxColors)
 
@@ -16,11 +17,11 @@
   
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
     color = [NSColor colorWithCalibratedWhite:0 alpha:1.000];
-#else
+} else {
     color = [NSColor colorWithCalibratedWhite:1 alpha:1.000];
-#endif
+}
   });
   
   return color;
@@ -32,11 +33,11 @@
   
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
     color = [NSColor colorWithCalibratedWhite:0.07 alpha:1.000];
-#else
+} else {
     color = [NSColor colorWithCalibratedRed:0.931 green:0.942 blue:0.960 alpha:1.000];
-#endif
+}
   });
   
   return color;

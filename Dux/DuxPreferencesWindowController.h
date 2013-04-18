@@ -42,4 +42,9 @@
 - (IBAction)setIndentWidth:(id)sender;
 - (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender;
 
+// colors section
+@property (weak) IBOutlet NSMatrix *darkModeRadioMatrix;
+
+- (IBAction)setDarkMode:(id)sender;
+
 @end

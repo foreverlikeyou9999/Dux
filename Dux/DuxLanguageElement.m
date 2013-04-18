@@ -10,6 +10,7 @@
 
 #import "DuxLanguageElement.h"
 #import "DuxLanguage.h"
+#import "DuxPreferences.h"
 
 @implementation DuxLanguageElement
 
@@ -17,6 +18,20 @@
 
 static NSMutableDictionary *sharedInstances = nil;
 static NSColor *color = nil;
+
++ (void)initialize
+{
+  [super initialize];
+  
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    if ([DuxPreferences editorDarkMode]) {
+      color = [NSColor colorWithCalibratedWhite:0.8 alpha:1];
+    } else {
+      color = [NSColor blackColor];
+    }
+  });
+}
 
 + (id)sharedInstance
 {
@@ -58,14 +73,6 @@ static NSColor *color = nil;
 
 - (NSColor *)color
 {
-#if DUX_DARK_MODE
-  if (!color)
-    color = [NSColor colorWithCalibratedWhite:0.8 alpha:1];
-#else
-  if (!color)
-    color = [NSColor blackColor];
-#endif
-  
   return color;
 }
 

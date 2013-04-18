@@ -51,9 +51,9 @@
       self.scrollView.hasHorizontalScroller = NO;
       self.scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
       self.scrollView.documentView = self.textView;
-#if DUX_DARK_MODE
+if ([DuxPreferences editorDarkMode]) {
       self.scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
-#endif
+}
       
       // load text into view
       self.textView.highlighter = self.syntaxtHighlighter;
