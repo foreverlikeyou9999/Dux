@@ -23,23 +23,22 @@ static NSUserDefaults *userDefaults;
 
 + (void)registerDefaults
 {
-  NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+  NSFont *editorFont = [NSFont fontWithName:@"Menlo" size:13];
   
-  NSFont *font = [NSFont fontWithName:@"Menlo" size:13];
-  [defaults setObject:font.fontName forKey:@"DuxEditorFontName"];
-  [defaults setObject:[NSNumber numberWithFloat:font.pointSize] forKey:@"DuxEditorFontSize"];
-  
-  [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorShowLineNumbers"];
-  [defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorPageGuide"];
-  [defaults setObject:[NSNumber numberWithInteger:800] forKey:@"DuxEditorPageGuidePosition"];
-	[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DuxEditorShowOtherInstancesOfSelectedSymbol"];
-  [defaults setObject:[NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace] forKey:@"DuxEditorTabIndentBehaviour"];
-	[defaults setObject:[NSNumber numberWithBool:NO] forKey:@"DuxEditorIndentWithSpaces"];
-	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorTabWidth"];
-	[defaults setObject:[NSNumber numberWithInteger:4] forKey:@"DuxEditorIndentWidth"];
-  [defaults setObject:[NSArray arrayWithObjects:@"pdf", @"jpg", @"png", @"gif", @"zip", @"ico", @"doc", @"docx", @"xls", @"xlsx", @"swf", nil] forKey:@"OpenQuicklyExcludesFilesWithExtension"];
-  
-  [userDefaults registerDefaults:defaults.copy];
+  [userDefaults registerDefaults:@{
+   @"DuxEditorFontName": editorFont.fontName,
+   @"DuxEditorFontSize": [NSNumber numberWithFloat:editorFont.pointSize],
+   @"DuxEditorShowLineNumbers": [NSNumber numberWithBool:YES],
+   @"DuxEditorPageGuide": [NSNumber numberWithBool:YES],
+   @"DuxEditorPageGuidePosition": [NSNumber numberWithInteger:800],
+   @"DuxEditorShowOtherInstancesOfSelectedSymbol": [NSNumber numberWithBool:YES],
+   @"DuxEditorTabIndentBehaviour": [NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace],
+   @"DuxEditorIndentWithSpaces": [NSNumber numberWithBool:NO],
+   @"DuxEditorTabWidth": [NSNumber numberWithInteger:4],
+   @"DuxEditorIndentWidth": [NSNumber numberWithInteger:4],
+   @"OpenQuicklyExcludesFilesWithExtension": [NSArray arrayWithObjects:@"pdf", @"jpg", @"png", @"gif", @"zip", @"ico", @"doc", @"docx", @"xls", @"xlsx", @"swf", nil],
+   @"NSSplitView Subview Frames DuxProjectWindowSplitView": @[@"0.000000, 0.000000, 0.000000, 1556.000000, NO", @"1.000000, 0.000000, 1280.000000, 1556.000000, NO"],
+  }];
 }
 
 + (NSFont *)editorFont
