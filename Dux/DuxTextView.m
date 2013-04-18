@@ -64,7 +64,11 @@ static NSCharacterSet *newlineCharacterSet;
   
 #if DUX_DARK_MODE
   self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
-  self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.2 alpha:1], NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1 alpha:1]};
+  
+// cannot do the following, because it is ignored when we are not the first responder, and then the text attributes lead to unreadable text
+//  self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor colorWithCalibratedRed:0.504 green:0.710 blue:1.000 alpha:0.3]};
+// instead we do this:
+  self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor selectedTextBackgroundColor], NSForegroundColorAttributeName: [NSColor blackColor]};
 #endif
   
   
