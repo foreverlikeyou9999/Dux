@@ -90,6 +90,9 @@
 		38CFEED21473AF4200F81E6F /* DuxPHPNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEED11473AF4200F81E6F /* DuxPHPNumberElement.m */; };
 		38CFEED51473AF5400F81E6F /* DuxPHPVariableElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEED41473AF5400F81E6F /* DuxPHPVariableElement.m */; };
 		38CFEED81473B1E000F81E6F /* DuxPHPKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEED71473B1E000F81E6F /* DuxPHPKeywordElement.m */; };
+		38D4B48E17209E6800B2EDEC /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D4B48D17209E6800B2EDEC /* Acknowledgements.xib */; };
+		38D4B49117209FA300B2EDEC /* DuxAcknowledgementsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D4B49017209FA300B2EDEC /* DuxAcknowledgementsController.m */; };
+		38D4B4931720A28D00B2EDEC /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 38D4B4921720A28D00B2EDEC /* Fonts */; };
 		38D605881403859600D70F81 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605871403859600D70F81 /* Cocoa.framework */; };
 		38D605921403859600D70F81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38D605901403859600D70F81 /* InfoPlist.strings */; };
 		38D605941403859600D70F81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D605931403859600D70F81 /* main.m */; };
@@ -277,6 +280,10 @@
 		38CFEED41473AF5400F81E6F /* DuxPHPVariableElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxPHPVariableElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38CFEED61473B1DF00F81E6F /* DuxPHPKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPKeywordElement.h; sourceTree = "<group>"; };
 		38CFEED71473B1E000F81E6F /* DuxPHPKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPKeywordElement.m; sourceTree = "<group>"; };
+		38D4B48D17209E6800B2EDEC /* Acknowledgements.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Acknowledgements.xib; sourceTree = "<group>"; };
+		38D4B48F17209FA300B2EDEC /* DuxAcknowledgementsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxAcknowledgementsController.h; sourceTree = "<group>"; };
+		38D4B49017209FA300B2EDEC /* DuxAcknowledgementsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxAcknowledgementsController.m; sourceTree = "<group>"; };
+		38D4B4921720A28D00B2EDEC /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = SOURCE_ROOT; };
 		38D605831403859600D70F81 /* Dux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dux.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D605871403859600D70F81 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		38D6058A1403859600D70F81 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -419,6 +426,9 @@
 				3822EAAA148623970068330B /* DuxScrollViewAnimation.m */,
 				38FBDAD615DF895300B9FE70 /* DuxFileContentsWatcher.h */,
 				38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */,
+				38D4B48D17209E6800B2EDEC /* Acknowledgements.xib */,
+				38D4B48F17209FA300B2EDEC /* DuxAcknowledgementsController.h */,
+				38D4B49017209FA300B2EDEC /* DuxAcknowledgementsController.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -658,6 +668,7 @@
 		38D6058E1403859600D70F81 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				38D4B4921720A28D00B2EDEC /* Fonts */,
 				38D6058F1403859600D70F81 /* Dux-Info.plist */,
 				38D605901403859600D70F81 /* InfoPlist.strings */,
 				38D605931403859600D70F81 /* main.m */,
@@ -774,6 +785,8 @@
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
 				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
 				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
+				38D4B48E17209E6800B2EDEC /* Acknowledgements.xib in Resources */,
+				38D4B4931720A28D00B2EDEC /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -894,6 +907,7 @@
 				38487A131692A8040055EDAA /* DuxBundle.m in Sources */,
 				385115071692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m in Sources */,
 				38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */,
+				38D4B49117209FA300B2EDEC /* DuxAcknowledgementsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

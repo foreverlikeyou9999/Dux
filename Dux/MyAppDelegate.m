@@ -15,6 +15,7 @@
 #import "DuxProjectWindowController.h"
 #import "DuxBundle.h"
 #import "DuxRunBundleQuicklyWindowController.h"
+#import "DuxAcknowledgementsController.h"
 
 @interface MyAppDelegate ()
 
@@ -114,6 +115,11 @@
   }
   
   return YES;
+}
+
+- (IBAction)showAcknowledgements:(id)sender
+{
+  [DuxAcknowledgementsController showAcknowledgementsWindow];
 }
 
 @end

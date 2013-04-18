@@ -27,14 +27,14 @@ static NSTextStorage *textStorage = nil;
   
   NSMutableParagraphStyle *paragraphStyle = [[[NSParagraphStyle alloc] init] mutableCopy];
   [paragraphStyle setAlignment:NSRightTextAlignment];
-  [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingHead];
+  [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
 if ([DuxPreferences editorDarkMode]) {
-  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
+  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro" size:10], NSFontAttributeName,
                       [NSColor colorWithCalibratedWhite:0.3 alpha:1], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
 } else {
-  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Menlo" size:9], NSFontAttributeName,
+  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro" size:10], NSFontAttributeName,
                       [NSColor darkGrayColor], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];

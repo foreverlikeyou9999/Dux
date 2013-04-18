@@ -24,5 +24,6 @@
 - (IBAction)newWindow:(id)sender;
 - (IBAction)openBundlesFolder:(id)sender;
 - (IBAction)runBundleQuickly:(id)sender;
+- (IBAction)showAcknowledgements:(id)sender;
 
 @end
