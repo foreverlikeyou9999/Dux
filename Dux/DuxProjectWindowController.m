@@ -90,6 +90,8 @@ if ([DuxPreferences editorDarkMode]) {
     [(MyTextDocument *)self.document loadIntoProjectWindowController:self documentView:self.documentView];
   }
   
+  self.editorWindowSplitView.delegate = self;
+  
    // seems to be a bug in IB that prevents custom views from being properly connected to their toolbar item
   self.historyToolbarItem.view = self.historyToolbarItemView;
   self.pathToolbarItem.view = self.pathToolbarItemView;
@@ -466,6 +468,15 @@ if ([DuxPreferences editorDarkMode]) {
     return NO;
   }
   
+  if (item.action == @selector(showNavigator:)) {
+    if ([self.editorWindowSplitView isSubviewCollapsed:self.navigatorView]) {
+      item.title = @"Show Navigator";
+    } else {
+      item.title = @"Hide Navigator";
+    }
+    return YES;
+  }
+  
   if (item.action == @selector(performDuxBundle:)) {
     DuxBundle *bundle = [DuxBundle bundleForSender:item];
     
@@ -534,6 +545,40 @@ if ([DuxPreferences editorDarkMode]) {
   }
   
   [[(MyTextDocument *)self.document textView] performFindPanelAction:sender];
+}
+
+- (IBAction)showNavigator:(id)sender
+{
+  if ([self.editorWindowSplitView isSubviewCollapsed:self.navigatorView]) {
+    NSInteger width = [[NSUserDefaults standardUserDefaults] integerForKey:@"DuxProjectNavigatorLastNonCollapsedWidth"];
+    if (width < [self.editorWindowSplitView minPossiblePositionOfDividerAtIndex:0])
+      width = [self.editorWindowSplitView minPossiblePositionOfDividerAtIndex:0];
+    
+    [self.editorWindowSplitView setPosition:width ofDividerAtIndex:0];
+  } else {
+    [[NSUserDefaults standardUserDefaults] setInteger:self.navigatorView.frame.size.width forKey:@"DuxProjectNavigatorLastNonCollapsedWidth"];
+    
+    [self.editorWindowSplitView setPosition:0 ofDividerAtIndex:0];
+  }
+  [self.editorWindowSplitView adjustSubviews];
+}
+
+- (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
+{
+  return YES;
+}
+
+- (BOOL)splitView:(NSSplitView *)splitView shouldHideDividerAtIndex:(NSInteger)dividerIndex
+{
+  return YES;
+}
+
+- (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+  if (proposedMinimumPosition < 150)
+    return 150;
+  
+  return proposedMinimumPosition;
 }
 
 @end

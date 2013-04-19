@@ -10,7 +10,7 @@
 
 @class MyOpenQuicklyController, DuxClickAndHoldPopUpButton;
 
-@interface DuxProjectWindowController : NSWindowController
+@interface DuxProjectWindowController : NSWindowController <NSSplitViewDelegate>
 
 @property (nonatomic, strong) NSURL *rootUrl;
 @property (nonatomic, strong) NSMutableArray *documents;
@@ -19,6 +19,10 @@
 @property (nonatomic, strong) NSMutableArray *goForwardDocuments;
 
 @property (unsafe_unretained) IBOutlet NSWindow *editorWindow;
+@property (weak) IBOutlet NSSplitView *editorWindowSplitView;
+@property (weak) IBOutlet NSView *navigatorView;
+
+
 
 @property (weak) IBOutlet NSView *noEditorView;
 @property (weak) IBOutlet NSImageView *noEditorLogoView;
@@ -56,5 +60,7 @@
 - (IBAction)closeDocument:(id)sender; // close the current document without closing the window
 
 - (IBAction)performFindPanelAction:(id)sender;
+
+- (IBAction)showNavigator:(id)sender;
 
 @end

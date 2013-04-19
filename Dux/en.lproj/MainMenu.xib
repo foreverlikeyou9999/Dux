@@ -802,6 +802,25 @@
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
 								</object>
+								<object class="NSMenuItem" id="407874432">
+									<reference key="NSMenu" ref="466310130"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
+								<object class="NSMenuItem" id="653904690">
+									<reference key="NSMenu" ref="466310130"/>
+									<string key="NSTitle">Show Navigator</string>
+									<string key="NSKeyEquiv">0</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="1033313550"/>
+									<reference key="NSMixedImage" ref="310636482"/>
+								</object>
 								<object class="NSMenuItem" id="28142366">
 									<reference key="NSMenu" ref="466310130"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -2073,6 +2092,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">showNavigator:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="653904690"/>
+					</object>
+					<int key="connectionID">701</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">showPreferences:</string>
 						<reference key="source" ref="638577645"/>
 						<reference key="destination" ref="609285721"/>
@@ -2716,6 +2743,8 @@
 							<reference ref="987394926"/>
 							<reference ref="256531493"/>
 							<reference ref="28142366"/>
+							<reference ref="653904690"/>
+							<reference ref="407874432"/>
 						</array>
 						<reference key="parent" ref="586577488"/>
 					</object>
@@ -3134,6 +3163,16 @@
 						<reference key="object" ref="300889287"/>
 						<reference key="parent" ref="388842427"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">699</int>
+						<reference key="object" ref="653904690"/>
+						<reference key="parent" ref="466310130"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">700</int>
+						<reference key="object" ref="407874432"/>
+						<reference key="parent" ref="466310130"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3420,6 +3459,8 @@
 				<string key="693.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="695.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="696.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="699.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="700.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3436,7 +3477,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">698</int>
+			<int key="maxID">701</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3475,7 +3516,9 @@
 						<string key="loadDocumentFromHistoryPopUp:">NSPopUpButton</string>
 						<string key="newWindow:">id</string>
 						<string key="openQuickly:">id</string>
+						<string key="performFindPanelAction:">id</string>
 						<string key="setProjectRoot:">id</string>
+						<string key="showNavigator:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="closeDocument:">
@@ -3506,8 +3549,16 @@
 							<string key="name">openQuickly:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="performFindPanelAction:">
+							<string key="name">performFindPanelAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="setProjectRoot:">
 							<string key="name">setProjectRoot:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showNavigator:">
+							<string key="name">showNavigator:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
@@ -3646,6 +3697,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="duplicate:">id</string>
 						<string key="showAcknowledgements:">id</string>
+						<string key="showNavigator:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="duplicate:">
@@ -3654,6 +3706,10 @@
 						</object>
 						<object class="IBActionInfo" key="showAcknowledgements:">
 							<string key="name">showAcknowledgements:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showNavigator:">
+							<string key="name">showNavigator:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
@@ -3669,7 +3725,6 @@
 						<string key="newWindow:">id</string>
 						<string key="openBundlesFolder:">id</string>
 						<string key="runBundleQuickly:">id</string>
-						<string key="setProjectRoot:">id</string>
 						<string key="showAcknowledgements:">id</string>
 						<string key="showPreferences:">id</string>
 					</dictionary>
@@ -3684,10 +3739,6 @@
 						</object>
 						<object class="IBActionInfo" key="runBundleQuickly:">
 							<string key="name">runBundleQuickly:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="setProjectRoot:">
-							<string key="name">setProjectRoot:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showAcknowledgements:">

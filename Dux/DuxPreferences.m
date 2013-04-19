@@ -38,6 +38,7 @@ static NSUserDefaults *userDefaults;
    @"DuxEditorIndentWidth": [NSNumber numberWithInteger:4],
    @"OpenQuicklyExcludesFilesWithExtension": [NSArray arrayWithObjects:@"pdf", @"jpg", @"png", @"gif", @"zip", @"ico", @"doc", @"docx", @"xls", @"xlsx", @"swf", nil],
    @"NSSplitView Subview Frames DuxProjectWindowSplitView": @[@"0.000000, 0.000000, 0.000000, 1556.000000, NO", @"1.000000, 0.000000, 1280.000000, 1556.000000, NO"],
+   @"DuxProjectNavigatorLastNonCollapsedWidth": @350,
    @"DuxEditorDarkMode": [NSNumber numberWithBool:NO],
   }];
 }
