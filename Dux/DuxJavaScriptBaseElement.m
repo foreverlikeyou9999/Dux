@@ -75,11 +75,21 @@ static DuxJavaScriptRegexElement *regexElement;
       } else if (characterFound == '*') {
         foundSingleLineComment = NO;
         foundRegexPattern = NO;
-      } else {
+      } else if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:characterFound]) { // whitespace, not a regex pattern
+        foundSingleLineComment = NO;
+        foundRegexPattern = NO;
+        keepLooking = YES;
+        searchStartLocation += 1;
+        continue;
+      } else { // regex pattern
         foundSingleLineComment = NO;
         foundRegexPattern = YES;
         characterFound = '/';
       }
+    } else { // regex pattern
+      foundSingleLineComment = NO;
+      foundRegexPattern = YES;
+      characterFound = '/';
     }
     
     keepLooking = NO;
