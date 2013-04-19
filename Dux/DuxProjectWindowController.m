@@ -527,4 +527,13 @@ if ([DuxPreferences editorDarkMode]) {
   }
 }
 
+- (IBAction)performFindPanelAction:(id)sender
+{
+  if (!self.document) {
+    return;
+  }
+  
+  [[(MyTextDocument *)self.document textView] performFindPanelAction:sender];
+}
+
 @end
