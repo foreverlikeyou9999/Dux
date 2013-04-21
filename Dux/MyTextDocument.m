@@ -107,7 +107,7 @@ if ([DuxPreferences editorDarkMode]) {
   [super showWindows];
 }
 
-- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller documentView:(NSView *)documentView
+- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller documentView:(NSView *)documentView takeFirstResponder:(BOOL)makeFirstResponder
 {
   self.editorWindow = controller.editorWindow;
   
@@ -119,12 +119,13 @@ if ([DuxPreferences editorDarkMode]) {
   [self.textView.layoutManager ensureLayoutForTextContainer:self.textView.textContainer];
   
   // make text view the first responder
-  [self.textView.window makeFirstResponder:self.textView];
+  if (makeFirstResponder) {
+    [self.textView.window makeFirstResponder:self.textView];
   
-  // update menus/etc
-  [self didBecomeKey];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWindowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.textView.window];
+    // update menus/etc
+    [self didBecomeKey];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentWindowDidBecomeKey:) name:NSWindowDidBecomeKeyNotification object:self.textView.window];
+  }
   
   // show encoding alert
   if (self.stringEncoding != NSUTF8StringEncoding) {

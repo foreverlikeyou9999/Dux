@@ -16,9 +16,11 @@
 @interface DuxProjectWindowController ()
 
 @property (nonatomic, strong) DuxMultiFileSearchWindowController *multiFileSearchWindowController;
+@property (nonatomic, strong) NSURL *rootUrl;
 
 @property BOOL areGoingBack;
 @property BOOL areGoingForward;
+@property BOOL nextOpenShouldTakeFirstResponder;
 
 @end
 
@@ -64,6 +66,7 @@ static NSMutableArray *projects = nil;
   self.goForwardDocuments = [NSMutableArray array];
   self.areGoingBack = NO;
   self.areGoingForward = NO;
+  self.nextOpenShouldTakeFirstResponder = YES;
   
   return self;
 }
@@ -76,23 +79,24 @@ static NSMutableArray *projects = nil;
   self.noEditorTextView.alphaValue = 0.65;
   
   [self.window setMovableByWindowBackground:YES];
-if ([DuxPreferences editorDarkMode]) {
-  self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-  self.noEditorTextView.textColor = [NSColor whiteColor];
-  self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
-  self.documentPathLabel.textColor = [NSColor lightGrayColor];
-} else {
-  self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
-}
+  if ([DuxPreferences editorDarkMode]) {
+    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+    self.noEditorTextView.textColor = [NSColor whiteColor];
+    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
+    self.documentPathLabel.textColor = [NSColor lightGrayColor];
+  } else {
+    self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
+  }
   
   if (self.document) {
     [self.noEditorView setHidden:YES];
-    [(MyTextDocument *)self.document loadIntoProjectWindowController:self documentView:self.documentView];
+    [(MyTextDocument *)self.document loadIntoProjectWindowController:self documentView:self.documentView takeFirstResponder:YES];
   }
   
   self.editorWindowSplitView.delegate = self;
+  self.navigatorFilesViewController.rootURL = self.rootUrl;
   
-   // seems to be a bug in IB that prevents custom views from being properly connected to their toolbar item
+  // seems to be a bug in IB that prevents custom views from being properly connected to their toolbar item
   self.historyToolbarItem.view = self.historyToolbarItemView;
   self.pathToolbarItem.view = self.pathToolbarItemView;
   
@@ -158,7 +162,8 @@ if ([DuxPreferences editorDarkMode]) {
   for (NSView *subview in self.documentView.subviews) {
     [subview removeFromSuperview];
   }
-  [document loadIntoProjectWindowController:self documentView:self.documentView];
+  [document loadIntoProjectWindowController:self documentView:self.documentView takeFirstResponder:self.nextOpenShouldTakeFirstResponder];
+  self.nextOpenShouldTakeFirstResponder = YES;
   [self.noEditorView setHidden:YES];
 }
 
@@ -318,6 +323,7 @@ if ([DuxPreferences editorDarkMode]) {
       return;
     
     self.rootUrl = panel.URL;
+    self.navigatorFilesViewController.rootURL = self.rootUrl;
     [self synchronizeWindowTitleWithDocumentName];
   }];
 }
@@ -358,7 +364,7 @@ if ([DuxPreferences editorDarkMode]) {
 {
   if (self.documents.count > 1) {
     MyTextDocument *document = self.document;
-
+    
     [self.documents removeObject:document];
     [self.goBackDocuments removeObject:document];
     [self.goForwardDocuments removeObject:document];
@@ -579,6 +585,12 @@ if ([DuxPreferences editorDarkMode]) {
     return 150;
   
   return proposedMinimumPosition;
+}
+
+- (void)duxNavigatorDidSelectFile:(NSURL *)url
+{
+  self.nextOpenShouldTakeFirstResponder = NO;
+  [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES completionHandler:NULL];
 }
 
 @end

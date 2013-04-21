@@ -7,12 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "DuxNavigatorFilesViewController.h"
 
 @class MyOpenQuicklyController, DuxClickAndHoldPopUpButton;
 
 @interface DuxProjectWindowController : NSWindowController <NSSplitViewDelegate>
 
-@property (nonatomic, strong) NSURL *rootUrl;
+@property (readonly, nonatomic, strong) NSURL *rootUrl;
 @property (nonatomic, strong) NSMutableArray *documents;
 
 @property (nonatomic, strong) NSMutableArray *goBackDocuments;
@@ -22,6 +23,7 @@
 @property (weak) IBOutlet NSSplitView *editorWindowSplitView;
 @property (weak) IBOutlet NSView *navigatorView;
 
+@property (strong) IBOutlet DuxNavigatorFilesViewController *navigatorFilesViewController;
 
 
 @property (weak) IBOutlet NSView *noEditorView;

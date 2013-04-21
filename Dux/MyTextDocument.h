@@ -48,6 +48,6 @@
 - (IBAction)convertToNewlineStyleFromMenuItem:(NSMenuItem *)sender;
 - (IBAction)setActiveEncoding:(NSMenuItem *)sender;
 
-- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller documentView:(NSView *)documentView;
+- (void)loadIntoProjectWindowController:(DuxProjectWindowController *)controller documentView:(NSView *)documentView takeFirstResponder:(BOOL)makeFirstResponder;
 
 @end
