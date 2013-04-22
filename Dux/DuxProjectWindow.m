@@ -33,6 +33,10 @@
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
+  if ([DuxPreferences editorDarkMode]) {
+    aStyle |= NSTexturedBackgroundWindowMask;
+  }
+  
   if (self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]) {
     
     // modify NSThemeFrame to do our custom drawing
@@ -56,6 +60,15 @@
   return self;
 }
 
+- (void)awakeFromNib
+{
+  [super awakeFromNib];
+  
+  if ([DuxPreferences editorDarkMode]) {
+    [self.toolbar setShowsBaselineSeparator:NO];
+  }
+}
+
 
 /**
  * this method will be copied over the top of [NSThemeFrame drawRect:]. It calls the
@@ -71,6 +84,10 @@
   if (![[self window] isKindOfClass:[DuxProjectWindow class]])
     return;
   
+  
+  // are we in dark mode?
+  if (![DuxPreferences editorDarkMode])
+    return;
   
   // grab gfx context
   CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];

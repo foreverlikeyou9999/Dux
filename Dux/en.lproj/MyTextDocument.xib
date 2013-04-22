@@ -55,7 +55,7 @@
 			</object>
 			<object class="NSViewController" id="647468615"/>
 			<object class="NSWindowTemplate" id="275939982">
-				<int key="NSWindowStyleMask">4367</int>
+				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{59, 110}, {1020, 700}}</string>
 				<int key="NSWTFlags">1882718208</int>
@@ -67,7 +67,7 @@
 					</object>
 					<nil key="NSToolbarDelegate"/>
 					<bool key="NSToolbarPrefersToBeShown">YES</bool>
-					<bool key="NSToolbarShowsBaselineSeparator">NO</bool>
+					<bool key="NSToolbarShowsBaselineSeparator">YES</bool>
 					<bool key="NSToolbarAllowsUserCustomization">NO</bool>
 					<bool key="NSToolbarAutosavesConfiguration">NO</bool>
 					<int key="NSToolbarDisplayMode">2</int>
@@ -582,7 +582,7 @@
 					<reference key="NSNextKeyView" ref="715518862"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
-				<string key="NSMinSize">{300, 254}</string>
+				<string key="NSMinSize">{300, 255}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">Project Window</string>
 				<int key="NSWindowAnimationBehavior">3</int>
