@@ -119,6 +119,8 @@
 		38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */; };
 		38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */; };
 		C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */; };
+		C9F4E9441725543100E7AEC8 /* PaneGradientBar.png in Resources */ = {isa = PBXBuildFile; fileRef = C9F4E9421725543100E7AEC8 /* PaneGradientBar.png */; };
+		C9F4E9451725543100E7AEC8 /* PaneGradientBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9F4E9431725543100E7AEC8 /* PaneGradientBar@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -337,6 +339,8 @@
 		38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFileContentsWatcher.m; sourceTree = "<group>"; };
 		C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxNavigatorFileCell.h; sourceTree = "<group>"; };
 		C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxNavigatorFileCell.m; sourceTree = "<group>"; };
+		C9F4E9421725543100E7AEC8 /* PaneGradientBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PaneGradientBar.png; sourceTree = "<group>"; };
+		C9F4E9431725543100E7AEC8 /* PaneGradientBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PaneGradientBar@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -642,6 +646,7 @@
 		38D6058D1403859600D70F81 /* Dux */ = {
 			isa = PBXGroup;
 			children = (
+				C9F4E9411725543100E7AEC8 /* Assets */,
 				38734F571406163A00992D33 /* MyAppDelegate.h */,
 				38734F581406163A00992D33 /* MyAppDelegate.m */,
 				38D605991403859600D70F81 /* MyTextDocument.h */,
@@ -735,6 +740,15 @@
 			name = XML;
 			sourceTree = "<group>";
 		};
+		C9F4E9411725543100E7AEC8 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C9F4E9421725543100E7AEC8 /* PaneGradientBar.png */,
+				C9F4E9431725543100E7AEC8 /* PaneGradientBar@2x.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -799,6 +813,8 @@
 				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
 				38D4B48E17209E6800B2EDEC /* Acknowledgements.xib in Resources */,
 				38D4B4931720A28D00B2EDEC /* Fonts in Resources */,
+				C9F4E9441725543100E7AEC8 /* PaneGradientBar.png in Resources */,
+				C9F4E9451725543100E7AEC8 /* PaneGradientBar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,7 +1045,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Dux;
 				WRAPPER_EXTENSION = app;
@@ -1046,7 +1062,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Dux;
 				WRAPPER_EXTENSION = app;

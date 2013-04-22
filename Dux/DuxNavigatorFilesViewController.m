@@ -150,7 +150,8 @@ static NSArray *filesExcludeList;
 
 - (NSCell *)outlineView:(NSOutlineView *)outlineView dataCellForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-	return [tableColumn dataCell];
+  DuxNavigatorFileCell *cell = [tableColumn dataCell];
+	return cell;
 }
 
 - (void)outlineView:(NSOutlineView *)olv willDisplayCell:(NSCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
@@ -275,6 +276,29 @@ static NSArray *filesExcludeList;
       }
     }
   }
+}
+
+- (IBAction)editSelectedRow
+{
+  [self.filesView editColumn:0 row:[self.filesView selectedRow] withEvent:[NSApp currentEvent] select:YES];
+}
+
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item {
+  NSLog(@"edit %@", tableColumn);
+  [self.filesView editColumn:0 row:[self.filesView selectedRow] withEvent:[NSApp currentEvent] select:YES];
+  return YES;
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView didClickTableColumn:(NSTableColumn *)tableColumn
+{
+  NSIndexSet *selectedRows = [self.filesView selectedRowIndexes];
+  NSLog(@"Got a click at %ld",(unsigned long)selectedRows.firstIndex);
+}
+
+- (void)revealFileInNavigator:(NSURL *)fileURL
+{
+  NSLog(@"reveal - fileURL: %@",fileURL);
 }
 
 @end

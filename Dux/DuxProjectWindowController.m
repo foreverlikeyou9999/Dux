@@ -553,6 +553,17 @@ static NSMutableArray *projects = nil;
   [[(MyTextDocument *)self.document textView] performFindPanelAction:sender];
 }
 
+- (IBAction)revealInNavigator:(id)sender
+{
+  NSInteger width = [[NSUserDefaults standardUserDefaults] integerForKey:@"DuxProjectNavigatorLastNonCollapsedWidth"];
+  if (width < [self.editorWindowSplitView minPossiblePositionOfDividerAtIndex:0])
+    width = [self.editorWindowSplitView minPossiblePositionOfDividerAtIndex:0];
+  
+  [self.editorWindowSplitView setPosition:width ofDividerAtIndex:0];
+  
+  [self.navigatorFilesViewController revealFileInNavigator:[[self.documents lastObject] fileURL]];
+}
+
 - (IBAction)showNavigator:(id)sender
 {
   if ([self.editorWindowSplitView isSubviewCollapsed:self.navigatorView]) {

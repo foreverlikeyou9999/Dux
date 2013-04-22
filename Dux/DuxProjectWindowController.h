@@ -63,6 +63,8 @@
 
 - (IBAction)performFindPanelAction:(id)sender;
 
+- (IBAction)revealInNavigator:(id)sender;
+
 - (IBAction)showNavigator:(id)sender;
 
 @end
