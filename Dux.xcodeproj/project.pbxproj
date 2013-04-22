@@ -118,6 +118,7 @@
 		38F1060916490F8A00467839 /* DuxMultiFileSearchWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F1060716490F8A00467839 /* DuxMultiFileSearchWindowController.m */; };
 		38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */; };
 		38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */; };
+		C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -334,6 +335,8 @@
 		38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DuxMultiFileSearchWindowController.xib; sourceTree = "<group>"; };
 		38FBDAD615DF895300B9FE70 /* DuxFileContentsWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxFileContentsWatcher.h; sourceTree = "<group>"; };
 		38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFileContentsWatcher.m; sourceTree = "<group>"; };
+		C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxNavigatorFileCell.h; sourceTree = "<group>"; };
+		C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxNavigatorFileCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -604,7 +607,9 @@
 				38D605861403859600D70F81 /* Frameworks */,
 				38D605841403859600D70F81 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		38D605841403859600D70F81 /* Products */ = {
 			isa = PBXGroup;
@@ -666,6 +671,8 @@
 				38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */,
 				389ACC4B172265A100E01DB3 /* DuxNavigatorFilesViewController.h */,
 				389ACC4C172265A100E01DB3 /* DuxNavigatorFilesViewController.m */,
+				C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */,
+				C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */,
 			);
 			path = Dux;
 			sourceTree = "<group>";
@@ -914,6 +921,7 @@
 				38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */,
 				38D4B49117209FA300B2EDEC /* DuxAcknowledgementsController.m in Sources */,
 				389ACC4D172265A100E01DB3 /* DuxNavigatorFilesViewController.m in Sources */,
+				C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,8 +7,15 @@
 //
 
 #import "DuxNavigatorFilesViewController.h"
+#import "DuxNavigatorFileCell.h"
+
+#define COLUMNID_NAME			@"NameColumn" // Name for the file cell
+#define kIconImageSize  16.0
 
 @interface DuxNavigatorFilesViewController ()
+{
+  NSImage						*folderImage;
+}
 
 @property NSMutableSet *cachedUrls;
 @property NSMutableSet *cacheQueuedUrls;
@@ -51,6 +58,22 @@
   
   self.cacheQueue = [[NSOperationQueue alloc] init];
   self.cacheQueue.maxConcurrentOperationCount = 1;
+}
+
+- (void)awakeFromNib
+{
+  [self initOutlineCells];
+}
+
+- (void)initOutlineCells
+{
+  NSTableColumn *tableColumn = [self.filesView tableColumnWithIdentifier:COLUMNID_NAME];
+  DuxNavigatorFileCell *imageAndTextCell = [[DuxNavigatorFileCell alloc] init];
+  [imageAndTextCell setEditable:YES];
+  [tableColumn setDataCell:imageAndTextCell];
+
+  folderImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
+  [folderImage setSize:NSMakeSize(kIconImageSize, kIconImageSize)];
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
@@ -117,6 +140,23 @@
   
   // return it
   return url.lastPathComponent;
+}
+
+- (NSCell *)outlineView:(NSOutlineView *)outlineView dataCellForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+	return [tableColumn dataCell];
+}
+
+- (void)outlineView:(NSOutlineView *)olv willDisplayCell:(NSCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+		if ([self outlineView:olv isItemExpandable:item])
+		{
+      [(DuxNavigatorFileCell *)cell setImage:folderImage];
+    }
+    else {
+      NSString *fileExtension = [(NSURL *)item pathExtension];
+      [(DuxNavigatorFileCell *)cell setImage:[[NSWorkspace sharedWorkspace] iconForFileType:fileExtension]];
+    }
 }
 
 - (void)setRootURL:(NSURL *)rootURL
