@@ -12,6 +12,8 @@
 #define COLUMNID_NAME			@"NameColumn" // Name for the file cell
 #define kIconImageSize  16.0
 
+static NSArray *filesExcludeList;
+
 @interface DuxNavigatorFilesViewController ()
 {
   NSImage						*folderImage;
@@ -58,6 +60,10 @@
   
   self.cacheQueue = [[NSOperationQueue alloc] init];
   self.cacheQueue.maxConcurrentOperationCount = 1;
+
+  if (!filesExcludeList) {
+    filesExcludeList = @[@".svn",@".git"];
+  }
 }
 
 - (void)awakeFromNib
@@ -187,15 +193,28 @@
   [self.cacheQueuedUrls addObject:url];
   
   __block BOOL isDone = NO;
-  __block NSArray *childUrls = nil;
+  __block NSMutableArray *mutableChildUrls = nil;
+  __block NSArray *childUrls;
   
   
   [self.cacheQueue addOperationWithBlock:^{
     // make sure it isn't already cached (we often have a cache miss on the same URL many times)
     // get children, and sort them
     childUrls = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:url includingPropertiesForKeys:@[NSURLIsPackageKey, NSURLIsDirectoryKey] options:0 error:NULL];
+
+    mutableChildUrls = [[NSMutableArray alloc] initWithArray:childUrls];
     
-    childUrls = [childUrls sortedArrayUsingComparator:^NSComparisonResult(NSURL *a, NSURL *b) {
+    NSIndexSet *matchingPathsSet = [mutableChildUrls indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+      NSString *fileComponent = [(NSURL *)obj lastPathComponent];
+      if ([filesExcludeList containsObject:fileComponent] ) {
+        return true;
+      }
+      return false;
+    }];
+    
+    [mutableChildUrls removeObjectsInArray:[childUrls objectsAtIndexes:matchingPathsSet]];
+    
+    childUrls = [mutableChildUrls sortedArrayUsingComparator:^NSComparisonResult(NSURL *a, NSURL *b) {
       return [a.lastPathComponent compare:b.lastPathComponent options:NSNumericSearch];
     }];
     
