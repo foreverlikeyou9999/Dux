@@ -590,6 +590,14 @@ static NSMutableArray *projects = nil;
   return YES;
 }
 
+- (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)subview
+{
+  if (subview == self.navigatorView)
+    return NO;
+  
+  return YES;
+}
+
 - (CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
   if (proposedMinimumPosition < 150)

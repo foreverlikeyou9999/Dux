@@ -250,6 +250,7 @@
 											<string key="NSFrame">{{0, 1}, {205, 698}}</string>
 											<reference key="NSSuperview" ref="671488935"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="709325840"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<object class="NSMutableArray" key="NSTabViewItems">
 												<bool key="EncodedWithXMLCoder">YES</bool>
@@ -474,7 +475,6 @@
 														<nil key="NSNextResponder"/>
 														<int key="NSvFlags">256</int>
 														<string key="NSFrameSize">{203, 698}</string>
-														<reference key="NSNextKeyView" ref="404015868"/>
 														<string key="NSReuseIdentifierKey">_NS:28</string>
 													</object>
 													<string key="NSLabel">View</string>
@@ -519,6 +519,7 @@
 													<string key="NSFrame">{{364, 341}, {86, 19}}</string>
 													<reference key="NSSuperview" ref="611566153"/>
 													<reference key="NSWindow"/>
+													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:1535</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="678367218">
@@ -617,6 +618,19 @@
 							<bool key="NSIsVertical">YES</bool>
 							<int key="NSDividerStyle">2</int>
 							<string key="NSAutosaveName">DuxProjectWindowSplitView</string>
+							<object class="NSMutableDictionary" key="NSHoldingPriorities">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="0"/>
+									<integer value="1"/>
+								</object>
+								<object class="NSArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<real value="250"/>
+									<real value="250"/>
+								</object>
+							</object>
 						</object>
 					</object>
 					<string key="NSFrameSize">{1020, 700}</string>
@@ -624,7 +638,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="715518862"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMinSize">{300, 255}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<string key="NSFrameAutosaveName">Project Window</string>
@@ -646,6 +660,7 @@
 						<string key="NSFrame">{{42, 0}, {22, 16}}</string>
 						<reference key="NSSuperview" ref="286523559"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="494957746">
