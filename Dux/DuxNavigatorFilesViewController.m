@@ -94,7 +94,7 @@ static NSArray *filesExcludeList;
   
   // is it in the cache yet? if not add it to the chache
   if (![self.cachedUrls containsObject:item]) {
-    BOOL didFillQuickly = [self cacheDidMiss:item giveCacheAChanceToFill:YES];
+    BOOL didFillQuickly = [self cacheDidMiss:item waitUntilFinished:20];
     if (!didFillQuickly)
       return 1;
   }
@@ -128,7 +128,7 @@ static NSArray *filesExcludeList;
   
   // is it in the cache yet? if not add it
   if (![self.cachedUrls containsObject:item]) {
-    [self cacheDidMiss:item giveCacheAChanceToFill:NO];
+    [self cacheDidMiss:item waitUntilFinished:0];
     return @"❔";
   }
   
@@ -186,7 +186,7 @@ static NSArray *filesExcludeList;
   [self.filesView reloadData];
 }
 
-- (BOOL)cacheDidMiss:(NSURL *)url giveCacheAChanceToFill:(BOOL)giveCacheAChance
+- (BOOL)cacheDidMiss:(NSURL *)url waitUntilFinished:(NSUInteger)millisecondsToWait
 {
   if ([self.cacheQueuedUrls containsObject:url])
     return NO;
@@ -236,10 +236,13 @@ static NSArray *filesExcludeList;
     });
   }];
   
-  // wait up to 0.02 seconds for the cache to data to be fetched. check every 0.002 seconds if it's in the cache yet
-  if (giveCacheAChance) {
+  // wait for some milliseconds for the cache to data to be fetched. check every 0.002 seconds if it's in the cache yet
+  if (millisecondsToWait != 0) {
     NSDate *startWait = [NSDate date];
-    while (!isDone && [startWait timeIntervalSinceNow] > -0.02) {
+    NSTimeInterval seconds = millisecondsToWait;
+    seconds = (0 - seconds / 1000);
+    
+    while (!isDone && [startWait timeIntervalSinceNow] > seconds) {
       usleep(0.002 * 100);
     }
     
@@ -298,7 +301,35 @@ static NSArray *filesExcludeList;
 
 - (void)revealFileInNavigator:(NSURL *)fileURL
 {
-  NSLog(@"reveal - fileURL: %@",fileURL);
+  // walk down the tree starting at rootURL, untli we get to fileURL
+  NSURL *nextUrl = self.rootURL;
+  while (fileURL.pathComponents.count > nextUrl.pathComponents.count) {
+    // make sure nextDir is in our cache
+    if (![self.cachedUrls containsObject:nextUrl]) {
+      [self cacheDidMiss:nextUrl waitUntilFinished:1000]; // wait 1 second for the cache to fill
+    }
+    
+    // is it in the cache now?
+    if (![self.cachedUrls containsObject:nextUrl]) {
+      NSLog(@"cannot find %@ in %@ - not a child url or filesystem too slow.", fileURL, self.rootURL);
+      NSBeep();
+      return;
+    }
+    
+    // is it in the outline view?
+    if ([self.filesView rowForItem:nextUrl] == -1) {
+      NSLog(@"cannot find %@ in files view. issue with NSURL isEqual?", nextUrl);
+      NSBeep();
+      return;
+    }
+    
+    // expand it
+    NSLog(@"expand: %@ in %@ (index %i)", nextUrl, self.filesView, (int)[self.filesView rowForItem:nextUrl]);
+    [self.filesView expandItem:nextUrl];
+    
+    // get the next dir
+    nextUrl = [nextUrl URLByAppendingPathComponent:[fileURL.pathComponents objectAtIndex:nextUrl.pathComponents.count]];
+  }
 }
 
 @end
